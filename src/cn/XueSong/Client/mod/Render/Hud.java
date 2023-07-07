@@ -3,7 +3,12 @@ package cn.XueSong.Client.mod.Render;
 import cn.XueSong.Client.Client;
 import cn.XueSong.Client.font.CFontRenderer;
 import cn.XueSong.Client.mod.Mod;
+import cn.XueSong.Client.util.InstanceAccess.InstanceAccess;
+import cn.XueSong.Client.util.render.ColorUtil;
+import cn.XueSong.Client.util.render.RenderUtil;
 import cn.XueSong.Client.util.shader.CShaders;
+import cn.XueSong.Client.util.shader.base.ShaderRenderType;
+import javafx.scene.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -25,19 +30,20 @@ public class Hud extends Mod {
 
     public double round = 5;
 
+
     public Hud() {
         super("HUD","原生中文测试Test",true);
     }
-
     @Override
     public void render() {
+
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
         int width = scaledResolution.getScaledWidth();
         int height = scaledResolution.getScaledHeight();
 
         //Logo
         int y_logo = 6;
-        int x_logo = 6;
+        int x_logo = 8;
         if (ClientLogo){
             font_C.drawStringWithShadow(Client.VERSION,width-font_C.getStringWidth(Client.VERSION) - x_logo, y_logo + font_B.getStringHeight(Client.NAEM) - font_C.getStringHeight(Client.VERSION) - 1, new Color(255, 197, 0, 255).getRGB());
             font_B.drawStringWithShadow(Client.NAEM, width-font_B.getStringWidth(Client.NAEM) - font_C.getStringWidth(Client.VERSION) - x_logo - 1, y_logo, new Color(107, 228, 255, 255).getRGB());
@@ -67,7 +73,8 @@ public class Hud extends Mod {
                     ModList_x = width- font_A.getStringWidth(enableMod.getName()) - font_A.getStringWidth(Modtype) - x_modlist - 2;
                 }
                 //绘制模组列表的底部长方形
-                Gui.drawRect(ModList_x-2,y_modlist + font_A.getStringHeight("A")+3,width - x_modlist + 2,y_modlist-1,new Color(162, 162, 162, 148).getRGB());
+                //RenderUtil.dropShadow(10, ModList_x-2,y_modlist-1, ModList_long + 5, font_A.getStringHeight("A") + 3, 40, 1);
+                Gui.drawRect(ModList_x-2,y_modlist + font_A.getStringHeight("A")+3,width - x_modlist + 2,y_modlist-1,new Color(112, 112, 112, 116).getRGB());
 
                 //绘制模组列表旁边的彩条
                 Gui.drawRect(ModList_x + ModList_long + 5,y_modlist + font_A.getStringHeight("A")+3,ModList_x + ModList_long + 4,y_modlist-1,new Color(0, 255, 255, 255).getRGB());
@@ -83,11 +90,18 @@ public class Hud extends Mod {
         //shouFps
         String text = "FPS ";
         String FPS = Integer.toString(Minecraft.getDebugFPS());
-        double y_showFps = 6;
-        double x_showFps = 6;
-        double width_showFps = font_A.getStringWidth(text + FPS);
+        double y_showFps = 10;
+        double x_showFps = 10;
+        double y_showFps_backdrop = y_showFps -5;
+        double x_showFps_backdrop= x_showFps -5;
+        double width_showFps = font_A.getStringWidth(text + FPS) + 10;
+        double height_shouwFps = (double) font_A.getStringHeight("A")+8;
+        final double progress = 1;
+        final Color bloomColor = ColorUtil.withAlpha(Color.BLACK, (int) (progress * 150));
         if(ShowFps){
-            CShaders.COGQ_SHADER.draw(x_showFps-5,y_showFps-5,width_showFps+10,(double) font_A.getStringHeight("A")+10,round,0.5,new Color(124, 124, 124, 171),new Color(124, 124, 124, 171));
+            RenderUtil.dropShadow(20, x_showFps_backdrop, y_showFps_backdrop, width_showFps, height_shouwFps, 30, round+5);
+            CShaders.CQ_SHADER.draw(x_showFps_backdrop,y_showFps_backdrop,width_showFps,height_shouwFps,round,new Color(63, 63, 63, 170));
+            //CShaders.COGQ_SHADER.draw(x_showFps-5,y_showFps-5,width_showFps,height_shouwFps,round,0.5,new Color(124, 124, 124, 171),new Color(124, 124, 124, 171));
             font_A.drawStringWithShadow(text, x_showFps, y_showFps, Color.WHITE.getRGB());
             font_A.drawStringWithShadow(FPS,font_A.getStringWidth(text) + x_showFps, y_showFps ,new Color(190, 190, 190).getRGB());
         };

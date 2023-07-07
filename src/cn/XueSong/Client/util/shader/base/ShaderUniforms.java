@@ -1,4 +1,4 @@
-package cn.XueSong.Client.util.shader;
+package cn.XueSong.Client.util.shader.base;
 
 import org.lwjgl.opengl.GL20;
 

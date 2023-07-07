@@ -1,6 +1,6 @@
 package cn.XueSong.Client.util.shader.impl;
 
-import cn.XueSong.Client.util.shader.ShaderUniforms;
+import cn.XueSong.Client.util.shader.base.ShaderUniforms;
 import cn.XueSong.Client.util.shader.base.CShaderProgram;
 import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;

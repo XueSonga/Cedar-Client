@@ -11,7 +11,6 @@ public class Client {
     public static final String NAEM = "Cedar";
     public static final String VERSION = "Dev 0.1.5";
     public static ModManager modManager;
-
     public static void start(){
         modManager = new ModManager();
         modManager.load();//º”‘ÿmod

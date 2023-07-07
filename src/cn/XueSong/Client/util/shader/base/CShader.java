@@ -9,8 +9,6 @@ import java.util.List;
 @Setter
 public abstract class CShader {
     private boolean active;
-
     public abstract void run(ShaderRenderType type, float partialTicks, List<Runnable> runnable);
-
     public abstract void update();
 }

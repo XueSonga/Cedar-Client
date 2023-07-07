@@ -103,7 +103,7 @@ public class RenderItem implements IResourceManagerReloadListener
 
     /**
      * False when the renderer is rendering the item's effects into a GUI
-     *  
+     *
      * @param isNot If the renderer is not rendering the effects in a GUI
      */
     public void isNotRenderingEffectsInGUI(boolean isNot)
@@ -466,7 +466,7 @@ public class RenderItem implements IResourceManagerReloadListener
 
     /**
      * Return true if only one scale is negative
-     *  
+     *
      * @param itemTranformVec The ItemTransformVec3f instance
      */
     private boolean isThereOneNegativeScale(ItemTransformVec3f itemTranformVec)
@@ -474,8 +474,7 @@ public class RenderItem implements IResourceManagerReloadListener
         return itemTranformVec.scale.x < 0.0F ^ itemTranformVec.scale.y < 0.0F ^ itemTranformVec.scale.z < 0.0F;
     }
 
-    public void renderItemIntoGUI(ItemStack stack, int x, int y)
-    {
+    public void renderItemIntoGUI(final ItemStack stack, final double x, final double y) {
         this.renderItemGui = true;
         IBakedModel ibakedmodel = this.itemModelMesher.getItemModel(stack);
         GlStateManager.pushMatrix();
@@ -489,13 +488,10 @@ public class RenderItem implements IResourceManagerReloadListener
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.setupGuiTransform(x, y, ibakedmodel.isGui3d());
 
-        if (Reflector.ForgeHooksClient_handleCameraTransforms.exists())
-        {
-            ibakedmodel = (IBakedModel)Reflector.call(Reflector.ForgeHooksClient_handleCameraTransforms, new Object[] {ibakedmodel, ItemCameraTransforms.TransformType.GUI});
-        }
-        else
-        {
-            ibakedmodel.getItemCameraTransforms().applyTransform(ItemCameraTransforms.TransformType.GUI);
+        if (Reflector.ForgeHooksClient_handleCameraTransforms.exists()) {
+            ibakedmodel = (IBakedModel) Reflector.call(Reflector.ForgeHooksClient_handleCameraTransforms, new Object[]{ibakedmodel, ItemCameraTransforms.TransformType.GUI});
+        } else {
+            ibakedmodel.getItemCameraTransforms().func_181689_a(ItemCameraTransforms.TransformType.GUI);
         }
 
         this.renderItem(stack, ibakedmodel);
@@ -508,67 +504,50 @@ public class RenderItem implements IResourceManagerReloadListener
         this.renderItemGui = false;
     }
 
-    private void setupGuiTransform(int xPosition, int yPosition, boolean isGui3d)
-    {
-        GlStateManager.translate((float)xPosition, (float)yPosition, 100.0F + this.zLevel);
+    private void setupGuiTransform(final double xPosition, final double yPosition, final boolean isGui3d) {
+        GlStateManager.translate((float) xPosition, (float) yPosition, 100.0F + this.zLevel);
         GlStateManager.translate(8.0F, 8.0F, 0.0F);
         GlStateManager.scale(1.0F, 1.0F, -1.0F);
         GlStateManager.scale(0.5F, 0.5F, 0.5F);
 
-        if (isGui3d)
-        {
+        if (isGui3d) {
             GlStateManager.scale(40.0F, 40.0F, 40.0F);
             GlStateManager.rotate(210.0F, 1.0F, 0.0F, 0.0F);
             GlStateManager.rotate(-135.0F, 0.0F, 1.0F, 0.0F);
             GlStateManager.enableLighting();
-        }
-        else
-        {
+        } else {
             GlStateManager.scale(64.0F, 64.0F, 64.0F);
             GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
             GlStateManager.disableLighting();
         }
     }
 
-    public void renderItemAndEffectIntoGUI(final ItemStack stack, int xPosition, int yPosition)
-    {
-        if (stack != null && stack.getItem() != null)
-        {
+    public void renderItemAndEffectIntoGUI(final ItemStack stack, final double xPosition, final double yPosition) {
+        if (stack != null && stack.getItem() != null) {
             this.zLevel += 50.0F;
 
-            try
-            {
+            try {
                 this.renderItemIntoGUI(stack, xPosition, yPosition);
-            }
-            catch (Throwable throwable)
-            {
-                CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Rendering item");
-                CrashReportCategory crashreportcategory = crashreport.makeCategory("Item being rendered");
-                crashreportcategory.addCrashSectionCallable("Item Type", new Callable<String>()
-                {
-                    public String call() throws Exception
-                    {
-                        return String.valueOf((Object)stack.getItem());
+            } catch (final Throwable throwable) {
+                final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Rendering item");
+                final CrashReportCategory crashreportcategory = crashreport.makeCategory("Item being rendered");
+                crashreportcategory.addCrashSectionCallable("Item Type", new Callable<String>() {
+                    public String call() throws Exception {
+                        return String.valueOf(stack.getItem());
                     }
                 });
-                crashreportcategory.addCrashSectionCallable("Item Aux", new Callable<String>()
-                {
-                    public String call() throws Exception
-                    {
+                crashreportcategory.addCrashSectionCallable("Item Aux", new Callable<String>() {
+                    public String call() throws Exception {
                         return String.valueOf(stack.getMetadata());
                     }
                 });
-                crashreportcategory.addCrashSectionCallable("Item NBT", new Callable<String>()
-                {
-                    public String call() throws Exception
-                    {
-                        return String.valueOf((Object)stack.getTagCompound());
+                crashreportcategory.addCrashSectionCallable("Item NBT", new Callable<String>() {
+                    public String call() throws Exception {
+                        return String.valueOf(stack.getTagCompound());
                     }
                 });
-                crashreportcategory.addCrashSectionCallable("Item Foil", new Callable<String>()
-                {
-                    public String call() throws Exception
-                    {
+                crashreportcategory.addCrashSectionCallable("Item Foil", new Callable<String>() {
+                    public String call() throws Exception {
                         return String.valueOf(stack.hasEffect());
                     }
                 });
@@ -658,7 +637,7 @@ public class RenderItem implements IResourceManagerReloadListener
 
     /**
      * Draw with the WorldRenderer
-     *  
+     *
      * @param renderer The WorldRenderer's instance
      * @param x X position where the RenderA begin
      * @param y Y position where the RenderA begin

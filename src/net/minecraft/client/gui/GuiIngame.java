@@ -132,7 +132,7 @@ public class GuiIngame extends Gui
 
     public void renderGameOverlay(float partialTicks)
     {
-        ScaledResolution scaledresolution = new ScaledResolution(this.mc);
+        final ScaledResolution scaledresolution = new ScaledResolution(this.mc);
         int i = scaledresolution.getScaledWidth();
         int j = scaledresolution.getScaledHeight();
         this.mc.entityRenderer.setupOverlayRendering();
@@ -362,7 +362,6 @@ public class GuiIngame extends Gui
         {
             this.overlayPlayerList.updatePlayerList(false);
         }
-
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.disableLighting();
         GlStateManager.enableAlpha();

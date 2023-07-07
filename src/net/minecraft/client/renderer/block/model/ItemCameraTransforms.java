@@ -26,9 +26,11 @@ public class ItemCameraTransforms
     public final ItemTransformVec3f gui;
     public final ItemTransformVec3f ground;
     public final ItemTransformVec3f fixed;
+    public ItemTransformVec3f field_181699_o;
+    public ItemTransformVec3f field_181700_p;
 
-    private ItemCameraTransforms()
-    {
+
+    private ItemCameraTransforms() {
         this(ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT);
     }
 
@@ -112,9 +114,46 @@ public class ItemCameraTransforms
             return new ItemCameraTransforms(itemtransformvec3f, itemtransformvec3f1, itemtransformvec3f2, itemtransformvec3f3, itemtransformvec3f4, itemtransformvec3f5);
         }
 
+
         private ItemTransformVec3f func_181683_a(JsonDeserializationContext p_181683_1_, JsonObject p_181683_2_, String p_181683_3_)
         {
             return p_181683_2_.has(p_181683_3_) ? (ItemTransformVec3f)p_181683_1_.deserialize(p_181683_2_.get(p_181683_3_), ItemTransformVec3f.class) : ItemTransformVec3f.DEFAULT;
+        }
+    }
+    public ItemTransformVec3f func_181688_b(final ItemCameraTransforms.TransformType p_181688_1_) {
+        switch (p_181688_1_) {
+            case THIRD_PERSON:
+                return this.thirdPerson;
+
+            case FIRST_PERSON:
+                return this.firstPerson;
+
+            case HEAD:
+                return this.head;
+
+            case GUI:
+                return this.gui;
+
+            case GROUND:
+                return this.field_181699_o;
+
+            case FIXED:
+                return this.field_181700_p;
+
+            default:
+                return ItemTransformVec3f.DEFAULT;
+        }
+    }
+
+    public void func_181689_a(final ItemCameraTransforms.TransformType p_181689_1_) {
+        final ItemTransformVec3f itemtransformvec3f = this.func_181688_b(p_181689_1_);
+
+        if (itemtransformvec3f != ItemTransformVec3f.DEFAULT) {
+            GlStateManager.translate(itemtransformvec3f.translation.x + field_181690_b, itemtransformvec3f.translation.y + field_181691_c, itemtransformvec3f.translation.z + field_181692_d);
+            GlStateManager.rotate(itemtransformvec3f.rotation.y + field_181694_f, 0.0F, 1.0F, 0.0F);
+            GlStateManager.rotate(itemtransformvec3f.rotation.x + field_181693_e, 1.0F, 0.0F, 0.0F);
+            GlStateManager.rotate(itemtransformvec3f.rotation.z + field_181695_g, 0.0F, 0.0F, 1.0F);
+            GlStateManager.scale(itemtransformvec3f.scale.x + field_181696_h, itemtransformvec3f.scale.y + field_181697_i, itemtransformvec3f.scale.z + field_181698_j);
         }
     }
 
