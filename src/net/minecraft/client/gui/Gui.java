@@ -1,12 +1,15 @@
 package net.minecraft.client.gui;
 
 import cn.XueSong.Client.font.CFontRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
@@ -47,6 +50,72 @@ public class Gui
 
         drawRect(x, startY + 1, x + 1, endY, color);
     }
+    /**
+     *当调用renderBlur方法时，你需要传入以下参数：\n
+     *
+     * x：矩形左上角的X坐标（类型为double）。\n
+     * y：矩形左上角的Y坐标（类型为double）。\n
+     * width：矩形的宽度（类型为double）。\n
+     * height：矩形的高度（类型为double）。\n
+     * radius：圆角的半径（类型为double）。\n
+     * 暂时无法使用,技术力不足
+     */
+    public static void renderBlur(double x, double y, double width, double height, double radius) {
+        // 创建一个帧缓存对象
+        Framebuffer framebuffer = new Framebuffer((int)width, (int)height, true);
+
+        // 在帧缓存中进行渲染
+        framebuffer.bindFramebuffer(true);
+        GlStateManager.clear(16640);
+
+        // 绘制高斯模糊圆角矩形
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        worldRenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+        drawRoundedRect(worldRenderer, x, y, width, height, radius);
+        tessellator.draw();
+
+        // 从帧缓存中解绑
+        framebuffer.unbindFramebuffer();
+
+        // 将帧缓存的内容渲染到屏幕上
+        Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(true);
+        framebuffer.framebufferRenderExt((int)width, (int)height, false);
+
+        // 恢复默认的OpenGL状态
+        GlStateManager.enableDepth();
+        GlStateManager.enableAlpha();
+        GlStateManager.alphaFunc(516, 0.1F);
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.shadeModel(7424);
+    }
+
+    private static void drawRoundedRect(WorldRenderer worldRenderer, double x, double y, double width, double height, double radius) {
+        int segments = (int)(radius * 4);
+        double theta = 2 * Math.PI / segments;
+
+        double xStart = x + radius;
+        double yStart = y + radius;
+
+        for (int i = 0; i < segments; i++) {
+            double angle = theta * i;
+            double x1 = xStart + radius * Math.cos(angle);
+            double y1 = yStart + radius * Math.sin(angle);
+            worldRenderer.pos(x1, y1, 0.0D).color(0, 0, 0, 255).endVertex();
+        }
+
+        worldRenderer.pos(x + radius, y, 0.0D).color(0, 0, 0, 255).endVertex();
+
+        for (int i = 0; i < segments; i++) {
+            double angle = theta * i;
+            double x2 = xStart + radius * Math.cos(angle);
+            double y2 = yStart + radius * Math.sin(angle);
+            worldRenderer.pos(x2, y2, 0.0D).color(0, 0, 0, 255).endVertex();
+        }
+    }
+
+
 
     /**
      * Draws a solid color rectangle with the specified coordinates and color (ARGB format). Args: x1, y1, x2, y2, color
