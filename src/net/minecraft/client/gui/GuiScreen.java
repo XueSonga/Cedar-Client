@@ -1,9 +1,12 @@
 package net.minecraft.client.gui;
 
+import cn.XueSong.Client.util.render.RenderUtil;
+import cn.XueSong.Client.util.shader.CShaders;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import java.awt.Toolkit;
+
+import java.awt.*;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
@@ -178,7 +181,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
      * Draws the text when mouse is over creative inventory tab. Params: current creative tab to be checked, current
      * mouse x position, current mouse y position.
      */
-    protected void drawCreativeTabHoveringText(String tabName, int mouseX, int mouseY)
+    protected void drawCreativeTabHoveringText(String tabName, double mouseX, double mouseY)
     {
         this.drawHoveringText(Arrays.<String>asList(new String[] {tabName}), mouseX, mouseY);
     }
@@ -186,7 +189,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     /**
      * Draws a List of strings as a tooltip. Every entry is drawn on a seperate line.
      */
-    protected void drawHoveringText(List<String> textLines, int x, int y)
+    protected void drawHoveringText(List<String> textLines, double x, double y)
     {
         if (!textLines.isEmpty())
         {
@@ -206,8 +209,8 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
                 }
             }
 
-            int l1 = x + 12;
-            int i2 = y - 12;
+            double l1 = x + 12;
+            double i2 = y - 12;
             int k = 8;
 
             if (textLines.size() > 1)
@@ -228,6 +231,9 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
             this.zLevel = 300.0F;
             this.itemRender.zLevel = 300.0F;
             int l = -267386864;
+            RenderUtil.dropShadow(20, l1 - 5, i2 - 6, i + 9, k + 12, 30, 5+5);
+            CShaders.CQ_SHADER.draw(l1 - 5, i2 - 6,i + 9,k + 12,5,new Color(0, 0, 0, 255));
+            /*
             this.drawGradientRect(l1 - 3, i2 - 4, l1 + i + 3, i2 - 3, l, l);
             this.drawGradientRect(l1 - 3, i2 + k + 3, l1 + i + 3, i2 + k + 4, l, l);
             this.drawGradientRect(l1 - 3, i2 - 3, l1 + i + 3, i2 + k + 3, l, l);
@@ -239,7 +245,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
             this.drawGradientRect(l1 + i + 2, i2 - 3 + 1, l1 + i + 3, i2 + k + 3 - 1, i1, j1);
             this.drawGradientRect(l1 - 3, i2 - 3, l1 + i + 3, i2 - 3 + 1, i1, i1);
             this.drawGradientRect(l1 - 3, i2 + k + 2, l1 + i + 3, i2 + k + 3, j1, j1);
-
+            */
             for (int k1 = 0; k1 < textLines.size(); ++k1)
             {
                 String s1 = (String)textLines.get(k1);
@@ -255,10 +261,12 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
 
             this.zLevel = 0.0F;
             this.itemRender.zLevel = 0.0F;
-            GlStateManager.enableLighting();
             GlStateManager.enableDepth();
-            RenderHelper.enableStandardItemLighting();
-            GlStateManager.enableRescaleNormal();
+            GlStateManager.enableAlpha();
+            GlStateManager.enableCull();
+            GlStateManager.enableTexture2D();
+            GlStateManager.disableBlend();
+            GlStateManager.resetColor();
         }
     }
 

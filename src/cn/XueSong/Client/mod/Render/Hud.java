@@ -8,6 +8,7 @@ import cn.XueSong.Client.util.render.ColorUtil;
 import cn.XueSong.Client.util.render.RenderUtil;
 import cn.XueSong.Client.util.shader.CShaders;
 import cn.XueSong.Client.util.shader.base.ShaderRenderType;
+import cn.XueSong.Client.util.shader.impl.GuiBlurRenderer;
 import javafx.scene.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -99,7 +100,7 @@ public class Hud extends Mod {
         final double progress = 1;
         final Color bloomColor = ColorUtil.withAlpha(Color.BLACK, (int) (progress * 150));
         if(ShowFps){
-            RenderUtil.dropShadow(20, x_showFps_backdrop, y_showFps_backdrop, width_showFps, height_shouwFps, 30, round+5);
+            RenderUtil.dropShadow(10, x_showFps_backdrop, y_showFps_backdrop, width_showFps, height_shouwFps, 40, round+5);
             CShaders.CQ_SHADER.draw(x_showFps_backdrop,y_showFps_backdrop,width_showFps,height_shouwFps,round,new Color(63, 63, 63, 170));
             //CShaders.COGQ_SHADER.draw(x_showFps-5,y_showFps-5,width_showFps,height_shouwFps,round,0.5,new Color(124, 124, 124, 171),new Color(124, 124, 124, 171));
             font_A.drawStringWithShadow(text, x_showFps, y_showFps, Color.WHITE.getRGB());

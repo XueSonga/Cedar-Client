@@ -27,6 +27,4 @@ public interface InstanceAccess {//สตภýทรฮส
     List<Runnable> LIMITED_PRE_RENDER_RUNNABLES = new ArrayList<>();
     List<Runnable> LIMITED_POST_RENDER_RUNNABLES = new ArrayList<>();
 
-    CShader GAUSSIAN_BLUR_SHADER = new GaussianBlurShader();
-    CShader UI_GAUSSIAN_BLUR_SHADER = new GaussianBlurShader();
 }

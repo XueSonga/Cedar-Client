@@ -106,7 +106,7 @@ public class GuiScreenRealmsProxy extends GuiScreen
      * Draws the text when mouse is over creative inventory tab. Params: current creative tab to be checked, current
      * mouse x position, current mouse y position.
      */
-    public void drawCreativeTabHoveringText(String tabName, int mouseX, int mouseY)
+    public void drawCreativeTabHoveringText(String tabName, double mouseX, double mouseY)
     {
         super.drawCreativeTabHoveringText(tabName, mouseX, mouseY);
     }
