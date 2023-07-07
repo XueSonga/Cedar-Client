@@ -53,11 +53,11 @@ public class RenderUtil {
         CShaders.CQ_SHADER.draw(x, y, width, height, radius, color);
     }
 
-    public void roundedOutlineRectangle(double x, double y, double width, double height, double radius, double borderSize, Color color) {
+    public static void roundedOutlineRectangle(double x, double y, double width, double height, double radius, double borderSize, Color color) {
         CShaders.COQ_SHADER.draw(x, y, width, height, radius, borderSize, color);
     }
 
-    public void roundedOutlineGradientRectangle(double x, double y, double width, double height, double radius, double borderSize, Color color1, Color color2) {
+    public static void roundedOutlineGradientRectangle(double x, double y, double width, double height, double radius, double borderSize, Color color1, Color color2) {
         CShaders.COGQ_SHADER.draw(x, y, width, height, radius, borderSize, color1, color2);
     }
     public static void end() {
