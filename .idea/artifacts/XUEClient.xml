@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="XUEClient">
+    <output-path>$PROJECT_DIR$/out/artifacts/XUEClient</output-path>
+    <root id="archive" name="XUEClient.jar">
+      <element id="module-output" name="Client-XUE" />
+    </root>
+  </artifact>
+</component>
