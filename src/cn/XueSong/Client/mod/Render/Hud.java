@@ -1,19 +1,16 @@
 package cn.XueSong.Client.mod.Render;
 
 import cn.XueSong.Client.Client;
-import cn.XueSong.Client.ModManager;
 import cn.XueSong.Client.font.CFontRenderer;
 import cn.XueSong.Client.mod.Mod;
+import cn.XueSong.Client.util.shader.CShaders;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Hud extends Mod {
 
@@ -25,6 +22,8 @@ public class Hud extends Mod {
     private static final CFontRenderer font_B = new CFontRenderer("SFBOLD", 30.0F, Font.PLAIN, true, true);//标题
     private static final CFontRenderer font_C = new CFontRenderer("SFBOLD", 17.0F, Font.PLAIN, true, true);//版本
     private final int rainbow_step = 1;
+
+    public double round = 5;
 
     public Hud() {
         super("HUD","原生中文测试Test",true);
@@ -82,13 +81,15 @@ public class Hud extends Mod {
         }
 
         //shouFps
-        int y_showFps = 6;
-        int x_showFps = 6;
-        int FPS = Minecraft.getDebugFPS();
         String text = "FPS ";
+        String FPS = Integer.toString(Minecraft.getDebugFPS());
+        double y_showFps = 6;
+        double x_showFps = 6;
+        double width_showFps = font_A.getStringWidth(text + FPS);
         if(ShowFps){
+            CShaders.COGQ_SHADER.draw(x_showFps-5,y_showFps-5,width_showFps+10,(double) font_A.getStringHeight("A")+10,round,0.5,new Color(124, 124, 124, 171),new Color(124, 124, 124, 171));
             font_A.drawStringWithShadow(text, x_showFps, y_showFps, Color.WHITE.getRGB());
-            font_A.drawStringWithShadow(Integer.toString(FPS),font_A.getStringWidth(text) + x_showFps, y_showFps ,new Color(190, 190, 190).getRGB());
+            font_A.drawStringWithShadow(FPS,font_A.getStringWidth(text) + x_showFps, y_showFps ,new Color(190, 190, 190).getRGB());
         };
     }
 }
