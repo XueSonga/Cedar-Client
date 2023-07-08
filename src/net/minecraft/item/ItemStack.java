@@ -161,7 +161,7 @@ public final class ItemStack
     }
 
     /**
-     * Called whenever this item stack is equipped and right clicked. Returns the new item stack to put in the position
+     * Called whenever this item stack is equipped and right-clicked. Returns the new item stack to put in the position
      * where this item is. Args: world, player
      */
     public ItemStack useItemRightClick(World worldIn, EntityPlayer playerIn)

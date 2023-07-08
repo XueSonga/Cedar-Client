@@ -8,7 +8,6 @@ public abstract class Mod {
     private int key;
 
     public Mod(String name, String type,boolean enable) {
-
         this.name = name;
         this.type = type;
         this.enable = enable;

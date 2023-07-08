@@ -12,7 +12,7 @@ public class SmartBlock extends Thread {
         long seed = System.currentTimeMillis();
         Random random = new Random(seed);
         // 生成50到200之间的随机整数
-        int randomNumber = random.nextInt(151) + 50;
+        int randomNumber = random.nextInt(50) + 30;
         try {
             Thread.sleep(randomNumber);
             KeyBinding.onTick(mc.gameSettings.keyBindDrop.getKeyCode());
