@@ -371,31 +371,43 @@ public class GuiIngame extends Gui
         GlStateManager.enableAlpha();
     }
 
-    protected void renderTooltip(ScaledResolution sr, float partialTicks)
-    {
-        if (this.mc.getRenderViewEntity() instanceof EntityPlayer)
-        {
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            //this.mc.getTextureManager().bindTexture(widgetsTexPath);
-            EntityPlayer entityplayer = (EntityPlayer)this.mc.getRenderViewEntity();
+    private double rectanglesize = 10;
+    private double currentRectSize = 10;
+    private double targetRectSize = 10;
+    private long rectTransitionStartTime = 0;
+    private long rectTransitionDuration = 100; // 背景大小过渡的持续时间，单位为毫秒
+    private double currentItem = -1; // 上一次选中的物品栏索引
+
+    protected void renderTooltip(ScaledResolution sr, float partialTicks) {
+        updateSelectedBackground();
+
+        if (this.mc.getRenderViewEntity() instanceof EntityPlayer) {
+            EntityPlayer entityplayer = (EntityPlayer) this.mc.getRenderViewEntity();
             int i = sr.getScaledWidth() / 2;
-            float f = this.zLevel;
-            this.zLevel = -90.0F;
-            //this.drawTexturedModalRect(i - 91, sr.getScaledHeight() - 22, 0, 0, 182, 22);
-            RenderUtil.dropShadow(10,i - 91,sr.getScaledHeight() - 22, 182, 22, 40, 10);
-            CShaders.CQ_SHADER.draw(i - 91,sr.getScaledHeight() - 22,182,22,5,new Color(10, 10, 10, 170));
-            //RenderUtil.dropShadow(10,i - 91 - 1 + entityplayer.inventory.currentItem * 20,sr.getScaledHeight() - 22, 24, 22, 50, 10);
-            CShaders.CQ_SHADER.draw(i - 91 + entityplayer.inventory.currentItem * 19.75,sr.getScaledHeight() - 22,24,22,5,new Color(255, 255, 255, 153));
-            //this.drawTexturedModalRect(i - 91 - 1 + entityplayer.inventory.currentItem * 20, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
-            this.zLevel = f;
+
+            // 绘制背景和选中物品背景
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            int yPos = sr.getScaledHeight() - 22;
+            RenderUtil.dropShadow(10, i - 91, yPos, 182, 22, 40, 10);
+            CShaders.CQ_SHADER.draw(i - 91, yPos, 182, 22, 5, new Color(10, 10, 10, 170));
+
+            double currentItemX = i - 91 + entityplayer.inventory.currentItem * 19.75;
+            double currentItemY = yPos;
+            double currentItemWidth = 24;
+            double currentItemHeight = 22;
+            double rectOffset = (int) this.currentRectSize;
+            double rectWidth = currentItemWidth - rectOffset * 2;
+            double rectHeight = currentItemHeight - rectOffset * 2;
+            CShaders.CQ_SHADER.draw(currentItemX + rectOffset, currentItemY + rectOffset, rectWidth, rectHeight, 5, new Color(255, 255, 255, 153));
+
+            // 绘制物品栏内容
             GlStateManager.enableRescaleNormal();
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
             RenderHelper.enableGUIStandardItemLighting();
 
-            for (int j = 0; j < 9; ++j)
-            {
-                int k = sr.getScaledWidth() / 2 - 90 + j * 20 + 2;
+            for (int j = 0; j < 9; ++j) {
+                double k = (double) sr.getScaledWidth() / 2 - 90 + j * 19.8 + 2;
                 int l = sr.getScaledHeight() - 16 - 3;
                 this.renderHotbarItem(j, k, l, partialTicks, entityplayer);
             }
@@ -406,6 +418,39 @@ public class GuiIngame extends Gui
         }
     }
 
+    // 更新选中背景的大小
+    private void updateSelectedBackground() {
+        if (this.mc.getRenderViewEntity() instanceof EntityPlayer) {
+            EntityPlayer entityplayer = (EntityPlayer) this.mc.getRenderViewEntity();
+
+            // 更新背景大小的过渡参数
+            if (entityplayer.inventory.currentItem != this.currentItem) {
+                this.currentItem = entityplayer.inventory.currentItem;
+                this.rectTransitionStartTime = System.currentTimeMillis();
+                this.targetRectSize = 1;
+            }
+            long currentTime = System.currentTimeMillis();
+            double progress = Math.min((currentTime - this.rectTransitionStartTime) / (double) this.rectTransitionDuration, 1.0);
+            double easedProgress = easeInOutCubic(progress);
+            this.currentRectSize = lerp(this.rectanglesize, this.targetRectSize, easedProgress);
+        }
+    }
+
+    // 线性插值函数
+    private double lerp(double startValue, double endValue, double progress) {
+        return startValue + (endValue - startValue) * progress;
+    }
+
+    // 缓动函数 - 缓入缓出函数（EaseInOutCubic）
+    private double easeInOutCubic(double t) {
+        t *= 2;
+        if (t < 1) {
+            return 0.5 * t * t * t;
+        } else {
+            t -= 2;
+            return 0.5 * (t * t * t + 2);
+        }
+    }
     public void renderHorseJumpBar(ScaledResolution scaledRes, int x)
     {
         this.mc.mcProfiler.startSection("jumpBar");
@@ -1061,7 +1106,7 @@ public class GuiIngame extends Gui
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    private void renderHotbarItem(int index, int xPos, int yPos, float partialTicks, EntityPlayer player)
+    private void renderHotbarItem(int index, double xPos, double yPos, float partialTicks, EntityPlayer player)
     {
         ItemStack itemstack = player.inventory.mainInventory[index];
 

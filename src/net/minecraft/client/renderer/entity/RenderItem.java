@@ -560,7 +560,7 @@ public class RenderItem implements IResourceManagerReloadListener
         }
     }
 
-    public void renderItemOverlays(FontRenderer fr, ItemStack stack, int xPosition, int yPosition)
+    public void renderItemOverlays(FontRenderer fr, ItemStack stack, double xPosition, double yPosition)
     {
         this.renderItemOverlayIntoGUI(fr, stack, xPosition, yPosition, (String)null);
     }
@@ -568,7 +568,7 @@ public class RenderItem implements IResourceManagerReloadListener
     /**
      * Renders the stack size and/or damage bar for the given ItemStack.
      */
-    public void renderItemOverlayIntoGUI(FontRenderer fr, ItemStack stack, int xPosition, int yPosition, String text)
+    public void renderItemOverlayIntoGUI(FontRenderer fr, ItemStack stack, double xPosition, double yPosition, String text)
     {
         if (stack != null)
         {
@@ -658,6 +658,15 @@ public class RenderItem implements IResourceManagerReloadListener
         renderer.pos((double)(x + 0), (double)(y + height), 0.0D).color(red, green, blue, alpha).endVertex();
         renderer.pos((double)(x + width), (double)(y + height), 0.0D).color(red, green, blue, alpha).endVertex();
         renderer.pos((double)(x + width), (double)(y + 0), 0.0D).color(red, green, blue, alpha).endVertex();
+        Tessellator.getInstance().draw();
+    }
+    private void draw(WorldRenderer renderer, double x, double y, double width, double height, int red, int green, int blue, int alpha)
+    {
+        renderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+        renderer.pos(x + 0, y + 0, 0.0D).color(red, green, blue, alpha).endVertex();
+        renderer.pos(x + 0, y + height, 0.0D).color(red, green, blue, alpha).endVertex();
+        renderer.pos(x + width, y + height, 0.0D).color(red, green, blue, alpha).endVertex();
+        renderer.pos(x + width, y + 0, 0.0D).color(red, green, blue, alpha).endVertex();
         Tessellator.getInstance().draw();
     }
 
