@@ -352,12 +352,18 @@ public class ItemRenderer
     /**
      * Translate and rotate the RenderA for holding a block
      */
+
+    int i = -180;
     private void doBlockTransformations()
     {
         GlStateManager.translate(-0.5F, 0.2F, 0.0F);
-        GlStateManager.rotate(30.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(i, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(-80.0F, 1.0F, 0.0F, 0.0F);
-        GlStateManager.rotate(60.0F, 0.0F, 1.0F, 0.0F);
+        if (i >= 180){
+            i=-180;
+        }
+        i=i+5;
+        GlStateManager.rotate(-40.0F, 0.0F, 1.0F, 0.0F);
     }
 
     /**
@@ -392,22 +398,27 @@ public class ItemRenderer
                     {
                         case NONE:
                             this.transformFirstPersonItem(f, 0.0F);
+                            //System.out.println("A");
                             break;
 
                         case EAT:
+                            //System.out.println("B");
                         case DRINK:
                             this.performDrinking(abstractclientplayer, partialTicks);
                             this.transformFirstPersonItem(f, 0.0F);
+                            //System.out.println("C");
                             break;
 
                         case BLOCK:
                             this.transformFirstPersonItem(f, 0.0F);
                             this.doBlockTransformations();
+                            //System.out.println("D");
                             break;
 
                         case BOW:
                             this.transformFirstPersonItem(f, 0.0F);
                             this.doBowTransformations(partialTicks, abstractclientplayer);
+                            //System.out.println("E");
                     }
                 }
                 else

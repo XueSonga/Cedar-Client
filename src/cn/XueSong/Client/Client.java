@@ -1,10 +1,8 @@
 package cn.XueSong.Client;
 
-import cn.XueSong.Client.font.CFontRenderer;
+import cn.XueSong.Client.mod.ModManager;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
-
-import java.awt.*;
 
 public class Client {
 

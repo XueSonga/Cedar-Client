@@ -1,25 +1,23 @@
 package cn.XueSong.Client.mod.MoveMent;
 
 import cn.XueSong.Client.mod.Mod;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
 import org.lwjgl.input.Keyboard;
 
-public class Sprint extends Mod{
+import static cn.XueSong.Client.util.InstanceAccess.InstanceAccess.mc;
+
+public class Sprint extends Mod {
 
     public Sprint() {
-        super("Sprint","自动疾跑", true);
+        super("Sprint", "自动疾跑", true);
         setKey(Keyboard.KEY_Z);
     }
 
     @Override
-    public void onUpdate(){
-
-       //if (Minecraft.getMinecraft().gameSettings.keyBindForward.isPressed() || Minecraft.getMinecraft().gameSettings.keyBindLeft.isPressed() || Minecraft.getMinecraft().gameSettings.keyBindRight.isPressed()){
-         //  if (!Minecraft.getMinecraft().thePlayer.isInWater()) Minecraft.getMinecraft().thePlayer.setSprinting(true);
-      //  }
-    }
-
-    @Override
-    public void render() {
-
+    public void onUpdate() {
+        if (Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown()) {
+            KeyBinding.setKeyBindState(mc.gameSettings.keyBindInventory.getKeyCode(), true);
+        }
     }
 }

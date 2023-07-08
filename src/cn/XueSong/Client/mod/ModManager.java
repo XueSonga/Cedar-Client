@@ -1,5 +1,6 @@
-package cn.XueSong.Client;
+package cn.XueSong.Client.mod;
 
+import cn.XueSong.Client.mod.Combo.autoblock;
 import cn.XueSong.Client.mod.MoveMent.Sprint;
 import cn.XueSong.Client.mod.Render.Hud;
 import cn.XueSong.Client.mod.Mod;
@@ -29,5 +30,6 @@ public class ModManager {
     public void load(){
         mods.add(new Sprint());
         mods.add(new Hud());
+        mods.add(new autoblock());
     }
 }
