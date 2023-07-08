@@ -644,7 +644,7 @@ public class GuiIngame extends Gui
         int j = 0;
         int k = 0;
         int l = 0;
-        int y=j1 + 20 - collection.size() * (font_A.getStringHeight("A")+3)- font_A.getStringHeight("A") - 8;
+        int y=j1 + 40 - collection.size() * (font_A.getStringHeight("A")+3)- font_A.getStringHeight("A") - 8;
         int height = collection.size()* (font_A.getStringHeight("A")+4) +8;
         RenderUtil.dropShadow(10, scaledRes.getScaledWidth() - i - 3 -4, y, scaledRes.getScaledWidth() - k1 + 2 - l1 + 4, height, 40, 5+5);
         CShaders.CQ_SHADER.draw(scaledRes.getScaledWidth() - i - 3 -4,y,scaledRes.getScaledWidth() - k1 + 2 - l1 + 4,height,5,new Color(10, 10, 10, 170));
@@ -653,10 +653,10 @@ public class GuiIngame extends Gui
             ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(score1.getPlayerName());
             String s1 = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, score1.getPlayerName());
             String s2 = EnumChatFormatting.RED + "" + score1.getScorePoints();
-            k = j1 + 20 - j * (font_A.getStringHeight("A")+3);
+            k = j1 + 40 - j * (font_A.getStringHeight("A")+3);
             l = scaledRes.getScaledWidth() - k1 + 2;
             CFontRenderer.DisplayFontWithShadow(s1, l1, k, Color.WHITE.getRGB());
-            CFontRenderer.DisplayFontWithShadow(s2, l - font_A.getStringWidth(s2), k, 553648127);
+            //CFontRenderer.DisplayFontWithShadow(s2, l - font_A.getStringWidth(s2), k, 553648127);
             if (j == collection.size()) {
                 String s3 = objective.getDisplayName();
                 //drawRect(l1 - 2, k - font_A.getStringHeight("A") - 1, l, k - 1, 1610612736);
