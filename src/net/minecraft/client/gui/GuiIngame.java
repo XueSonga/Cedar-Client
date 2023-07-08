@@ -50,11 +50,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.border.WorldBorder;
 import net.optifine.CustomColors;
+import org.lwjgl.Sys;
 
 public class GuiIngame extends Gui
 {
     private static final ResourceLocation vignetteTexPath = new ResourceLocation("textures/misc/vignette.png");
-    private static final ResourceLocation widgetsTexPath = new ResourceLocation("textures/gui/widgets.png");
+    //private static final ResourceLocation widgetsTexPath = new ResourceLocation("textures/gui/widgets.png");
     private static final ResourceLocation pumpkinBlurTexPath = new ResourceLocation("textures/misc/pumpkinblur.png");
     private final Random rand = new Random();
     private final Minecraft mc;
@@ -612,61 +613,57 @@ public class GuiIngame extends Gui
         this.streamIndicator.render(scaledRes.getScaledWidth() - 10, 10);
     }
 
-    private void renderScoreboard(ScoreObjective objective, ScaledResolution scaledRes)
-    {
+    private static final CFontRenderer font_A = new CFontRenderer("Roboto-Medium", 18.0F, Font.PLAIN, true, true);//∆’Õ®
+
+    private void renderScoreboard(ScoreObjective objective, ScaledResolution scaledRes) {
         Scoreboard scoreboard = objective.getScoreboard();
         Collection<Score> collection = scoreboard.getSortedScores(objective);
-        List<Score> list = Lists.newArrayList(Iterables.filter(collection, new Predicate<Score>()
-        {
-            public boolean apply(Score p_apply_1_)
-            {
+        List<Score> list = Lists.newArrayList(Iterables.filter(collection, new Predicate<Score>() {
+            public boolean apply(Score p_apply_1_) {
                 return p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#");
             }
         }));
 
-        if (list.size() > 15)
-        {
+        if (list.size() > 15) {
             collection = Lists.newArrayList(Iterables.skip(list, collection.size() - 15));
-        }
-        else
-        {
+        } else {
             collection = list;
         }
 
-        int i = this.getFontRenderer().getStringWidth(objective.getDisplayName());
+        int i = font_A.getStringWidth(objective.getDisplayName());
 
-        for (Score score : collection)
-        {
+        for (Score score : collection) {
             ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
             String s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": " + EnumChatFormatting.RED + score.getScorePoints();
-            i = Math.max(i, this.getFontRenderer().getStringWidth(s));
+            i = Math.max(i, font_A.getStringWidth(s));
         }
-
-        int i1 = collection.size() * this.getFontRenderer().FONT_HEIGHT;
+        int i1 = collection.size() * font_A.getStringHeight("A");
         int j1 = scaledRes.getScaledHeight() / 2 + i1 / 3;
         int k1 = 3;
         int l1 = scaledRes.getScaledWidth() - i - k1;
         int j = 0;
-
-        for (Score score1 : collection)
-        {
+        int k = 0;
+        int l = 0;
+        int y=j1 + 20 - collection.size() * (font_A.getStringHeight("A")+3)- font_A.getStringHeight("A") - 8;
+        int height = collection.size()* (font_A.getStringHeight("A")+4) +8;
+        RenderUtil.dropShadow(10, scaledRes.getScaledWidth() - i - 3 -4, y, scaledRes.getScaledWidth() - k1 + 2 - l1 + 4, height, 40, 5+5);
+        CShaders.CQ_SHADER.draw(scaledRes.getScaledWidth() - i - 3 -4,y,scaledRes.getScaledWidth() - k1 + 2 - l1 + 4,height,5,new Color(10, 10, 10, 170));
+        for (Score score1 : collection) {
             ++j;
             ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(score1.getPlayerName());
             String s1 = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, score1.getPlayerName());
             String s2 = EnumChatFormatting.RED + "" + score1.getScorePoints();
-            int k = j1 - j * this.getFontRenderer().FONT_HEIGHT;
-            int l = scaledRes.getScaledWidth() - k1 + 2;
-            drawRect(l1 - 2, k, l, k + this.getFontRenderer().FONT_HEIGHT, 1342177280);
-            CFontRenderer.DisplayFontWithShadow(s1, l1, k, 553648127);
-            CFontRenderer.DisplayFontWithShadow(s2, l - this.getFontRenderer().getStringWidth(s2), k, 553648127);
-
-            if (j == collection.size())
-            {
+            k = j1 + 20 - j * (font_A.getStringHeight("A")+3);
+            l = scaledRes.getScaledWidth() - k1 + 2;
+            CFontRenderer.DisplayFontWithShadow(s1, l1, k, Color.WHITE.getRGB());
+            CFontRenderer.DisplayFontWithShadow(s2, l - font_A.getStringWidth(s2), k, 553648127);
+            if (j == collection.size()) {
                 String s3 = objective.getDisplayName();
-                drawRect(l1 - 2, k - this.getFontRenderer().FONT_HEIGHT - 1, l, k - 1, 1610612736);
-                drawRect(l1 - 2, k - 1, l, k, 1342177280);
-                CFontRenderer.DisplayFontWithShadow(s3, l1 + i / 2 - this.getFontRenderer().getStringWidth(s3) / 2, k - this.getFontRenderer().FONT_HEIGHT, 553648127);
+                //drawRect(l1 - 2, k - font_A.getStringHeight("A") - 1, l, k - 1, 1610612736);
+                //drawRect(l1 - 2, k - 1, l, k, 1342177280);
+                CFontRenderer.DisplayFontWithShadow(s3, l1 + i / 2 - font_A.getStringWidth(s3) / 2, k - font_A.getStringHeight("A")-3, Color.WHITE.getRGB());
             }
+
         }
     }
 
