@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Cedar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Cedar</output-path>
+    <root id="archive" name="Cedar.jar">
+      <element id="module-output" name="Client-XUE" />
+    </root>
+  </artifact>
+</component>

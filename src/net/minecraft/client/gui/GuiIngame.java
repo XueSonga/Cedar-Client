@@ -3,9 +3,13 @@ package net.minecraft.client.gui;
 import cn.XueSong.Client.Client;
 import cn.XueSong.Client.font.CFontRenderer;
 import cn.XueSong.Client.mod.Mod;
+import cn.XueSong.Client.util.render.RenderUtil;
+import cn.XueSong.Client.util.shader.CShaders;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+
+import java.awt.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
@@ -372,13 +376,17 @@ public class GuiIngame extends Gui
         if (this.mc.getRenderViewEntity() instanceof EntityPlayer)
         {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            this.mc.getTextureManager().bindTexture(widgetsTexPath);
+            //this.mc.getTextureManager().bindTexture(widgetsTexPath);
             EntityPlayer entityplayer = (EntityPlayer)this.mc.getRenderViewEntity();
             int i = sr.getScaledWidth() / 2;
             float f = this.zLevel;
             this.zLevel = -90.0F;
-            this.drawTexturedModalRect(i - 91, sr.getScaledHeight() - 22, 0, 0, 182, 22);
-            this.drawTexturedModalRect(i - 91 - 1 + entityplayer.inventory.currentItem * 20, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
+            //this.drawTexturedModalRect(i - 91, sr.getScaledHeight() - 22, 0, 0, 182, 22);
+            RenderUtil.dropShadow(10,i - 91,sr.getScaledHeight() - 22, 182, 22, 40, 10);
+            CShaders.CQ_SHADER.draw(i - 91,sr.getScaledHeight() - 22,182,22,5,new Color(10, 10, 10, 170));
+            //RenderUtil.dropShadow(10,i - 91 - 1 + entityplayer.inventory.currentItem * 20,sr.getScaledHeight() - 22, 24, 22, 50, 10);
+            CShaders.CQ_SHADER.draw(i - 91 + entityplayer.inventory.currentItem * 19.75,sr.getScaledHeight() - 22,24,22,5,new Color(255, 255, 255, 153));
+            //this.drawTexturedModalRect(i - 91 - 1 + entityplayer.inventory.currentItem * 20, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
             this.zLevel = f;
             GlStateManager.enableRescaleNormal();
             GlStateManager.enableBlend();
