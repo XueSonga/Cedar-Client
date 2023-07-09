@@ -2,15 +2,24 @@ package cn.XueSong.Client.mod.Render;
 
 import cn.XueSong.Client.mod.Mod;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.World;
 
 public class fullbright extends Mod {
+    private float originalGamma;
+
     public fullbright() {
         super("Fullbright", "视觉高亮Gamma", true);
     }
 
     @Override
-    public void onUpdate() {
-            //Minecraft.getMinecraft().gameSettings.of;
+    public void onEnable() {
+        Minecraft mc = Minecraft.getMinecraft();
+        originalGamma = mc.gameSettings.saturation; // 保存原始的亮度设置值
+        mc.gameSettings.saturation = 100.0f; // 设置游戏的亮度为最大值
+    }
+
+    @Override
+    public void onDisable() {
+        Minecraft mc = Minecraft.getMinecraft();
+        mc.gameSettings.saturation = originalGamma; // 恢复原始的亮度设置值
     }
 }

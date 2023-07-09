@@ -7,40 +7,48 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 
-public class autoblock extends Mod {
-    public autoblock() {
-        super("AutoBlock", "自动防砍Smart", true);
+import java.util.HashSet;
+import java.util.Set;
+
+public class autoclick extends Mod {
+    private static final Set<String> VALID_SWORD_NAMES = new HashSet<>();
+
+    static {
+        VALID_SWORD_NAMES.add("minecraft:wooden_sword");
+        VALID_SWORD_NAMES.add("minecraft:stone_sword");
+        VALID_SWORD_NAMES.add("minecraft:iron_sword");
+        VALID_SWORD_NAMES.add("minecraft:diamond_sword");
+        VALID_SWORD_NAMES.add("minecraft:golden_sword");
     }
 
-    boolean isUsing = false;
-    ItemStack woodenSword = new ItemStack(Item.getByNameOrId("minecraft:wooden_sword"));
+    public autoclick() {
+        super("AutoClick", "自动防砍Smart", true);
+    }
 
     @Override
     public void onUpdate() {
-        if (Minecraft.getMinecraft().gameSettings.keyBindPickBlock.isKeyDown() && !isUsing) {
+        if (Minecraft.getMinecraft().gameSettings.keyBindPickBlock.isKeyDown()) {
             ItemStack heldItem = Minecraft.getMinecraft().thePlayer.getHeldItem();
             if (heldItem == null || heldItem.getItem() == null) {
-                // 玩家手持为空
                 return;
             }
             Item heldItemType = heldItem.getItem();
             String heldItemName = Item.itemRegistry.getNameForObject(heldItemType).toString();
-            if (heldItemName.equals("minecraft:wooden_sword")
-                    || heldItemName.equals("minecraft:stone_sword")
-                    || heldItemName.equals("minecraft:iron_sword")
-                    || heldItemName.equals("minecraft:diamond_sword")
-                    || heldItemName.equals("minecraft:golden_sword")) {
+            if (VALID_SWORD_NAMES.contains(heldItemName)) {
                 if (isLookingAtEntity()) {
                     // 玩家正在瞄向实体
                     SmartBlock thread = new SmartBlock();
                     thread.start();
-                    isUsing = true;
                 }
             }
-        } else {
-            isUsing = false;
         }
     }
+
+    /**
+     * 检查玩家是否正在瞄向实体
+     *
+     * @return 如果玩家正在瞄向实体则返回true，否则返回false
+     */
     public boolean isLookingAtEntity() {
         Minecraft mc = Minecraft.getMinecraft();
         MovingObjectPosition target = mc.objectMouseOver;

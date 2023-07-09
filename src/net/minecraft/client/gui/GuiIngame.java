@@ -177,7 +177,7 @@ public class GuiIngame extends Gui
         {
             this.renderTooltip(scaledresolution, partialTicks);
         }
-        Client.modManager.getEnableMods().forEach(Mod::render);
+        Client.modManager.getEnabledMods().forEach(Mod::render);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(icons);
         GlStateManager.enableBlend();
