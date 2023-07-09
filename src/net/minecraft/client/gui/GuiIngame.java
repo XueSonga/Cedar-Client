@@ -372,11 +372,11 @@ public class GuiIngame extends Gui
         GlStateManager.enableAlpha();
     }
 
-    private double rectanglesize = 10;
-    private double currentRectSize = 10;
-    private double targetRectSize = 10;
+    private double rectanglesize = 5;
+    private double currentRectSize = 5;
+    private double targetRectSize = 5;
     private long rectTransitionStartTime = 0;
-    private long rectTransitionDuration = 100; // 背景大小过渡的持续时间，单位为毫秒
+    private long rectTransitionDuration = 50; // 背景大小过渡的持续时间，单位为毫秒
     private double currentItem = -1; // 上一次选中的物品栏索引
 
     protected void renderTooltip(ScaledResolution sr, float partialTicks) {

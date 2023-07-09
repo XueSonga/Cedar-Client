@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import cn.XueSong.Client.font.CFontRenderer;
 import cn.XueSong.Client.util.render.RenderUtil;
 import cn.XueSong.Client.util.shader.CShaders;
 import com.google.common.base.Splitter;
@@ -185,7 +186,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     {
         this.drawHoveringText(Arrays.<String>asList(new String[] {tabName}), mouseX, mouseY);
     }
-
+    private static final CFontRenderer font_A = new CFontRenderer("Roboto-Medium", 18.0F, Font.PLAIN, true, true);//ÆÕÍ¨
     /**
      * Draws a List of strings as a tooltip. Every entry is drawn on a seperate line.
      */
@@ -201,7 +202,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
 
             for (String s : textLines)
             {
-                int j = this.fontRendererObj.getStringWidth(s);
+                int j = font_A.getStringWidth(s);
 
                 if (j > i)
                 {
@@ -249,8 +250,8 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
             for (int k1 = 0; k1 < textLines.size(); ++k1)
             {
                 String s1 = (String)textLines.get(k1);
-                this.fontRendererObj.drawStringWithShadow(s1, (float)l1, (float)i2, -1);
-
+                //this.fontRendererObj.drawStringWithShadow(s1, (float)l1, (float)i2, -1);
+                CFontRenderer.DisplayFontWithShadow(s1, (float)l1, (float)i2, -1);
                 if (k1 == 0)
                 {
                     i2 += 2;

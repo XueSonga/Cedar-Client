@@ -254,9 +254,6 @@ public class CFontRenderer extends CFont {
 
         for (int i = 0; i < size; i++) {
             char character = text.charAt(i);
-            if (isChinese(character)){
-                width += Minecraft.getMinecraft().fontRendererObj.getStringWidth(String.valueOf(character))*2;
-            }else{
                     if ((String.valueOf(character).equals("\247")) && (i < size)) {
                         int colorIndex = "0123456789abcdefklmnor".indexOf(character);
 
@@ -288,9 +285,10 @@ public class CFontRenderer extends CFont {
                         i++;
                     } else if ((character < currentData.length) && (character >= 0)) {
                         width += currentData[character].width - 8 + this.charOffset;
-                    }
-                }
+                    }else if (isChinese(character)){
+                width += Minecraft.getMinecraft().fontRendererObj.getStringWidth(String.valueOf(character))*2;
             }
+                }
         return width / 2;
     }
 
