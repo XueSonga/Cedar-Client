@@ -1,6 +1,7 @@
 package net.minecraft.client.gui;
 
 import cn.XueSong.Client.font.CFontRenderer;
+//import cn.XueSong.Client.mod.Render.Blur.BlurBuffer;
 import cn.XueSong.Client.util.render.RenderUtil;
 import cn.XueSong.Client.util.shader.CShaders;
 import com.google.common.base.Splitter;
@@ -88,8 +89,11 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     /**
      * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
      */
+    //private BlurBuffer blur = new BlurBuffer();
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+       // blur.updateBlurBuffer(true, 20); //- true not for editing, 20 - intesivity of blur. this String is important!
+        //BlurBuffer.blurArea(mouseX, mouseY, width, height, true); //x coordinat, y coordinat, width and height, true not for edit.
         for (int i = 0; i < this.buttonList.size(); ++i)
         {
             ((GuiButton)this.buttonList.get(i)).drawButton(this.mc, mouseX, mouseY);

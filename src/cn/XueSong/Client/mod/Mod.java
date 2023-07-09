@@ -1,5 +1,7 @@
 package cn.XueSong.Client.mod;
 
+import cn.XueSong.Client.util.math.MathUtil;
+
 public abstract class Mod {
     private final String name;
     private final String type;

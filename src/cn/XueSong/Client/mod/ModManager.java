@@ -1,6 +1,7 @@
 package cn.XueSong.Client.mod;
 
-import cn.XueSong.Client.mod.Combo.autoclick;
+import cn.XueSong.Client.mod.Combo.AutoClick;
+import cn.XueSong.Client.mod.Combo.AimAssist;
 import cn.XueSong.Client.mod.MoveMent.Sprint;
 import cn.XueSong.Client.mod.Render.Hud;
 import cn.XueSong.Client.mod.Render.fullbright;
@@ -31,7 +32,8 @@ public class ModManager {
     public void load() {
         mods.add(new Sprint());
         mods.add(new Hud());
-        mods.add(new autoclick());
+        mods.add(new AutoClick());
         mods.add(new fullbright());
+        mods.add(new AimAssist());
     }
 }
