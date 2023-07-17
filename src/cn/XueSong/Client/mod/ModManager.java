@@ -3,6 +3,7 @@ package cn.XueSong.Client.mod;
 import cn.XueSong.Client.mod.Combo.AutoClick;
 import cn.XueSong.Client.mod.Combo.AimAssist;
 import cn.XueSong.Client.mod.MoveMent.Sprint;
+import cn.XueSong.Client.mod.Other.Serverdetection;
 import cn.XueSong.Client.mod.Render.Hud;
 import cn.XueSong.Client.mod.Render.fullbright;
 
@@ -25,6 +26,11 @@ public class ModManager {
         for (Mod mod : mods) {
             if (mod.getKey() == key) {
                 mod.setEnabled(!mod.isEnabled());
+                if (mod.isEnabled()){
+                    mod.onEnable();
+                }else {
+                    mod.onDisable();
+                }
             }
         }
     }
@@ -35,5 +41,6 @@ public class ModManager {
         mods.add(new AutoClick());
         mods.add(new fullbright());
         mods.add(new AimAssist());
+        mods.add(new Serverdetection());
     }
 }

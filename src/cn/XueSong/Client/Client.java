@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 public class Client {
 
     public static final String NAEM = "Cedar";
-    public static final String VERSION = "Dev 0.1.9";
+    public static final String VERSION = "Dev 0.22";
     public static ModManager modManager;
     public static void start(){
         modManager = new ModManager();
@@ -20,6 +20,6 @@ public class Client {
     }
 
     public static void Stop(){
-        System.out.println("XUEClient Stop");
+        System.out.println("CedarClient Stop");
     }
 }

@@ -277,7 +277,7 @@ public class GuiIngame extends Gui
                     l = MathHelper.hsvToRGB(f2 / 50.0F, 0.7F, 0.6F) & 16777215;
                 }
 
-                CFontRenderer.DisplayFontWithShadow(this.recordPlaying, (float) -this.getFontRenderer().getStringWidth(this.recordPlaying) / 2, -4, l + (l1 << 24 & -16777216));
+                CFontRenderer.DisplayFontWithShadow(this.recordPlaying, (float) -font_A.getStringWidth(this.recordPlaying)/ 2, -4, l + (l1 << 24 & -16777216));
                 GlStateManager.disableBlend();
                 GlStateManager.popMatrix();
             }
@@ -313,11 +313,11 @@ public class GuiIngame extends Gui
                 GlStateManager.pushMatrix();
                 GlStateManager.scale(4.0F, 4.0F, 4.0F);
                 int j2 = i2 << 24 & -16777216;
-                CFontRenderer.DisplayFontWithShadow(this.displayedTitle, (float)(-this.getFontRenderer().getStringWidth(this.displayedTitle) / 2), -10.0F, 16777215 | j2);
+                CFontRenderer.DisplayFontWithShadow(this.displayedTitle, (float)(-font_A.getStringWidth(this.displayedTitle) / 2), -10.0F, 16777215 | j2);
                 GlStateManager.popMatrix();
                 GlStateManager.pushMatrix();
                 GlStateManager.scale(2.0F, 2.0F, 2.0F);
-                CFontRenderer.DisplayFontWithShadow(this.displayedSubTitle, (float)(-this.getFontRenderer().getStringWidth(this.displayedSubTitle) / 2), 5.0F, 16777215 | j2);
+                CFontRenderer.DisplayFontWithShadow(this.displayedSubTitle, (float)(-font_A.getStringWidth(this.displayedSubTitle) / 2), 5.0F, 16777215 | j2);
                 GlStateManager.popMatrix();
                 GlStateManager.disableBlend();
                 GlStateManager.popMatrix();
@@ -502,7 +502,7 @@ public class GuiIngame extends Gui
             }
 
             String s = "" + this.mc.thePlayer.experienceLevel;
-            int l1 = (scaledRes.getScaledWidth() - this.getFontRenderer().getStringWidth(s)) / 2;
+            int l1 = (scaledRes.getScaledWidth() - font_A.getStringWidth(s)) / 2;
             int i1 = scaledRes.getScaledHeight() - 31 - 4;
             int j1 = 0;
             CFontRenderer.DisplayFontWithShadow(s, l1 + 1, i1, 0);
@@ -527,7 +527,7 @@ public class GuiIngame extends Gui
                 s = EnumChatFormatting.ITALIC + s;
             }
 
-            int i = (scaledRes.getScaledWidth() - this.getFontRenderer().getStringWidth(s)) / 2;
+            int i = (scaledRes.getScaledWidth() - font_A.getStringWidth(s)) / 2;
             int j = scaledRes.getScaledHeight() - 59;
 
             if (!this.mc.playerController.shouldDrawHUD())
@@ -570,7 +570,7 @@ public class GuiIngame extends Gui
             s = I18n.format("demo.remainingTime", new Object[] {StringUtils.ticksToElapsedTime((int)(120500L - this.mc.theWorld.getTotalWorldTime()))});
         }
 
-        int i = this.getFontRenderer().getStringWidth(s);
+        int i = font_A.getStringWidth(s);
         CFontRenderer.DisplayFontWithShadow(s, (float)(scaledRes.getScaledWidth() - i - 10), 5.0F, 16777215);
         this.mc.mcProfiler.endSection();
     }
@@ -613,8 +613,10 @@ public class GuiIngame extends Gui
         this.streamIndicator.render(scaledRes.getScaledWidth() - 10, 10);
     }
 
-    private static final CFontRenderer font_A = new CFontRenderer("Roboto-Medium", 18.0F, Font.PLAIN, true, true);//ÆÕÍ¨
+    public void getScoreboardLastline(){
 
+    }
+    private static final CFontRenderer font_A = new CFontRenderer("Roboto-Medium", 18.0F, Font.PLAIN, true, true);//ÆÕÍ¨
     private void renderScoreboard(ScoreObjective objective, ScaledResolution scaledRes) {
         Scoreboard scoreboard = objective.getScoreboard();
         Collection<Score> collection = scoreboard.getSortedScores(objective);
@@ -980,7 +982,7 @@ public class GuiIngame extends Gui
             }
 
             String s = BossStatus.bossName;
-            CFontRenderer.DisplayFontWithShadow(s, (float)(i / 2 - this.getFontRenderer().getStringWidth(s) / 2), (float)(i1 - 10), 16777215);
+            CFontRenderer.DisplayFontWithShadow(s, (float)(i / 2 - font_A.getStringWidth(s) / 2), (float)(i1 - 10), 16777215);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.mc.getTextureManager().bindTexture(icons);
         }

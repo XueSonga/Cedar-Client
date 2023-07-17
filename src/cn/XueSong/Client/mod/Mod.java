@@ -4,7 +4,7 @@ import cn.XueSong.Client.util.math.MathUtil;
 
 public abstract class Mod {
     private final String name;
-    private final String type;
+    private String type;
     private boolean enabled;
     private int key;
 
@@ -37,6 +37,9 @@ public abstract class Mod {
         }
     }
 
+    public void setType(String text){
+        this.type = text;
+    }
     public int getKey() {
         return key;
     }

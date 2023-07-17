@@ -1,6 +1,9 @@
 package net.minecraft.client.gui;
 
+import cn.XueSong.Client.font.CFontRenderer;
 import com.google.common.collect.Lists;
+
+import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 import net.minecraft.network.play.client.C14PacketTabComplete;
@@ -37,6 +40,8 @@ public class GuiChat extends GuiScreen
      * is the text that appears when you press the chat key and the input box appears pre-filled
      */
     private String defaultInputFieldText = "";
+
+    private static final CFontRenderer font_A = new CFontRenderer("Roboto-Medium", 18.0F, Font.PLAIN, true, true);//∆’Õ®
 
     public GuiChat()
     {

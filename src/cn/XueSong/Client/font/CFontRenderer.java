@@ -1,6 +1,7 @@
 package cn.XueSong.Client.font;
 
 
+import cn.XueSong.Client.serverdetection.ServerDetection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -243,6 +244,7 @@ public class CFontRenderer extends CFont {
     }
 
     public int getStringWidth(String text) {
+        text = replaceChineseSymbols(text);
         if (text == null) {
             return 0;
         }
@@ -429,20 +431,96 @@ public class CFontRenderer extends CFont {
         return (new Color(255, 255, 255)).getRGB();
     }
 
+    public static String replaceChineseSymbols(String str) {
+        str = str.replace("（", "(");
+        str = str.replace("）", ")");
+        str = str.replace("【", "[");
+        str = str.replace("】", "]");
+        str = str.replace("｛", "{");
+        str = str.replace("｝", "}");
+        str = str.replace("［", "[");
+        str = str.replace("］", "]");
+        str = str.replace("“", "\"");
+        str = str.replace("”", "\"");
+        str = str.replace("‘", "'");
+        str = str.replace("’", "'");
+        str = str.replace("，", ",");
+        str = str.replace("。", ".");
+        str = str.replace("：", ":");
+        str = str.replace("；", ";");
+        str = str.replace("？", "?");
+        str = str.replace("！", "!");
+        str = str.replace("—", "-");
+        str = str.replace("～", "~");
+        // 添加其他中文全角符号的替换规则...
+
+        return str;
+    }
+
     private static final CFontRenderer font_A = new CFontRenderer("Roboto-Medium", 18.0F, Font.PLAIN, true, true);//普通
+    private static final CFontRenderer font_Title = new CFontRenderer("Roboto-Medium", 18.0F*4F, Font.PLAIN, true, true);//普通
+    private static final CFontRenderer font_SubTitle = new CFontRenderer("Roboto-Medium", 18.0F*2F, Font.PLAIN, true, true);//普通
 
     public static void DisplayFont( String str, int x, int y, int color) {
         DisplayFont(str, (float) x, (float) y, color);
     }
     public static float DisplayFontWithShadow(String str, float x, float y, int color) {
-       //str=" "+str;
+        str = replaceChineseSymbols(str);
+
+        for (int iF = 0; iF < str.length(); ++iF) {
+            String s = String.valueOf(str.toCharArray()[iF]);
+            if (s.contains("§") && iF + 1 <= str.length()) {
+                color = getColor(String.valueOf(str.toCharArray()[iF + 1]));
+                iF++;
+            } else if (isChinese(s.charAt(0))) {
+                Minecraft.getMinecraft().fontRendererObj.drawString(s, x + 0.25f, y + 0.5f, new Color(20, 20, 20, 200).getRGB(), false);
+                Minecraft.getMinecraft().fontRendererObj.drawString(s, x - 0.25f, y, color, false);
+                x += (float) Minecraft.getMinecraft().fontRendererObj.getStringWidth(s);
+            } else {
+                font_A.drawString(s, x + 0.25f, y + 2.5, new Color(20, 20, 20, 200).getRGB());
+                font_A.drawString(s, x, y + 2, color);
+                x += (float) font_A.getStringWidth(s);
+            }
+        }
+        return x;
+    }
+
+    public static float _TitleDisplayFont(String str, float x, float y, int color) {
+        //str=" "+str;
         //ClientUtils.INSTANCE.displayAlert(str);
         for(int iF = 0; iF < str.length(); ++iF) {
             String s = String.valueOf(str.toCharArray()[iF]);
             if (s.contains("§") && iF + 1 <= str.length()) {
                 color = getColor(String.valueOf(str.toCharArray()[iF + 1]));
                 iF++;
-            } else if (isChinese(s.charAt(0))) {
+            }else if (isChinese(s.charAt(0))) {
+                Minecraft.getMinecraft().fontRendererObj.drawString(s, x+0.25f, y+0.5f, new Color(20, 20, 20, 200).getRGB(),false);
+                Minecraft.getMinecraft().fontRendererObj.drawString(s, x-0.25f, y, color,false);
+                x += (float)Minecraft.getMinecraft().fontRendererObj.getStringWidth(s);
+            } else {
+                font_A.drawString(s, x+0.25f, y+2.5, new Color(20, 20, 20, 200).getRGB());
+                font_A.drawString(s, x, y+2, color);
+                x += (float)font_A.getStringWidth(s);
+            }
+        }
+        return x;
+        //return font.drawString(str, x, y, color);
+    }
+
+    public static float _SubTitleDisplayFont(String str, float x, float y, int color) {
+        //str=" "+str;
+        //ClientUtils.INSTANCE.displayAlert(str);
+        for(int iF = 0; iF < str.length(); ++iF) {
+            String s = String.valueOf(str.toCharArray()[iF]);
+            if (s.contains("§") && iF + 1 <= str.length()) {
+                color = getColor(String.valueOf(str.toCharArray()[iF + 1]));
+                iF++;
+            }else if (isChinese(s.charAt(0))) {
+                GlStateManager.pushMatrix();
+                GlStateManager.enableBlend();
+                GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+                GlStateManager.pushMatrix();
+                GlStateManager.scale(4.0F, 4.0F, 4.0F);
                 Minecraft.getMinecraft().fontRendererObj.drawString(s, x+0.25f, y+0.5f, new Color(20, 20, 20, 200).getRGB(),false);
                 Minecraft.getMinecraft().fontRendererObj.drawString(s, x-0.25f, y, color,false);
                 x += (float)Minecraft.getMinecraft().fontRendererObj.getStringWidth(s);
@@ -458,6 +536,7 @@ public class CFontRenderer extends CFont {
 
     public static float DisplayFont(String str, float x, float y, int color) {
        // str=" "+str;
+        str = replaceChineseSymbols(str);
         for(int iF = 0; iF < str.length(); ++iF) {
             String s = String.valueOf(str.toCharArray()[iF]);
             if (s.contains("§") && iF + 1 <= str.length()) {
@@ -476,6 +555,7 @@ public class CFontRenderer extends CFont {
 
     public static float DisplayFonts(String str, float x, float y, int color) {
         //str=" "+str;
+        str = replaceChineseSymbols(str);
         for(int iF = 0; iF < str.length(); ++iF) {
             String s = String.valueOf(str.toCharArray()[iF]);
             if (s.contains("§") && iF + 1 <= str.length()) {
@@ -617,4 +697,12 @@ public class CFontRenderer extends CFont {
             this.colorCode[index] = ((red & 0xFF) << 16 | (green & 0xFF) << 8 | blue & 0xFF);
         }
     }
+
+    public static String getStringWithoutColor(String text) {
+        // 定义颜色字符的正则表达式模式
+        String colorPattern = "§[0-9a-fk-oA-FK-O]";
+        // 使用正则表达式替换颜色字符为空字符串
+        return text.replaceAll(colorPattern, "");
+    }
+
 }

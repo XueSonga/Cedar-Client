@@ -13,6 +13,22 @@ import java.util.Random;
 import java.util.Set;
 
 public class AutoClick extends Mod {
+    AutoClickThred AutoClickthread = new AutoClickThred();
+    public AutoClick() {
+        super("AutoClick", "自动防砍Smart", true);
+        AutoClickThred.setAutoClick(true);
+        Thread AutoClickThred = new Thread(AutoClickthread);
+        AutoClickThred.start();
+    }
+}
+
+class AutoClickThred extends Thread {
+    public static boolean AutoClickisOn = false;
+    private long lastRenderTime = 0;
+    public static void setAutoClick(boolean isOn){
+        AutoClickisOn=isOn;
+    }
+    private static final Random random = new Random();
     private static final Set<String> VALID_SWORD_NAMES = new HashSet<>();
 
     static {
@@ -22,38 +38,6 @@ public class AutoClick extends Mod {
         VALID_SWORD_NAMES.add("minecraft:diamond_sword");
         VALID_SWORD_NAMES.add("minecraft:golden_sword");
     }
-
-    private long lastRenderTime = 0;
-
-    public AutoClick() {
-        super("AutoClick", "自动防砍Smart", true);
-    }
-
-    @Override
-    public void render() {
-        long currentTime = System.currentTimeMillis();
-        long elapsedTime = currentTime - lastRenderTime;
-
-        if (elapsedTime >= 50) {
-            lastRenderTime = currentTime;
-
-            if (Minecraft.getMinecraft().gameSettings.keyBindPickBlock.isKeyDown()) {
-                ItemStack heldItem = Minecraft.getMinecraft().thePlayer.getHeldItem();
-                if (heldItem == null || heldItem.getItem() == null) {
-                    return;
-                }
-                Item heldItemType = heldItem.getItem();
-                String heldItemName = Item.itemRegistry.getNameForObject(heldItemType).toString();
-                if (VALID_SWORD_NAMES.contains(heldItemName)) {
-                    if (isLookingAtEntity()) {
-                        SmartBlock thread = new SmartBlock();
-                        thread.start();
-                    }
-                }
-            }
-        }
-    }
-
     public boolean isLookingAtEntity() {
         Minecraft mc = Minecraft.getMinecraft();
         MovingObjectPosition target = mc.objectMouseOver;
@@ -66,21 +50,42 @@ public class AutoClick extends Mod {
         }
         return false;
     }
-}
-
-class SmartBlock extends Thread {
-    private static final Random random = new Random();
-
     @Override
     public void run() {
-        int randomNumber = random.nextInt(60) + 20;
-        try {
-            KeyBinding.onTick(Minecraft.getMinecraft().gameSettings.keyBindPickBlock.getKeyCode());
-            Thread.sleep(randomNumber);
-            KeyBinding.onTick(Minecraft.getMinecraft().gameSettings.keyBindDrop.getKeyCode());
-            Thread.sleep(randomNumber);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        while (true){
+            while (true){
+                if (AutoClickisOn){
+                    long currentTime = System.currentTimeMillis();
+                    long elapsedTime = currentTime - lastRenderTime;
+                    if (elapsedTime >= 50) {
+                        lastRenderTime = currentTime;
+                        if (Minecraft.getMinecraft().gameSettings.keyBindPickBlock.isKeyDown()) {
+                            ItemStack heldItem = Minecraft.getMinecraft().thePlayer.getHeldItem();
+                            if (heldItem == null || heldItem.getItem() == null) {
+                                break;
+                            }
+                            Item heldItemType = heldItem.getItem();
+                            String heldItemName = Item.itemRegistry.getNameForObject(heldItemType).toString();
+                            if (VALID_SWORD_NAMES.contains(heldItemName)) {
+                                if (isLookingAtEntity()) {
+                                    int randomNumber = random.nextInt(60) + 20;
+                                    if (randomNumber<=70){
+                                        try {
+                                            KeyBinding.onTick(Minecraft.getMinecraft().gameSettings.keyBindPickBlock.getKeyCode());
+                                            Thread.sleep(randomNumber+10);
+                                            KeyBinding.onTick(Minecraft.getMinecraft().gameSettings.keyBindDrop.getKeyCode());
+                                        } catch (InterruptedException e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                    }else {
+                                        KeyBinding.onTick(Minecraft.getMinecraft().gameSettings.keyBindPickBlock.getKeyCode());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

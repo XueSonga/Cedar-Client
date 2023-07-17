@@ -20,6 +20,8 @@ import static org.lwjgl.opengl.GL11.glBegin;
 public class RenderUtil {
     static Minecraft mc = Minecraft.getMinecraft();
 
+
+
     public void image(final ResourceLocation imageLocation, final float x, final float y, final float width, final float height, final Color color) {
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);

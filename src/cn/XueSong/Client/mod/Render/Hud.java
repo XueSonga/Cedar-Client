@@ -3,12 +3,10 @@ package cn.XueSong.Client.mod.Render;
 import cn.XueSong.Client.Client;
 import cn.XueSong.Client.font.CFontRenderer;
 import cn.XueSong.Client.mod.Mod;
+import cn.XueSong.Client.serverdetection.ServerDetection;
 import cn.XueSong.Client.util.render.ColorUtil;
 import cn.XueSong.Client.util.render.RenderUtil;
 import cn.XueSong.Client.util.shader.CShaders;
-import cn.XueSong.Client.util.shader.base.ShaderRenderType;
-import cn.XueSong.Client.util.shader.impl.GuiBlurRenderer;
-import javafx.scene.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -65,19 +63,6 @@ public class Hud extends Mod {
                 y_modlist = y_modlist + font_B.getStringHeight(Client.NAEM) + 2;
             }
             List<Mod> enableMods = Client.modManager.getEnabledMods();
-            enableMods.sort((o1, o2) -> font_A.getStringWidth(o2.getName() + o2.getType()) - font_A.getStringWidth(o1.getName() + o1.getType()));
-            for (Mod enableMod : enableMods) {
-                String Modtype = enableMod.getType();
-                double ModList_x = 0;
-                double ModList_long = font_A.getStringWidth(enableMod.getName()) + font_A.getStringWidth(Modtype);
-                if (Objects.equals(enableMod.getType(), "")) {
-                    ModList_x = width - font_A.getStringWidth(enableMod.getName()) - font_A.getStringWidth(Modtype) - x_modlist_dropdow;
-                } else {
-                    ModList_x = width - font_A.getStringWidth(enableMod.getName()) - font_A.getStringWidth(Modtype) - x_modlist_dropdow - 2;
-                }
-                RenderUtil.dropShadow(10, ModList_x - 2, y_modlist_dropdow - 1, ModList_long + 5, font_A.getStringHeight("A") + 3, 40, round);
-                y_modlist_dropdow = y_modlist_dropdow + 11;
-            }
             enableMods.sort((o1, o2) -> font_A.getStringWidth(o2.getName() + o2.getType()) - font_A.getStringWidth(o1.getName() + o1.getType()));
             for (Mod enableMod : enableMods) {
 

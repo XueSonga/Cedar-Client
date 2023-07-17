@@ -1,7 +1,6 @@
 package net.minecraft.client.gui;
 
 import cn.XueSong.Client.font.CFontRenderer;
-//import cn.XueSong.Client.mod.Render.Blur.BlurBuffer;
 import cn.XueSong.Client.util.render.RenderUtil;
 import cn.XueSong.Client.util.shader.CShaders;
 import com.google.common.base.Splitter;
