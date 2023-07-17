@@ -16,6 +16,9 @@ public class EntityFinder {
             if (player != mc.thePlayer && !player.isInvisible()) {
                 double distanceSq = mc.thePlayer.getDistanceSqToEntity(player);
                 double angleDifference = Math.abs(mc.thePlayer.rotationYaw - getAngleToEntity(mc.thePlayer, player));
+                if (angleDifference > 180.0) {
+                    angleDifference = 360.0 - angleDifference;
+                }
                 if (distanceSq < closestDistanceSq && angleDifference <= maxAngle) {
                     closestPlayer = player;
                     closestDistanceSq = distanceSq;
@@ -25,9 +28,14 @@ public class EntityFinder {
         return closestPlayer;
     }
 
+
     private float getAngleToEntity(Entity player, Entity target) {
         double deltaX = target.posX - player.posX;
         double deltaZ = target.posZ - player.posZ;
-        return (float) Math.toDegrees(Math.atan2(deltaZ, deltaX)) - 90.0F;
+        double angle = Math.toDegrees(Math.atan2(deltaZ, deltaX)) - 90.0;
+        if (angle < 0) {
+            angle += 360.0;
+        }
+        return (float) angle;
     }
 }

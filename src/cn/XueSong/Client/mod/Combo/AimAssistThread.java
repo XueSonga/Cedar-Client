@@ -3,6 +3,7 @@ package cn.XueSong.Client.mod.Combo;
 import cn.XueSong.Client.util.EntityFinder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.MathHelper;
 
 public class AimAssistThread extends Thread {
     private final Minecraft mc;
@@ -48,12 +49,22 @@ public class AimAssistThread extends Thread {
         double deltaZ = targetPlayer.posZ - mc.thePlayer.posZ;
 
         double targetYaw = Math.atan2(deltaZ, deltaX) * 180.0D / Math.PI - 90.0D;
+        if (targetYaw < 0) {
+            targetYaw += 360.0;
+        }
         double targetPitch = -Math.atan2(deltaY, Math.sqrt(deltaX * deltaX + deltaZ * deltaZ)) * 180.0D / Math.PI;
 
-        // 使用插值平滑瞄准
-        mc.thePlayer.rotationYaw += (targetYaw - mc.thePlayer.rotationYaw) * aimSpeed;
+        // Use interpolation to smooth the aiming
+        double yawDifference = targetYaw - mc.thePlayer.rotationYaw;
+        if (yawDifference > 180.0) {
+            yawDifference -= 360.0;
+        } else if (yawDifference < -180.0) {
+            yawDifference += 360.0;
+        }
+        mc.thePlayer.rotationYaw += yawDifference * aimSpeed;
         mc.thePlayer.rotationPitch += (targetPitch - mc.thePlayer.rotationPitch) * aimSpeed;
     }
+
 
     private boolean isPlayerValid(EntityPlayer player) {
         //检查玩家是否还活着，不是隐形的，并且在指定的距离内
