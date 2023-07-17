@@ -31,6 +31,8 @@ class AutoClickThred extends Thread {
     private static final Random random = new Random();
     private static final Set<String> VALID_SWORD_NAMES = new HashSet<>();
 
+    public static Boolean AutoBlock = false;
+
     static {
         VALID_SWORD_NAMES.add("minecraft:wooden_sword");
         VALID_SWORD_NAMES.add("minecraft:stone_sword");
@@ -57,9 +59,9 @@ class AutoClickThred extends Thread {
                 if (AutoClickisOn){
                     long currentTime = System.currentTimeMillis();
                     long elapsedTime = currentTime - lastRenderTime;
-                    if (elapsedTime >= 50) {
+                    if (elapsedTime >= 53) {
                         lastRenderTime = currentTime;
-                        if (Minecraft.getMinecraft().gameSettings.keyBindPickBlock.isKeyDown()) {
+                        if (Minecraft.getMinecraft().gameSettings.keyBindAttack.isKeyDown()) {
                             ItemStack heldItem = Minecraft.getMinecraft().thePlayer.getHeldItem();
                             if (heldItem == null || heldItem.getItem() == null) {
                                 break;
@@ -69,16 +71,16 @@ class AutoClickThred extends Thread {
                             if (VALID_SWORD_NAMES.contains(heldItemName)) {
                                 if (isLookingAtEntity()) {
                                     int randomNumber = random.nextInt(60) + 20;
-                                    if (randomNumber<=70){
+                                    if (randomNumber<=70&&AutoBlock){
                                         try {
-                                            KeyBinding.onTick(Minecraft.getMinecraft().gameSettings.keyBindPickBlock.getKeyCode());
+                                            KeyBinding.onTick(Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode());
                                             Thread.sleep(randomNumber+10);
-                                            KeyBinding.onTick(Minecraft.getMinecraft().gameSettings.keyBindDrop.getKeyCode());
+                                            KeyBinding.onTick(Minecraft.getMinecraft().gameSettings.keyBindUseItem.getKeyCode());
                                         } catch (InterruptedException e) {
                                             throw new RuntimeException(e);
                                         }
                                     }else {
-                                        KeyBinding.onTick(Minecraft.getMinecraft().gameSettings.keyBindPickBlock.getKeyCode());
+                                        KeyBinding.onTick(Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode());
                                     }
                                 }
                             }

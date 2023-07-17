@@ -524,7 +524,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             {
                 try
                 {
-                    return String.format(str, new Object[] {GameSettings.getKeyDisplayString(Minecraft.this.gameSettings.keyBindUseItem.getKeyCode())});
+                    return String.format(str, new Object[] {GameSettings.getKeyDisplayString(Minecraft.this.gameSettings.keyBindInventory.getKeyCode())});
                 }
                 catch (Exception exception)
                 {
@@ -2029,7 +2029,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                             this.gameSettings.lastServer = GuiScreen.isAltKeyDown();
                         }
 
-                        if (this.gameSettings.keyBindSmoothCamera.isPressed())
+                        if (this.gameSettings.keyBindTogglePerspective.isPressed())
                         {
                             ++this.gameSettings.showDebugInfo;
 
@@ -2050,7 +2050,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                             this.renderGlobal.setDisplayListEntitiesDirty();
                         }
 
-                        if (this.gameSettings.keyBindFullscreen.isPressed())
+                        if (this.gameSettings.keyBindSmoothCamera.isPressed())
                         {
                             this.gameSettings.debugCamEnable = !this.gameSettings.debugCamEnable;
                         }
@@ -2076,7 +2076,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
             for (int l = 0; l < 9; ++l)
             {
-                if (this.gameSettings.keyBindings[l].isPressed())
+                if (this.gameSettings.keyBindsHotbar[l].isPressed())
                 {
                     if (this.thePlayer.isSpectator())
                     {
@@ -2091,7 +2091,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
             boolean flag = this.gameSettings.chatVisibility != EntityPlayer.EnumChatVisibility.HIDDEN;
 
-            while (this.gameSettings.keyBindUseItem.isPressed())
+            while (this.gameSettings.keyBindInventory.isPressed())
             {
                 if (this.playerController.isRidingHorse())
                 {
@@ -2104,7 +2104,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                 }
             }
 
-            while (this.gameSettings.keyBindAttack.isPressed())
+            while (this.gameSettings.keyBindDrop.isPressed())
             {
                 if (!this.thePlayer.isSpectator())
                 {
@@ -2112,62 +2112,62 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                 }
             }
 
-            while (this.gameSettings.keyBindPlayerList.isPressed() && flag)
+            while (this.gameSettings.keyBindChat.isPressed() && flag)
             {
                 this.displayGuiScreen(new GuiChat());
             }
 
-            if (this.currentScreen == null && this.gameSettings.keyBindScreenshot.isPressed() && flag)
+            if (this.currentScreen == null && this.gameSettings.keyBindCommand.isPressed() && flag)
             {
                 this.displayGuiScreen(new GuiChat("/"));
             }
 
             if (this.thePlayer.isUsingItem())
             {
-                if (!this.gameSettings.keyBindDrop.isKeyDown())
+                if (!this.gameSettings.keyBindUseItem.isKeyDown())
                 {
                     this.playerController.onStoppedUsingItem(this.thePlayer);
                 }
 
+                while (this.gameSettings.keyBindAttack.isPressed())
+                {
+                    ;
+                }
+
+                while (this.gameSettings.keyBindUseItem.isPressed())
+                {
+                    ;
+                }
+
                 while (this.gameSettings.keyBindPickBlock.isPressed())
-                {
-                    ;
-                }
-
-                while (this.gameSettings.keyBindDrop.isPressed())
-                {
-                    ;
-                }
-
-                while (this.gameSettings.keyBindChat.isPressed())
                 {
                     ;
                 }
             }
             else
             {
-                while (this.gameSettings.keyBindPickBlock.isPressed())
+                while (this.gameSettings.keyBindAttack.isPressed())
                 {
                     this.clickMouse();
                 }
 
-                while (this.gameSettings.keyBindDrop.isPressed())
+                while (this.gameSettings.keyBindUseItem.isPressed())
                 {
                     this.rightClickMouse();
                 }
 
-                while (this.gameSettings.keyBindChat.isPressed())
+                while (this.gameSettings.keyBindPickBlock.isPressed())
                 {
                     this.middleClickMouse();
                 }
             }
 
-            if (this.gameSettings.keyBindDrop.isKeyDown() && this.rightClickDelayTimer == 0 && !this.thePlayer.isUsingItem())
+            if (this.gameSettings.keyBindUseItem.isKeyDown() && this.rightClickDelayTimer == 0 && !this.thePlayer.isUsingItem())
             {
                 this.rightClickMouse();
             }
 
-            this.sendClickBlockToController(this.currentScreen == null && this.gameSettings.keyBindPickBlock.isKeyDown() && this.inGameHasFocus);
+            this.sendClickBlockToController(this.currentScreen == null && this.gameSettings.keyBindAttack.isKeyDown() && this.inGameHasFocus);
         }
 
         if (this.theWorld != null)
@@ -3134,7 +3134,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             {
                 if (Keyboard.getEventKeyState())
                 {
-                    if (i == this.gameSettings.keyBindStreamPauseUnpause.getKeyCode())
+                    if (i == this.gameSettings.keyBindStreamStartStop.getKeyCode())
                     {
                         if (this.getTwitchStream().isBroadcasting())
                         {
@@ -3167,7 +3167,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                             GuiStreamUnavailable.func_152321_a(this.currentScreen);
                         }
                     }
-                    else if (i == this.gameSettings.keyBindStreamCommercials.getKeyCode())
+                    else if (i == this.gameSettings.keyBindStreamPauseUnpause.getKeyCode())
                     {
                         if (this.getTwitchStream().isBroadcasting())
                         {
@@ -3181,27 +3181,27 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                             }
                         }
                     }
-                    else if (i == this.gameSettings.keyBindStreamToggleMic.getKeyCode())
+                    else if (i == this.gameSettings.keyBindStreamCommercials.getKeyCode())
                     {
                         if (this.getTwitchStream().isBroadcasting())
                         {
                             this.getTwitchStream().requestCommercial();
                         }
                     }
-                    else if (i == this.gameSettings.keyBindsHotbar.getKeyCode())
+                    else if (i == this.gameSettings.keyBindStreamToggleMic.getKeyCode())
                     {
                         this.stream.muteMicrophone(true);
                     }
-                    else if (i == this.gameSettings.keyBindSpectatorOutlines.getKeyCode())
+                    else if (i == this.gameSettings.keyBindFullscreen.getKeyCode())
                     {
                         this.toggleFullscreen();
                     }
-                    else if (i == this.gameSettings.keyBindTogglePerspective.getKeyCode())
+                    else if (i == this.gameSettings.keyBindScreenshot.getKeyCode())
                     {
                         this.ingameGUI.getChatGUI().printChatMessage(ScreenShotHelper.saveScreenshot(this.mcDataDir, this.displayWidth, this.displayHeight, this.framebufferMc));
                     }
                 }
-                else if (i == this.gameSettings.keyBindsHotbar.getKeyCode())
+                else if (i == this.gameSettings.keyBindStreamToggleMic.getKeyCode())
                 {
                     this.stream.muteMicrophone(false);
                 }

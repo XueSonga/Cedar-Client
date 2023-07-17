@@ -46,7 +46,7 @@ public interface INetHandlerPlayServer extends INetHandler
     void processClientStatus(C16PacketClientStatus packetIn);
 
     /**
-     * Updates serverside copy of client settings: language, RenderA distance, chat visibility, chat colours, difficulty,
+     * Updates serverside copy of client settings: language, RenderA distance, chat visibility, chat colours, mc,
      * and whether to show the cape
      */
     void processClientSettings(C15PacketClientSettings packetIn);

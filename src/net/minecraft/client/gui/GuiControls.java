@@ -78,7 +78,7 @@ public class GuiControls extends GuiScreen
         }
         else if (button.id == 201)
         {
-            for (KeyBinding keybinding : this.mc.gameSettings.mc)
+            for (KeyBinding keybinding : this.mc.gameSettings.keyBindings)
             {
                 keybinding.setKeyCode(keybinding.getKeyCodeDefault());
             }
@@ -161,7 +161,7 @@ public class GuiControls extends GuiScreen
         this.drawCenteredString(this.fontRendererObj, this.screenTitle, this.width / 2, 8, 16777215);
         boolean flag = true;
 
-        for (KeyBinding keybinding : this.options.mc)
+        for (KeyBinding keybinding : this.options.keyBindings)
         {
             if (keybinding.getKeyCode() != keybinding.getKeyCodeDefault())
             {

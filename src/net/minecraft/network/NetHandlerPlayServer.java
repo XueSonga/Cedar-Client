@@ -1226,7 +1226,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
     }
 
     /**
-     * Updates serverside copy of client settings: language, RenderA distance, chat visibility, chat colours, difficulty,
+     * Updates serverside copy of client settings: language, RenderA distance, chat visibility, chat colours, mc,
      * and whether to show the cape
      */
     public void processClientSettings(C15PacketClientSettings packetIn)

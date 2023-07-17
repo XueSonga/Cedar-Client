@@ -397,7 +397,7 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
     public abstract WorldSettings.GameType getGameType();
 
     /**
-     * Get the server's difficulty
+     * Get the server's mc
      */
     public abstract EnumDifficulty getDifficulty();
 
@@ -1183,7 +1183,7 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
                     WorldInfo worldinfo = worldserver.getWorldInfo();
                     playerSnooper.addClientStat("world[" + i + "][dimension]", Integer.valueOf(worldserver.provider.getDimensionId()));
                     playerSnooper.addClientStat("world[" + i + "][mode]", worldinfo.getGameType());
-                    playerSnooper.addClientStat("world[" + i + "][difficulty]", worldserver.getDifficulty());
+                    playerSnooper.addClientStat("world[" + i + "][mc]", worldserver.getDifficulty());
                     playerSnooper.addClientStat("world[" + i + "][hardcore]", Boolean.valueOf(worldinfo.isHardcoreModeEnabled()));
                     playerSnooper.addClientStat("world[" + i + "][generator_name]", worldinfo.getTerrainType().getWorldTypeName());
                     playerSnooper.addClientStat("world[" + i + "][generator_version]", Integer.valueOf(worldinfo.getTerrainType().getGeneratorVersion()));

@@ -253,7 +253,7 @@ public interface INetHandlerPlayClient extends INetHandler
     void handleEffect(S28PacketEffect packetIn);
 
     /**
-     * Registers some server properties (gametype,hardcore-mode,terraintype,difficulty,player limit), creates a new
+     * Registers some server properties (gametype,hardcore-mode,terraintype,mc,player limit), creates a new
      * WorldClient and sets the player initial dimension
      */
     void handleJoinGame(S01PacketJoinGame packetIn);

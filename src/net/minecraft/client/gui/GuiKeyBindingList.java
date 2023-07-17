@@ -2,7 +2,6 @@ package net.minecraft.client.gui;
 
 import java.util.Arrays;
 
-import cn.XueSong.Client.font.CFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
@@ -23,7 +22,7 @@ public class GuiKeyBindingList extends GuiListExtended
         super(mcIn, controls.width, controls.height, 63, controls.height - 32, 20);
         this.field_148191_k = controls;
         this.mc = mcIn;
-        KeyBinding[] akeybinding = (KeyBinding[])ArrayUtils.clone(mcIn.gameSettings.mc);
+        KeyBinding[] akeybinding = (KeyBinding[])ArrayUtils.clone(mcIn.gameSettings.keyBindings);
         this.listEntries = new GuiListExtended.IGuiListEntry[akeybinding.length + KeyBinding.getKeybinds().size()];
         Arrays.sort((Object[])akeybinding);
         int i = 0;
@@ -136,7 +135,7 @@ public class GuiKeyBindingList extends GuiListExtended
 
             if (this.keybinding.getKeyCode() != 0)
             {
-                for (KeyBinding keybinding : GuiKeyBindingList.this.mc.gameSettings.mc)
+                for (KeyBinding keybinding : GuiKeyBindingList.this.mc.gameSettings.keyBindings)
                 {
                     if (keybinding != this.keybinding && keybinding.getKeyCode() == this.keybinding.getKeyCode())
                     {

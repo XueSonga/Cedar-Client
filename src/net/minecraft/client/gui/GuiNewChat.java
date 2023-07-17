@@ -351,7 +351,7 @@ public class GuiNewChat extends Gui
     }
 
     /**
-     * Returns the chatscale from mc.gameSettings.chatScale
+     * Returns the chatscale from keyBindings.gameSettings.chatScale
      */
     public float getChatScale()
     {

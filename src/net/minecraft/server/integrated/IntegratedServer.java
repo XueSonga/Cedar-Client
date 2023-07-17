@@ -284,12 +284,12 @@ public class IntegratedServer extends MinecraftServer
 
                 if (!worldinfo1.isDifficultyLocked() && worldinfo.getDifficulty() != worldinfo1.getDifficulty())
                 {
-                    logger.info("Changing difficulty to {}, from {}", new Object[] {worldinfo.getDifficulty(), worldinfo1.getDifficulty()});
+                    logger.info("Changing mc to {}, from {}", new Object[] {worldinfo.getDifficulty(), worldinfo1.getDifficulty()});
                     this.setDifficultyForAllWorlds(worldinfo.getDifficulty());
                 }
                 else if (worldinfo.isDifficultyLocked() && !worldinfo1.isDifficultyLocked())
                 {
-                    logger.info("Locking difficulty to {}", new Object[] {worldinfo.getDifficulty()});
+                    logger.info("Locking mc to {}", new Object[] {worldinfo.getDifficulty()});
 
                     for (WorldServer worldserver : this.worldServers)
                     {
@@ -314,7 +314,7 @@ public class IntegratedServer extends MinecraftServer
     }
 
     /**
-     * Get the server's difficulty
+     * Get the server's mc
      */
     public EnumDifficulty getDifficulty()
     {

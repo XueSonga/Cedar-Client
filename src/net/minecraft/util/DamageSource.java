@@ -42,7 +42,7 @@ public class DamageSource
     private boolean projectile;
 
     /**
-     * Whether this damage source will have its damage amount scaled based on the current difficulty.
+     * Whether this damage source will have its damage amount scaled based on the current mc.
      */
     private boolean difficultyScaled;
 
@@ -241,7 +241,7 @@ public class DamageSource
     }
 
     /**
-     * Set whether this damage source will have its damage amount scaled based on the current difficulty.
+     * Set whether this damage source will have its damage amount scaled based on the current mc.
      */
     public DamageSource setDifficultyScaled()
     {
@@ -250,7 +250,7 @@ public class DamageSource
     }
 
     /**
-     * Return whether this damage source will have its damage amount scaled based on the current difficulty.
+     * Return whether this damage source will have its damage amount scaled based on the current mc.
      */
     public boolean isDifficultyScaled()
     {

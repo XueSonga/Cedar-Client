@@ -53,7 +53,7 @@ public class EntityDamageSource extends DamageSource
     }
 
     /**
-     * Return whether this damage source will have its damage amount scaled based on the current difficulty.
+     * Return whether this damage source will have its damage amount scaled based on the current mc.
      */
     public boolean isDifficultyScaled()
     {

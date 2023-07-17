@@ -235,7 +235,7 @@ public class TileEntityBanner extends TileEntity
         DIAGONAL_RIGHT("diagonal_up_right", "rd", "   ", "  #", " ##"),
         DIAGONAL_LEFT_MIRROR("diagonal_up_left", "lud", "   ", "#  ", "## "),
         DIAGONAL_RIGHT_MIRROR("diagonal_right", "rud", " ##", "  #", "   "),
-        CIRCLE_MIDDLE("circle", "mc", "   ", " # ", "   "),
+        CIRCLE_MIDDLE("circle", "keyBindings", "   ", " # ", "   "),
         RHOMBUS_MIDDLE("rhombus", "mr", " # ", "# #", " # "),
         HALF_VERTICAL("half_vertical", "vh", "## ", "## ", "## "),
         HALF_HORIZONTAL("half_horizontal", "hh", "###", "###", "   "),

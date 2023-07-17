@@ -16,8 +16,8 @@ public class Sprint extends Mod {
 
     @Override
     public void onUpdate() {
-        if (Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown()) {
-            KeyBinding.setKeyBindState(mc.gameSettings.keyBindInventory.getKeyCode(), true);
+        if (Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown()) {
+            KeyBinding.setKeyBindState(mc.gameSettings.keyBindSprint.getKeyCode(), true);
         }
     }
 }

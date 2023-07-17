@@ -353,17 +353,13 @@ public class ItemRenderer
      * Translate and rotate the RenderA for holding a block
      */
 
-    int i = -180;
+    //int i = -180;
     private void doBlockTransformations()
     {
-        GlStateManager.translate(-0.5F, 0.2F, 0.0F);
-        GlStateManager.rotate(i, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(-80.0F, 1.0F, 0.0F, 0.0F);
-        if (i >= 180){
-            i=-180;
-        }
-        i=i+5;
-        GlStateManager.rotate(-40.0F, 0.0F, 1.0F, 0.0F);
+        GL11.glTranslatef(-0.5F, 0.2F, 0.0F);
+        GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
+        GL11.glRotatef(-80.0F, 1.0F, 0.0F, 0.0F);
+        GL11.glRotatef(60.0F, 0.0F, 1.0F, 0.0F);
     }
 
     /**
@@ -371,6 +367,7 @@ public class ItemRenderer
      */
     public void renderItemInFirstPerson(float partialTicks)
     {
+        final float swingProgress = mc.thePlayer.getSwingProgress(partialTicks);
         if (!Config.isShaders() || !Shaders.isSkipRenderHand())
         {
             float f = 1.0F - (this.prevEquippedProgress + (this.equippedProgress - this.prevEquippedProgress) * partialTicks);
@@ -397,27 +394,34 @@ public class ItemRenderer
                     switch (enumaction)
                     {
                         case NONE:
-                            this.transformFirstPersonItem(f, 0.0F);
+                            this.transformFirstPersonItem(f, swingProgress);
                             //System.out.println("A");
                             break;
 
                         case EAT:
+                            //this.mc.thePlayer.swingItem();
+                            this.performDrinking(abstractclientplayer, partialTicks);
+                            this.transformFirstPersonItem(f, swingProgress);
+                            GlStateManager.translate(-0.3F, -0.1F, -0.0F);
                             //System.out.println("B");
                         case DRINK:
                             this.performDrinking(abstractclientplayer, partialTicks);
-                            this.transformFirstPersonItem(f, 0.0F);
+                            this.transformFirstPersonItem(f, swingProgress);
+                            GlStateManager.translate(-0.3F, -0.1F, -0.0F);
                             //System.out.println("C");
                             break;
 
                         case BLOCK:
-                            this.transformFirstPersonItem(f, 0.0F);
+                            this.transformFirstPersonItem(f, swingProgress);
                             this.doBlockTransformations();
+                            GlStateManager.translate(-0.3F, -0.1F, -0.0F);
                             //System.out.println("D");
                             break;
 
                         case BOW:
-                            this.transformFirstPersonItem(f, 0.0F);
+                            this.transformFirstPersonItem(f, swingProgress);
                             this.doBowTransformations(partialTicks, abstractclientplayer);
+                            GlStateManager.translate(-0.3F, -0.1F, -0.0F);
                             //System.out.println("E");
                     }
                 }
