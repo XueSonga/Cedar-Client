@@ -3,8 +3,10 @@ package cn.XueSong.Client.mod;
 import cn.XueSong.Client.mod.Combo.AutoClick;
 import cn.XueSong.Client.mod.Combo.AimAssist;
 import cn.XueSong.Client.mod.MoveMent.Sprint;
+import cn.XueSong.Client.mod.Other.Nick;
 import cn.XueSong.Client.mod.Other.Serverdetection;
 import cn.XueSong.Client.mod.Render.Hud;
+import cn.XueSong.Client.mod.Render.NameTag;
 import cn.XueSong.Client.mod.Render.fullbright;
 
 import java.util.ArrayList;
@@ -42,5 +44,7 @@ public class ModManager {
         mods.add(new fullbright());
         mods.add(new AimAssist());
         mods.add(new Serverdetection());
+        mods.add(new Nick());
+        mods.add(new NameTag());
     }
 }

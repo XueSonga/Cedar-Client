@@ -22,6 +22,7 @@ public class CQShader {
      * @param color  The color used to draw the rectangle
      */
     public void draw(final float x, final float y, final float width, final float height, final float radius, final Color color) {
+        GlStateManager.pushMatrix();
         final int programId = this.program.getProgramId();
         this.program.start();
         ShaderUniforms.uniform2f(programId, "u_size", width, height);
@@ -34,6 +35,7 @@ public class CQShader {
         CShaderProgram.drawQuad(x, y, width, height);
         GlStateManager.disableBlend();
         CShaderProgram.stop();
+        GlStateManager.popMatrix();
     }
 
     /**

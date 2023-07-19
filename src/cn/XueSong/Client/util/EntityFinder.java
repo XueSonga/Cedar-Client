@@ -1,5 +1,6 @@
 package cn.XueSong.Client.util;
 
+import cn.XueSong.Client.util.bot.AntiBotUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,10 +11,22 @@ public class EntityFinder {
     public EntityPlayer findNearestEntity(double maxAngle, double maxDistance, Minecraft mc) {
         EntityPlayer closestPlayer = null;
         double closestDistanceSq = Double.MAX_VALUE;
+        AntiBotUtil antiBotUtil = new AntiBotUtil();
 
         List<EntityPlayer> playerList = mc.theWorld.playerEntities;
         for (EntityPlayer player : playerList) {
             if (player != mc.thePlayer && !player.isInvisible()) {
+                try {
+                    if (antiBotUtil.isPlayerBot(player, mc)) {
+                        // Skip this player if they are a bot
+                        continue;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // If there is an error when checking the bot status, skip this player
+                    continue;
+                }
+
                 double distanceSq = mc.thePlayer.getDistanceSqToEntity(player);
                 double angleDifference = Math.abs(mc.thePlayer.rotationYaw - getAngleToEntity(mc.thePlayer, player));
                 if (angleDifference > 180.0) {

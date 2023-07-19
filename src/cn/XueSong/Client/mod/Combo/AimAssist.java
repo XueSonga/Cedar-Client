@@ -1,18 +1,26 @@
 package cn.XueSong.Client.mod.Combo;
 
+import cn.XueSong.Client.Thread.threads.AimAssistThread;
 import cn.XueSong.Client.mod.Mod;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import org.lwjgl.input.Keyboard;
 
 public class AimAssist extends Mod {
     // Constructor
     public AimAssist() {
-        super("AimAssist", "自动瞄准", true);
+        super("AimAssist", "自动瞄准[F]", true);
         AimAssistThread.setAimAssistEnabled(true);
-        AimAssistThread AIm = new AimAssistThread(Minecraft.getMinecraft());
-        Thread AimAssistThread = new Thread(AIm);
-        AimAssistThread.start();
+        setKey(Keyboard.KEY_F);
+    }
+
+    @Override
+    public void onEnable() {
+        AimAssistThread.setAimAssistEnabled(isEnabled());
+    }
+
+    @Override
+    public void onDisable() {
+        AimAssistThread.setAimAssistEnabled(isEnabled());
     }
 
     // We will not use the render function in this mod.

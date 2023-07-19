@@ -1,7 +1,5 @@
 package cn.XueSong.Client.mod;
 
-import cn.XueSong.Client.util.math.MathUtil;
-
 public abstract class Mod {
     private final String name;
     private String type;
@@ -48,11 +46,20 @@ public abstract class Mod {
         this.key = key;
     }
 
-    public void render() {
+
+    public void render(float partialTicks) {
 
     }
 
-    public void onUpdate() {
+    public void renderWorld(float partialTicks) {
+
+    }
+
+    public void onWorldChange(){
+
+    }
+
+    public void subThread(){
 
     }
 

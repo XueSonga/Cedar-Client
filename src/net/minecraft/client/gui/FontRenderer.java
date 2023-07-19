@@ -1,5 +1,7 @@
 package net.minecraft.client.gui;
 
+import cn.XueSong.Client.font.CFontRenderer;
+import cn.XueSong.Client.mod.Other.Nick;
 import com.ibm.icu.text.ArabicShaping;
 import com.ibm.icu.text.ArabicShapingException;
 import com.ibm.icu.text.Bidi;
@@ -376,6 +378,7 @@ public class FontRenderer implements IResourceManagerReloadListener
      */
     public int drawStringWithShadow(String text, float x, float y, int color)
     {
+
         return this.drawString(text, x, y, color, true);
     }
 
@@ -384,6 +387,7 @@ public class FontRenderer implements IResourceManagerReloadListener
      */
     public int drawString(String text, int x, int y, int color)
     {
+
         return this.drawString(text, (float)x, (float)y, color, false);
     }
 
@@ -392,6 +396,7 @@ public class FontRenderer implements IResourceManagerReloadListener
      */
     public int drawString(String text, float x, float y, int color, boolean dropShadow)
     {
+        text = Nick.Nick(text);
         this.enableAlpha();
 
         if (this.blend)

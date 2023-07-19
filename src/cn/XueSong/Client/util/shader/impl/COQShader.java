@@ -13,6 +13,7 @@ public class COQShader {
     private final CShaderProgram program = new CShaderProgram("roq.glsl", "vertex.vsh");
 
     public void draw(float x, float y, float width, float height, float radius, float borderSize, Color color) {
+        GlStateManager.pushMatrix();
         int programId = this.program.getProgramId();
         this.program.start();
         ShaderUniforms.uniform2f(programId, "u_size", width, height);
@@ -25,6 +26,7 @@ public class COQShader {
         GlStateManager.alphaFunc(GL11.GL_GREATER, 0.0F);
         CShaderProgram.drawQuad(x, y, width, height);
         GlStateManager.disableBlend();
+        GlStateManager.popMatrix();
         CShaderProgram.stop();
     }
 

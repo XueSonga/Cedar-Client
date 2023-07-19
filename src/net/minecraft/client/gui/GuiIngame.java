@@ -2,7 +2,6 @@ package net.minecraft.client.gui;
 
 import cn.XueSong.Client.Client;
 import cn.XueSong.Client.font.CFontRenderer;
-import cn.XueSong.Client.mod.Mod;
 import cn.XueSong.Client.util.render.RenderUtil;
 import cn.XueSong.Client.util.shader.CShaders;
 import com.google.common.base.Predicate;
@@ -176,7 +175,7 @@ public class GuiIngame extends Gui
         {
             this.renderTooltip(scaledresolution, partialTicks);
         }
-        Client.modManager.getEnabledMods().forEach(Mod::render);
+        Client.modManager.getEnabledMods().forEach(mod -> mod.render(partialTicks));
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(icons);
         GlStateManager.enableBlend();

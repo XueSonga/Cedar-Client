@@ -25,6 +25,7 @@ public class CGQShader {
      *@param vertical 渐变是否是水平的或垂直的
      **/
     public void draw(float x, float y, float width, float height, float radius, Color firstColor, Color secondColor, boolean vertical) {
+        GlStateManager.pushMatrix();
         int programId = this.program.getProgramId();
         this.program.start();
         ShaderUniforms.uniform2f(programId, "u_size", width, height);
@@ -38,6 +39,7 @@ public class CGQShader {
         GlStateManager.alphaFunc(GL11.GL_GREATER, 0.0F);
         drawQuad(x, y, width, height);
         GL20.glUseProgram(0);
+        GlStateManager.popMatrix();
     }
 
     /**

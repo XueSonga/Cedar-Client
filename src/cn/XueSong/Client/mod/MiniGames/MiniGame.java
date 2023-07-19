@@ -7,9 +7,4 @@ public class MiniGame extends Mod {
     public MiniGame() {
         super("MiniGame", "type", true);
     }
-
-    @Override
-    public void onUpdate() {
-        super.onUpdate();
-    }
 }

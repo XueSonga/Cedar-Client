@@ -1,6 +1,7 @@
 package cn.XueSong.Client.font;
 
 
+import cn.XueSong.Client.mod.Other.Nick;
 import cn.XueSong.Client.serverdetection.ServerDetection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -11,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class CFontRenderer extends CFont {
@@ -242,12 +244,11 @@ public class CFontRenderer extends CFont {
 
         return (float) x / 2.0F;
     }
-
     public int getStringWidth(String text) {
-        text = replaceChineseSymbols(text);
-        if (text == null) {
+        if (Objects.equals(text, "")){
             return 0;
         }
+        text = replaceChineseSymbols(text);
         int width = 0;
         CFont.CharData[] currentData = this.charData;
         boolean bold = false;
@@ -448,12 +449,18 @@ public class CFontRenderer extends CFont {
         str = str.replace("。", ".");
         str = str.replace("：", ":");
         str = str.replace("；", ";");
-        str = str.replace("？", "?");
         str = str.replace("！", "!");
         str = str.replace("—", "-");
         str = str.replace("～", "~");
+        str = str.replace("§l", "");
+        str = str.replace("§k", "");
+        str = str.replace("§m", "");
+        str = str.replace("§n", "");
+        str = str.replace("§o", "");
+        str = str.replace("§r", "");
+        str = str.replace("?", "§a[CedarClient]§r");
         // 添加其他中文全角符号的替换规则...
-
+        str = Nick.Nick(str);//设置nick
         return str;
     }
 
@@ -473,8 +480,8 @@ public class CFontRenderer extends CFont {
                 color = getColor(String.valueOf(str.toCharArray()[iF + 1]));
                 iF++;
             } else if (isChinese(s.charAt(0))) {
-                Minecraft.getMinecraft().fontRendererObj.drawString(s, x + 0.25f, y + 0.5f, new Color(20, 20, 20, 200).getRGB(), false);
-                Minecraft.getMinecraft().fontRendererObj.drawString(s, x - 0.25f, y, color, false);
+                Minecraft.getMinecraft().fontRendererObj.drawString(s, x + 1.25f, y + 0.5f, new Color(20, 20, 20, 200).getRGB(), false);
+                Minecraft.getMinecraft().fontRendererObj.drawString(s, x - 0.25f + 1, y, color, false);
                 x += (float) Minecraft.getMinecraft().fontRendererObj.getStringWidth(s);
             } else {
                 font_A.drawString(s, x + 0.25f, y + 2.5, new Color(20, 20, 20, 200).getRGB());
@@ -494,8 +501,8 @@ public class CFontRenderer extends CFont {
                 color = getColor(String.valueOf(str.toCharArray()[iF + 1]));
                 iF++;
             }else if (isChinese(s.charAt(0))) {
-                Minecraft.getMinecraft().fontRendererObj.drawString(s, x+0.25f, y+0.5f, new Color(20, 20, 20, 200).getRGB(),false);
-                Minecraft.getMinecraft().fontRendererObj.drawString(s, x-0.25f, y, color,false);
+                Minecraft.getMinecraft().fontRendererObj.drawString(s, x+1.25f, y+0.5f, new Color(20, 20, 20, 200).getRGB(),false);
+                Minecraft.getMinecraft().fontRendererObj.drawString(s, x-0.25f + 1, y, color,false);
                 x += (float)Minecraft.getMinecraft().fontRendererObj.getStringWidth(s);
             } else {
                 font_A.drawString(s, x+0.25f, y+2.5, new Color(20, 20, 20, 200).getRGB());
@@ -544,7 +551,7 @@ public class CFontRenderer extends CFont {
                 iF++;
             } else if (isChinese(s.charAt(0))) {
                 Minecraft.getMinecraft().fontRendererObj.drawString(s, x, y, color,false);
-                x += (float)Minecraft.getMinecraft().fontRendererObj.getStringWidth(s)-0.25F;
+                x += (float)Minecraft.getMinecraft().fontRendererObj.getStringWidth(s)-0.25F+1;
             } else{
                 font_A.drawString(s, x, y, color);
                 x += (float)font_A.getStringWidth(s);
@@ -562,8 +569,8 @@ public class CFontRenderer extends CFont {
                 color = getColor(String.valueOf(str.toCharArray()[iF + 1]));
                 iF++;
             } else if (isChinese(s.charAt(0))) {
-                Minecraft.getMinecraft().fontRendererObj.drawString(s, x-0.5f, y-1, color,false);
-                x += (float)Minecraft.getMinecraft().fontRendererObj.getStringWidth(s)-0.25F;
+                Minecraft.getMinecraft().fontRendererObj.drawString(s, x-1.5f, y-1, color,false);
+                x += (float)Minecraft.getMinecraft().fontRendererObj.getStringWidth(s)-0.25F+1;
             } else{
                 font_A.drawString(s, x+0.5f, y+1, color);
                 x += font_A.getStringWidth(s);

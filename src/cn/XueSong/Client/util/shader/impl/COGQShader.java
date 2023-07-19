@@ -13,6 +13,7 @@ public class COGQShader {
     private final CShaderProgram program = new CShaderProgram("rogq.frag", "vertex.vsh");
 
     public void draw(float x, float y, float width, float height, float radius, float borderSize, Color color1, Color color2) {
+        GlStateManager.pushMatrix();
         int programId = this.program.getProgramId();
         this.program.start();
         ShaderUniforms.uniform2f(programId, "u_size", width, height);
@@ -31,6 +32,7 @@ public class COGQShader {
         CShaderProgram.drawQuad(x, y, width, height);
         GlStateManager.disableBlend();
         CShaderProgram.stop();
+        GlStateManager.popMatrix();
     }
 
     public void draw(double x, double y, double width, double height, double radius, double borderSize, Color color1, Color color2) {

@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer;
 
+import cn.XueSong.Client.Client;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
@@ -1541,7 +1542,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
         {
             this.renderWorldPass(2, partialTicks, finishTimeNano);
         }
-
         this.mc.mcProfiler.endSection();
     }
 
@@ -1843,7 +1843,9 @@ public class EntityRenderer implements IResourceManagerReloadListener
             ShadersRender.renderHand0(this, partialTicks, pass);
             Shaders.preWater();
         }
-
+        if (mc.theWorld!=null&&mc.thePlayer!=null){
+            Client.modManager.getEnabledMods().forEach(it->it.renderWorld(partialTicks));
+        }
         GlStateManager.disableBlend();
         GlStateManager.enableCull();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
@@ -1877,6 +1879,8 @@ public class EntityRenderer implements IResourceManagerReloadListener
             Reflector.callVoid(Reflector.ForgeHooksClient_setRenderPass, new Object[] {Integer.valueOf(-1)});
             RenderHelper.disableStandardItemLighting();
         }
+
+
 
         GlStateManager.shadeModel(7424);
         GlStateManager.depthMask(true);
@@ -1919,6 +1923,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
             this.renderWorldDirections(partialTicks);
         }
+
 
         if (flag)
         {

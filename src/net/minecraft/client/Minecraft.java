@@ -1568,8 +1568,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     /**
      * Called when user clicked he's mouse right button (place)
-     */
-    private void rightClickMouse()
+     */ public void rightClickMouse()
     {
         if (!this.playerController.getIsHittingBlock())
         {
@@ -1934,6 +1933,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
                 if (Keyboard.getEventKeyState())
                 {
+                    Client.modManager.onKey(k);
                     if (k == 62 && this.entityRenderer != null)
                     {
                         this.entityRenderer.switchUseShader();

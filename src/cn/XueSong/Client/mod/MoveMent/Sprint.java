@@ -10,12 +10,12 @@ import static cn.XueSong.Client.util.InstanceAccess.InstanceAccess.mc;
 public class Sprint extends Mod {
 
     public Sprint() {
-        super("Sprint", "自动疾跑", true);
+        super("Sprint", "自动疾跑[Z]", true);
         setKey(Keyboard.KEY_Z);
     }
 
     @Override
-    public void onUpdate() {
+    public void subThread() {
         if (Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown()) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindSprint.getKeyCode(), true);
         }

@@ -1,18 +1,19 @@
-package cn.XueSong.Client.mod.Combo;
+package cn.XueSong.Client.Thread.threads;
 
 import cn.XueSong.Client.util.EntityFinder;
+import cn.XueSong.Client.util.team.TeamUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 
-public class AimAssistThread extends Thread {
+public class AimAssistThread implements Runnable{
     private final Minecraft mc;
     private EntityPlayer targetPlayer = null;
     private static boolean isAimAssistEnabled = false;
 
     private double maxAimAngle = 180.0;
     private double maxDistance = 4;
-    private double aimSpeed = 0.1;
+    private double aimSpeed = 0.08;
 
     public AimAssistThread(Minecraft mc) {
         this.mc = mc;
@@ -36,7 +37,7 @@ public class AimAssistThread extends Thread {
                 targetPlayer = null;
             }
             try {
-                Thread.sleep(10); // 设置短时间休眠，避免CPU占用率过高
+                Thread.sleep(4); // 设置短时间休眠，避免CPU占用率过高
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -67,7 +68,12 @@ public class AimAssistThread extends Thread {
 
 
     private boolean isPlayerValid(EntityPlayer player) {
-        //检查玩家是否还活着，不是隐形的，并且在指定的距离内
-        return player != null && player.isEntityAlive() && !player.isInvisible() && mc.thePlayer.getDistanceSqToEntity(player) <= maxDistance * maxDistance;
+        // 检查玩家是否还活着，不是隐形的，并且在指定的距离内，且不在同一个队伍中
+        return player != null
+                && player.isEntityAlive()
+                && !player.isInvisible()
+                && mc.thePlayer.getDistanceSqToEntity(player) <= maxDistance * maxDistance
+                && !TeamUtil.isInSameTeam(player, mc.thePlayer);
     }
+
 }

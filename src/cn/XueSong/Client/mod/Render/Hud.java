@@ -3,13 +3,13 @@ package cn.XueSong.Client.mod.Render;
 import cn.XueSong.Client.Client;
 import cn.XueSong.Client.font.CFontRenderer;
 import cn.XueSong.Client.mod.Mod;
-import cn.XueSong.Client.serverdetection.ServerDetection;
 import cn.XueSong.Client.util.render.ColorUtil;
 import cn.XueSong.Client.util.render.RenderUtil;
 import cn.XueSong.Client.util.shader.CShaders;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 
 import java.awt.*;
 import java.util.List;
@@ -31,10 +31,13 @@ public class Hud extends Mod {
         super("HUD", "ΩÁ√Ê", true);
     }
     @Override
-    public void render() {
+    public void render(float partialTicks) {
+        GlStateManager.pushMatrix();
         renderLogo();
         renderModList();
         renderShowFps();
+        renderOwnName();
+        GlStateManager.popMatrix();
     }
     public void renderLogo() {
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
@@ -65,7 +68,6 @@ public class Hud extends Mod {
             List<Mod> enableMods = Client.modManager.getEnabledMods();
             enableMods.sort((o1, o2) -> font_A.getStringWidth(o2.getName() + o2.getType()) - font_A.getStringWidth(o1.getName() + o1.getType()));
             for (Mod enableMod : enableMods) {
-
                 String Modtype = enableMod.getType();
 
                 double ModList_x = 0;
@@ -80,7 +82,9 @@ public class Hud extends Mod {
                 Gui.drawRect((int) (ModList_x - 2), (int) (y_modlist + font_A.getStringHeight("A") + 3), (int) (width - x_modlist + 2), (int) (y_modlist - 1), new Color(112, 112, 112, 116).getRGB());
                 Gui.drawRect((int) (ModList_x + ModList_long + 5), (int) (y_modlist + font_A.getStringHeight("A") + 3), (int) (ModList_x + ModList_long + 4), (int) (y_modlist - 1), new Color(0, 255, 255, 255).getRGB());
                 CFontRenderer.DisplayFontWithShadow(enableMod.getName(), (float) ModList_x, (float) y_modlist, new Color(255, 255, 255, 255).getRGB());
-                CFontRenderer.DisplayFontWithShadow(enableMod.getType(), (float) (width - font_A.getStringWidth(Modtype) - x_modlist), (float) y_modlist, new Color(0, 255, 178, 210).getRGB());
+                if (!Objects.equals(enableMod.getType(), "") || !Objects.equals(enableMod.getType(), " ")){
+                    CFontRenderer.DisplayFontWithShadow(enableMod.getType(), (float) (width - font_A.getStringWidth(Modtype) - x_modlist), (float) y_modlist, new Color(0, 255, 178, 210).getRGB());
+                }
                 y_modlist = y_modlist + 11;
             }
         }
@@ -105,6 +109,26 @@ public class Hud extends Mod {
             CShaders.CQ_SHADER.draw(x_showFps_backdrop,y_showFps_backdrop, width_showFps, height_shouwFps, round, new Color(10, 10, 10, 170));
             font_A.drawStringWithShadow(text, x_showFps, y_showFps, Color.WHITE.getRGB());
             font_A.drawStringWithShadow(FPS, font_A.getStringWidth(text) + x_showFps, y_showFps, new Color(190, 190, 190).getRGB());
+        }
+    }
+
+    public void renderOwnName() {
+        ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+        String text = "Name: ";
+        String Name = Minecraft.getMinecraft().thePlayer.getName();
+        double y_NAME = 30;
+        double x_NAME = 10;
+        double y_NAME_backdrop = y_NAME - 5;
+        double x_NAME_backdrop = x_NAME - 5;
+        double width_showFps = font_A.getStringWidth(text + Name) + 10;
+        double height_shouwFps = (double) font_A.getStringHeight("A") + 8;
+        final double progress_showfps = 1;
+        final Color bloomColor = ColorUtil.withAlpha(Color.BLACK, (int) (progress_showfps * 150));
+        if (ShowFps) {
+            RenderUtil.dropShadow(10, x_NAME_backdrop, y_NAME_backdrop, width_showFps, height_shouwFps, 40, round + 5);
+            CShaders.CQ_SHADER.draw(x_NAME_backdrop,y_NAME_backdrop, width_showFps, height_shouwFps, round, new Color(10, 10, 10, 170));
+            font_A.drawStringWithShadow(text, x_NAME, y_NAME, Color.WHITE.getRGB());
+            CFontRenderer.DisplayFontWithShadow(Name, (float) (font_A.getStringWidth(text) + x_NAME), (float) y_NAME-2, new Color(190, 190, 190).getRGB());
         }
     }
 }
