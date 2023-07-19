@@ -61,8 +61,8 @@ public class RenderUtil {
             int j = font_A.getStringWidth(str) / 2;
             GlStateManager.disableTexture2D();
             worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-            RenderUtil.dropShadow(10, (float) -font_A.getStringWidth(str) / 2 - 3, i - 3, font_A.getStringWidth(str)+6, font_A.getStringHeight("A") + 6, 40, 5);
-            CShaders.CQ_SHADER.draw((float) -font_A.getStringWidth(str) / 2 - 3,i - 3, font_A.getStringWidth(str)+6, font_A.getStringHeight("A") + 6, 3, new Color(10, 10, 10, 170));
+            //RenderUtil.dropShadow(10, (float) -font_A.getStringWidth(str) / 2 - 3, i - 3, font_A.getStringWidth(str)+6, font_A.getStringHeight("A") + 6, 40, 5);
+            CShaders.CQ_SHADER.draw((float) -font_A.getStringWidth(str) / 2 - 4,i - 3, font_A.getStringWidth(str)+6, font_A.getStringHeight("A") + 6, 3, new Color(10, 10, 10, 255));
             tessellator.draw();
             GlStateManager.enableTexture2D();
             CFontRenderer.DisplayFont(str, -font_A.getStringWidth(str) / 2, i, 553648127);

@@ -458,7 +458,7 @@ public class CFontRenderer extends CFont {
         str = str.replace("§n", "");
         str = str.replace("§o", "");
         str = str.replace("§r", "");
-        str = str.replace("?", "§a[CedarClient]§r");
+        str = str.replace("CedarClient", "§aCedarClient§r");
         // 添加其他中文全角符号的替换规则...
         str = Nick.Nick(str);//设置nick
         return str;
