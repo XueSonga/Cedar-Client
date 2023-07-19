@@ -69,38 +69,6 @@ public class CFontRenderer extends CFont {
         return drawString(text, x - getStringWidth(text) / 2, y, color);
     }
 
-    public float drawCenteredStringWithShadow(String text, float x, float y, int color) {
-        float shadowWidth = drawString(text, x - getStringWidth(text) / 2 + 0.45D, y + 0.5D, color, true);
-        return drawString(text, x - getStringWidth(text) / 2, y, color);
-    }
-
-    public void drawStringWithOutline(String text, double x, double y, int color) {
-        drawString(text, x - .5, y, 0x000000);
-
-        drawString(text, x + .5, y, 0x000000);
-
-        drawString(text, x, y - .5, 0x000000);
-
-        drawString(text, x, y + .5, 0x000000);
-
-        drawString(text, x, y, color);
-    }
-
-    public void drawCenteredStringWithOutline(String text, double x, double y, int color) {
-        drawCenteredString(text, x - .5, y, 0x000000);
-
-        drawCenteredString(text, x + .5, y, 0x000000);
-
-        drawCenteredString(text, x, y - .5, 0x000000);
-
-        drawCenteredString(text, x, y + .5, 0x000000);
-
-        drawCenteredString(text, x, y, color);
-    }
-    public float drawCenteredStringWithShadow(String text, double x, double y, int color) {
-        float shadowWidth = drawString(text, x - getStringWidth(text) / 2 + 0.45D, y + 0.5D, color, true);
-        return drawString(text, x - getStringWidth(text) / 2, y, color);
-    }
 
     public float drawString(String text, double x, double y, int color, boolean shadow) {
         Minecraft mc = Minecraft.getMinecraft();
@@ -158,7 +126,6 @@ public class CFontRenderer extends CFont {
                                 if (colorIndex < 16) {
                                     bold = false;
                                     italic = false;
-                                    randomCase = false;
                                     underline = false;
                                     strikethrough = false;
                                     GlStateManager.bindTexture(tex.getGlTextureId());
@@ -213,7 +180,6 @@ public class CFontRenderer extends CFont {
                                 } else if (colorIndex == 21) {
                                     bold = false;
                                     italic = false;
-                                    randomCase = false;
                                     underline = false;
                                     strikethrough = false;
                                     GlStateManager.color((color >> 16 & 0xFF) / 255.0F, (color >> 8 & 0xFF) / 255.0F, (color & 0xFF) / 255.0F, alpha);
@@ -346,90 +312,90 @@ public class CFontRenderer extends CFont {
         return (width - this.charOffset) / 2;
     }
 
-    public static int getColor(String str) {
+    public static int getColor(String str,Color color) {
         switch(str.hashCode()) {
             case 48:
                 if (str.equals("0")) {
-                    return (new Color(0, 0, 0)).getRGB();
+                    return (new Color(0, 0, 0,color.getAlpha())).getRGB();
                 }
                 break;
             case 49:
                 if (str.equals("1")) {
-                    return (new Color(0, 0, 189)).getRGB();
+                    return (new Color(0, 0, 189,color.getAlpha())).getRGB();
                 }
                 break;
             case 50:
                 if (str.equals("2")) {
-                    return (new Color(0, 192, 0)).getRGB();
+                    return (new Color(0, 192, 0,color.getAlpha())).getRGB();
                 }
                 break;
             case 51:
                 if (str.equals("3")) {
-                    return (new Color(0, 190, 190)).getRGB();
+                    return (new Color(0, 190, 190,color.getAlpha())).getRGB();
                 }
                 break;
             case 52:
                 if (str.equals("4")) {
-                    return (new Color(190, 0, 0)).getRGB();
+                    return (new Color(190, 0, 0,color.getAlpha())).getRGB();
                 }
                 break;
             case 53:
                 if (str.equals("5")) {
-                    return (new Color(189, 0, 188)).getRGB();
+                    return (new Color(189, 0, 188,color.getAlpha())).getRGB();
                 }
                 break;
             case 54:
                 if (str.equals("6")) {
-                    return (new Color(218, 163, 47)).getRGB();
+                    return (new Color(218, 163, 47,color.getAlpha())).getRGB();
                 }
                 break;
             case 55:
                 if (str.equals("7")) {
-                    return (new Color(190, 190, 190)).getRGB();
+                    return (new Color(190, 190, 190,color.getAlpha())).getRGB();
                 }
                 break;
             case 56:
                 if (str.equals("8")) {
-                    return (new Color(63, 63, 63)).getRGB();
+                    return (new Color(63, 63, 63,color.getAlpha())).getRGB();
                 }
                 break;
             case 57:
                 if (str.equals("9")) {
-                    return (new Color(63, 64, 253)).getRGB();
+                    return (new Color(63, 64, 253,color.getAlpha())).getRGB();
                 }
                 break;
             case 97:
                 if (str.equals("a")) {
-                    return (new Color(63, 254, 63)).getRGB();
+                    return (new Color(63, 254, 63,color.getAlpha())).getRGB();
                 }
                 break;
             case 98:
                 if (str.equals("b")) {
-                    return (new Color(62, 255, 254)).getRGB();
+                    return (new Color(62, 255, 254,color.getAlpha())).getRGB();
                 }
                 break;
             case 99:
                 if (str.equals("c")) {
-                    return (new Color(254, 61, 62)).getRGB();
+                    return (new Color(254, 61, 62,color.getAlpha())).getRGB();
                 }
                 break;
             case 100:
                 if (str.equals("d")) {
-                    return (new Color(255, 64, 255)).getRGB();
+                    return (new Color(255, 64, 255,color.getAlpha())).getRGB();
                 }
                 break;
             case 101:
                 if (str.equals("e")) {
-                    return (new Color(254, 254, 62)).getRGB();
+                    return (new Color(254, 254, 62,color.getAlpha())).getRGB();
                 }
                 break;
             case 102:
                 if (str.equals("f")) {
-                    return (new Color(255, 255, 255)).getRGB();
+                    return (new Color(255, 255, 255,color.getAlpha())).getRGB();
                 }
         }
 
-        return (new Color(255, 255, 255)).getRGB();
+        return (new Color(255, 255, 255,color.getAlpha())).getRGB();
     }
 
     public static String replaceChineseSymbols(String str) {
@@ -464,9 +430,19 @@ public class CFontRenderer extends CFont {
         return str;
     }
 
-    private static final CFontRenderer font_A = new CFontRenderer("Roboto-Medium", 18.0F, Font.PLAIN, true, true);//普通
-    private static final CFontRenderer font_Title = new CFontRenderer("Roboto-Medium", 18.0F*4F, Font.PLAIN, true, true);//普通
-    private static final CFontRenderer font_SubTitle = new CFontRenderer("Roboto-Medium", 18.0F*2F, Font.PLAIN, true, true);//普通
+    private static final CFontRenderer font_A = new CFontRenderer("Nunito", 18.0F, Font.PLAIN, true, true);//GUI
+    private static final CFontRenderer font_N = new CFontRenderer("Roboto-Medium", 18.0F, Font.PLAIN, true, true);//普通
+    private static final CFontRenderer font_Title = new CFontRenderer("Nunito", 18.0F*4F, Font.PLAIN, true, true);//普通
+    private static final CFontRenderer font_SubTitle = new CFontRenderer("Nunito", 18.0F*2F, Font.PLAIN, true, true);//普通
+
+    private static Color RGBtoColor(int argb){
+        int alpha = (argb >> 24) & 0xFF;
+        int red = (argb >> 16) & 0xFF;
+        int green = (argb >> 8) & 0xFF;
+        int blue = argb & 0xFF;
+
+        return new Color(red, green, blue,alpha);
+    }
 
     public static void DisplayFont( String str, int x, int y, int color) {
         DisplayFont(str, (float) x, (float) y, color);
@@ -477,68 +453,40 @@ public class CFontRenderer extends CFont {
         for (int iF = 0; iF < str.length(); ++iF) {
             String s = String.valueOf(str.toCharArray()[iF]);
             if (s.contains("§") && iF + 1 <= str.length()) {
-                color = getColor(String.valueOf(str.toCharArray()[iF + 1]));
+                color = getColor(String.valueOf(str.toCharArray()[iF + 1]),RGBtoColor(color));
                 iF++;
             } else if (isChinese(s.charAt(0))) {
-                Minecraft.getMinecraft().fontRendererObj.drawString(s, x + 1.25f, y + 0.5f, new Color(20, 20, 20, 200).getRGB(), false);
+                Minecraft.getMinecraft().fontRendererObj.drawString(s, x + 1.25f, y + 0.5f, new Color(20, 20, 20, RGBtoColor(color).getAlpha()).getRGB(), false);
                 Minecraft.getMinecraft().fontRendererObj.drawString(s, x - 0.25f + 1, y, color, false);
                 x += (float) Minecraft.getMinecraft().fontRendererObj.getStringWidth(s);
             } else {
-                font_A.drawString(s, x + 0.25f, y + 2.5, new Color(20, 20, 20, 200).getRGB());
-                font_A.drawString(s, x, y + 2, color);
+                font_A.drawString(s, x + 0.25f, y + 1.5, new Color(20, 20, 20, 200).getRGB());
+                font_A.drawString(s, x, y+1, color);
                 x += (float) font_A.getStringWidth(s);
             }
         }
         return x;
     }
 
-    public static float _TitleDisplayFont(String str, float x, float y, int color) {
-        //str=" "+str;
-        //ClientUtils.INSTANCE.displayAlert(str);
-        for(int iF = 0; iF < str.length(); ++iF) {
-            String s = String.valueOf(str.toCharArray()[iF]);
-            if (s.contains("§") && iF + 1 <= str.length()) {
-                color = getColor(String.valueOf(str.toCharArray()[iF + 1]));
-                iF++;
-            }else if (isChinese(s.charAt(0))) {
-                Minecraft.getMinecraft().fontRendererObj.drawString(s, x+1.25f, y+0.5f, new Color(20, 20, 20, 200).getRGB(),false);
-                Minecraft.getMinecraft().fontRendererObj.drawString(s, x-0.25f + 1, y, color,false);
-                x += (float)Minecraft.getMinecraft().fontRendererObj.getStringWidth(s);
-            } else {
-                font_A.drawString(s, x+0.25f, y+2.5, new Color(20, 20, 20, 200).getRGB());
-                font_A.drawString(s, x, y+2, color);
-                x += (float)font_A.getStringWidth(s);
-            }
-        }
-        return x;
-        //return font.drawString(str, x, y, color);
-    }
+    public static float DisplayFontWithShadowNormal(String str, float x, float y, int color) {
+        str = replaceChineseSymbols(str);
 
-    public static float _SubTitleDisplayFont(String str, float x, float y, int color) {
-        //str=" "+str;
-        //ClientUtils.INSTANCE.displayAlert(str);
-        for(int iF = 0; iF < str.length(); ++iF) {
+        for (int iF = 0; iF < str.length(); ++iF) {
             String s = String.valueOf(str.toCharArray()[iF]);
             if (s.contains("§") && iF + 1 <= str.length()) {
-                color = getColor(String.valueOf(str.toCharArray()[iF + 1]));
+                color = getColor(String.valueOf(str.toCharArray()[iF + 1]),RGBtoColor(color));
                 iF++;
-            }else if (isChinese(s.charAt(0))) {
-                GlStateManager.pushMatrix();
-                GlStateManager.enableBlend();
-                GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-                GlStateManager.pushMatrix();
-                GlStateManager.scale(4.0F, 4.0F, 4.0F);
-                Minecraft.getMinecraft().fontRendererObj.drawString(s, x+0.25f, y+0.5f, new Color(20, 20, 20, 200).getRGB(),false);
-                Minecraft.getMinecraft().fontRendererObj.drawString(s, x-0.25f, y, color,false);
-                x += (float)Minecraft.getMinecraft().fontRendererObj.getStringWidth(s);
+            } else if (isChinese(s.charAt(0))) {
+                Minecraft.getMinecraft().fontRendererObj.drawString(s, x + 1.25f, y + 0.5f, new Color(20, 20, 20, RGBtoColor(color).getAlpha()).getRGB(), false);
+                Minecraft.getMinecraft().fontRendererObj.drawString(s, x - 0.25f + 1, y, color, false);
+                x += (float) Minecraft.getMinecraft().fontRendererObj.getStringWidth(s);
             } else {
-                font_A.drawString(s, x+0.25f, y+2.5, new Color(20, 20, 20, 200).getRGB());
-                font_A.drawString(s, x, y+2, color);
-                x += (float)font_A.getStringWidth(s);
+                font_N.drawString(s, x + 0.25f, y + 2.5, new Color(20, 20, 20, 200).getRGB());
+                font_N.drawString(s, x, y+2, color);
+                x += (float) font_N.getStringWidth(s);
             }
         }
         return x;
-        //return font.drawString(str, x, y, color);
     }
 
     public static float DisplayFont(String str, float x, float y, int color) {
@@ -547,11 +495,12 @@ public class CFontRenderer extends CFont {
         for(int iF = 0; iF < str.length(); ++iF) {
             String s = String.valueOf(str.toCharArray()[iF]);
             if (s.contains("§") && iF + 1 <= str.length()) {
-                color = getColor(String.valueOf(str.toCharArray()[iF + 1]));
+                color = getColor(String.valueOf(str.toCharArray()[iF + 1]),RGBtoColor(color));
                 iF++;
             } else if (isChinese(s.charAt(0))) {
-                Minecraft.getMinecraft().fontRendererObj.drawString(s, x, y, color,false);
-                x += (float)Minecraft.getMinecraft().fontRendererObj.getStringWidth(s)-0.25F+1;
+                Minecraft.getMinecraft().fontRendererObj.drawString(s, x+0.25f, y+0.5f, new Color(20, 20, 20, RGBtoColor(color).getAlpha()).getRGB(),false);
+                Minecraft.getMinecraft().fontRendererObj.drawString(s, x-0.25f, y, color,false);
+                x += (float) Minecraft.getMinecraft().fontRendererObj.getStringWidth(s);
             } else{
                 font_A.drawString(s, x, y, color);
                 x += (float)font_A.getStringWidth(s);
@@ -560,25 +509,25 @@ public class CFontRenderer extends CFont {
         return x;
     }
 
-    public static float DisplayFonts(String str, float x, float y, int color) {
-        //str=" "+str;
+    public static float DisplayFontNormal(String str, float x, float y, int color) {
+        // str=" "+str;
         str = replaceChineseSymbols(str);
         for(int iF = 0; iF < str.length(); ++iF) {
             String s = String.valueOf(str.toCharArray()[iF]);
             if (s.contains("§") && iF + 1 <= str.length()) {
-                color = getColor(String.valueOf(str.toCharArray()[iF + 1]));
+                color = getColor(String.valueOf(str.toCharArray()[iF + 1]),RGBtoColor(color));
                 iF++;
             } else if (isChinese(s.charAt(0))) {
-                Minecraft.getMinecraft().fontRendererObj.drawString(s, x-1.5f, y-1, color,false);
-                x += (float)Minecraft.getMinecraft().fontRendererObj.getStringWidth(s)-0.25F+1;
+                Minecraft.getMinecraft().fontRendererObj.drawString(s, x+0.25f, y+0.5f, new Color(20, 20, 20, RGBtoColor(color).getAlpha()).getRGB(),false);
+                Minecraft.getMinecraft().fontRendererObj.drawString(s, x-0.25f, y, color,false);
+                x += (float) Minecraft.getMinecraft().fontRendererObj.getStringWidth(s);
             } else{
-                font_A.drawString(s, x+0.5f, y+1, color);
-                x += font_A.getStringWidth(s);
+                font_N.drawString(s, x, y+2, color);
+                x += (float)font_N.getStringWidth(s);
             }
         }
         return x;
     }
-
 
     public void setFont(Font font) {
         super.setFont(font);

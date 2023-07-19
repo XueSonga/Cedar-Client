@@ -1,0 +1,98 @@
+---- Minecraft Crash Report ----
+// Don't do that.
+
+Time: 23-7-20 上午12:00
+Description: Updating screen events
+
+java.lang.NullPointerException: Updating screen events
+	at cn.XueSong.Client.gui.clickgui.CategoryPanel.mouseClicked(CategoryPanel.java:59)
+	at cn.XueSong.Client.gui.clickgui.ClickGui.lambda$mouseClicked$1(ClickGui.java:31)
+	at java.util.ArrayList.forEach(ArrayList.java:1259)
+	at cn.XueSong.Client.gui.clickgui.ClickGui.mouseClicked(ClickGui.java:31)
+	at net.minecraft.client.gui.GuiScreen.handleMouseInput(GuiScreen.java:625)
+	at net.minecraft.client.gui.GuiScreen.handleInput(GuiScreen.java:594)
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1797)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1122)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:428)
+	at net.minecraft.client.main.Main.main(Main.java:113)
+	at Start.main(Start.java:11)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at cn.XueSong.Client.gui.clickgui.CategoryPanel.mouseClicked(CategoryPanel.java:59)
+	at cn.XueSong.Client.gui.clickgui.ClickGui.lambda$mouseClicked$1(ClickGui.java:31)
+	at java.util.ArrayList.forEach(ArrayList.java:1259)
+	at cn.XueSong.Client.gui.clickgui.ClickGui.mouseClicked(ClickGui.java:31)
+	at net.minecraft.client.gui.GuiScreen.handleMouseInput(GuiScreen.java:625)
+	at net.minecraft.client.gui.GuiScreen.handleInput(GuiScreen.java:594)
+
+-- Affected screen --
+Details:
+	Screen name: cn.XueSong.Client.gui.clickgui.ClickGui
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 1 total; [EntityPlayerSP['LOsadnwj'/81, l='MpServer', x=147.77, y=4.00, z=-967.93]]
+	Chunk stats: MultiplayerChunkCache: 210, 210
+	Level seed: 0
+	Level generator: ID 01 - flat, ver 0. Features enabled: false
+	Level generator options: 
+	Level spawn location: -361.00,4.00,-677.00 - World: (-361,4,-677), Chunk: (at 7,0,11 in -23,-43; contains blocks -368,0,-688 to -353,255,-673), Region: (-1,-2; contains chunks -32,-64 to -1,-33, blocks -512,0,-1024 to -1,255,-513)
+	Level time: 613438 game time, 150844 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 59 total; [EntityXPOrb['经验球'/128, l='MpServer', x=145.16, y=4.00, z=-923.53], EntitySlime['史莱姆'/129, l='MpServer', x=155.19, y=4.93, z=-925.45], EntitySlime['史莱姆'/130, l='MpServer', x=151.16, y=4.00, z=-925.97], EntitySlime['史莱姆'/131, l='MpServer', x=147.81, y=4.00, z=-897.38], EntitySlime['史莱姆'/132, l='MpServer', x=148.53, y=4.00, z=-902.78], EntityXPOrb['经验球'/133, l='MpServer', x=166.47, y=4.00, z=-935.28], EntityXPOrb['经验球'/134, l='MpServer', x=166.16, y=4.00, z=-940.19], EntityXPOrb['经验球'/135, l='MpServer', x=171.50, y=4.00, z=-896.72], EntitySlime['史莱姆'/136, l='MpServer', x=171.92, y=4.00, z=-906.51], EntitySlime['史莱姆'/137, l='MpServer', x=162.97, y=4.00, z=-909.28], EntityXPOrb['经验球'/138, l='MpServer', x=173.00, y=4.00, z=-895.00], EntitySlime['史莱姆'/141, l='MpServer', x=191.94, y=4.00, z=-1042.69], EntitySlime['史莱姆'/142, l='MpServer', x=187.79, y=4.70, z=-1033.98], EntitySlime['史莱姆'/143, l='MpServer', x=192.63, y=4.00, z=-1018.09], EntitySlime['史莱姆'/144, l='MpServer', x=179.09, y=4.00, z=-999.09], EntitySlime['史莱姆'/145, l='MpServer', x=184.75, y=4.00, z=-922.88], EntitySlime['史莱姆'/146, l='MpServer', x=181.97, y=4.00, z=-905.56], EntitySlime['史莱姆'/150, l='MpServer', x=199.19, y=4.00, z=-970.31], EntitySlime['史莱姆'/151, l='MpServer', x=203.44, y=4.00, z=-915.44], EntitySlime['史莱姆'/152, l='MpServer', x=208.22, y=4.26, z=-917.59], EntitySlime['史莱姆'/153, l='MpServer', x=214.86, y=4.26, z=-915.42], EntitySlime['史莱姆'/156, l='MpServer', x=228.03, y=4.32, z=-934.41], EntityPlayerSP['LOsadnwj'/81, l='MpServer', x=147.77, y=4.00, z=-967.93], EntityItem['item.item.slimeball'/82, l='MpServer', x=151.69, y=4.00, z=-961.00], EntityXPOrb['经验球'/83, l='MpServer', x=154.36, y=4.00, z=-970.05], EntitySlime['史莱姆'/86, l='MpServer', x=78.06, y=4.00, z=-925.34], EntitySlime['史莱姆'/87, l='MpServer', x=73.21, y=4.70, z=-897.88], EntitySlime['史莱姆'/88, l='MpServer', x=76.47, y=4.00, z=-893.88], EntitySlime['史莱姆'/89, l='MpServer', x=87.85, y=4.93, z=-941.50], EntitySlime['史莱姆'/90, l='MpServer', x=86.13, y=4.26, z=-918.61], EntitySlime['史莱姆'/91, l='MpServer', x=106.84, y=4.00, z=-1034.53], EntitySlime['史莱姆'/92, l='MpServer', x=107.97, y=4.00, z=-998.09], EntitySlime['史莱姆'/93, l='MpServer', x=106.69, y=4.00, z=-970.22], EntitySlime['史莱姆'/94, l='MpServer', x=99.53, y=4.00, z=-943.28], EntitySlime['史莱姆'/95, l='MpServer', x=105.34, y=4.00, z=-921.75], EntitySlime['史莱姆'/97, l='MpServer', x=119.85, y=5.07, z=-1032.47], EntitySlime['史莱姆'/98, l='MpServer', x=121.41, y=4.00, z=-931.63], EntitySlime['史莱姆'/99, l='MpServer', x=117.72, y=4.00, z=-932.47], EntitySlime['史莱姆'/100, l='MpServer', x=124.30, y=4.93, z=-933.41], EntitySlime['史莱姆'/101, l='MpServer', x=127.72, y=4.00, z=-939.44], EntitySlime['史莱姆'/102, l='MpServer', x=120.31, y=4.00, z=-922.91], EntitySlime['史莱姆'/103, l='MpServer', x=114.75, y=4.00, z=-919.91], EntitySlime['史莱姆'/108, l='MpServer', x=130.06, y=4.00, z=-1022.94], EntitySlime['史莱姆'/109, l='MpServer', x=131.25, y=4.00, z=-1024.56], EntitySlime['史莱姆'/110, l='MpServer', x=133.52, y=4.18, z=-976.26], EntitySlime['史莱姆'/111, l='MpServer', x=144.53, y=4.00, z=-981.72], EntitySlime['史莱姆'/112, l='MpServer', x=144.16, y=4.00, z=-971.34], EntitySlime['史莱姆'/113, l='MpServer', x=131.13, y=4.00, z=-959.75], EntitySlime['史莱姆'/114, l='MpServer', x=134.42, y=5.48, z=-913.73], EntityXPOrb['经验球'/115, l='MpServer', x=136.56, y=4.00, z=-911.25], EntitySlime['史莱姆'/116, l='MpServer', x=143.25, y=4.00, z=-899.78], EntitySlime['史莱姆'/120, l='MpServer', x=145.65, y=4.40, z=-1031.51], EntitySlime['史莱姆'/121, l='MpServer', x=156.88, y=5.07, z=-1029.51], EntitySlime['史莱姆'/122, l='MpServer', x=156.34, y=4.00, z=-995.84], EntitySlime['史莱姆'/123, l='MpServer', x=154.09, y=4.00, z=-945.78], EntitySlime['史莱姆'/124, l='MpServer', x=147.13, y=4.00, z=-942.69], EntitySlime['史莱姆'/125, l='MpServer', x=153.56, y=4.00, z=-939.44], EntitySlime['史莱姆'/126, l='MpServer', x=148.53, y=4.93, z=-941.35], EntityXPOrb['经验球'/127, l='MpServer', x=150.88, y=4.00, z=-919.94]]
+	Retry entities: 0 total; []
+	Server brand: vanilla
+	Server type: Integrated singleplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:403)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2775)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:449)
+	at net.minecraft.client.main.Main.main(Main.java:113)
+	at Start.main(Start.java:11)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.9
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 1.8.0_382, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Amazon.com Inc.
+	Memory: 550199288 bytes (524 MB) / 905445376 bytes (863 MB) up to 3763863552 bytes (3589 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	Launched Version: mcp
+	LWJGL: 2.9.4
+	OpenGL: NVIDIA GeForce GTX 1070/PCIe/SSE2 GL version 4.6.0 NVIDIA 545.37, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: Yes
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: !            §5§lZOVA MASHUP V4(1).zip
+	Current Language: 简体中文 (中国)
+	Profiler Position: N/A (disabled)
+	CPU: <unknown>
+	OptiFine Version: OptiFine_1.8.9_HD_U_M5
+	OptiFine Build: ~~NULL~~
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: 动态模糊光影.zip
+	OpenGlVersion: 4.6.0 NVIDIA 545.37
+	OpenGlRenderer: NVIDIA GeForce GTX 1070/PCIe/SSE2
+	OpenGlVendor: NVIDIA Corporation
+	CpuCount: 8

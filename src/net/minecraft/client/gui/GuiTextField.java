@@ -553,7 +553,7 @@ public class GuiTextField extends Gui
             if (s.length() > 0)
             {
                 String s1 = flag ? s.substring(0, j) : s;
-                j1 = (int) CFontRenderer.DisplayFontWithShadow(s1,(float)l,(float)i1,i);
+                j1 = (int) CFontRenderer.DisplayFontWithShadowNormal(s1,(float)l,(float)i1,i);
                 //j1 = this.fontRendererInstance.drawStringWithShadow(s1, (float)l, (float)i1, i);
             }
 
@@ -572,7 +572,7 @@ public class GuiTextField extends Gui
 
             if (s.length() > 0 && flag && j < s.length())
             {
-                j1 = (int) CFontRenderer.DisplayFontWithShadow(s.substring(j),(float)j1,(float)i1, i);
+                j1 = (int) CFontRenderer.DisplayFontWithShadowNormal(s.substring(j),(float)j1,(float)i1, i);
                 //j1 = this.fontRendererInstance.drawStringWithShadow(s.substring(j), (float)j1, (float)i1, i);
             }
 
@@ -584,7 +584,7 @@ public class GuiTextField extends Gui
                 }
                 else
                 {
-                    CFontRenderer.DisplayFontWithShadow("_",(float)k1,(float) i1,i);
+                    CFontRenderer.DisplayFontWithShadowNormal("_",(float)k1,(float) i1,i);
                     //this.fontRendererInstance.drawStringWithShadow("_", (float)k1, (float)i1, i);
                 }
             }

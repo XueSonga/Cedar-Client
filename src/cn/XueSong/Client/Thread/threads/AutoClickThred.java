@@ -22,7 +22,7 @@ public class AutoClickThred implements Runnable {
     private static final Random random = new Random();
     private static final Set<String> VALID_SWORD_NAMES = new HashSet<>();
 
-    public static Boolean AutoBlock = false;
+    public static Boolean AutoBlock = true;
 
     static {
         VALID_SWORD_NAMES.add("minecraft:wooden_sword");
@@ -48,7 +48,6 @@ public class AutoClickThred implements Runnable {
     @Override
     public void run() {
         while (true) {
-            while (true) {
                 if (AutoClickisOn) {
                     long currentTime = System.currentTimeMillis();
                     long elapsedTime = currentTime - lastRenderTime;
@@ -57,7 +56,7 @@ public class AutoClickThred implements Runnable {
                         if (Minecraft.getMinecraft().gameSettings.keyBindAttack.isKeyDown()) {
                             ItemStack heldItem = Minecraft.getMinecraft().thePlayer.getHeldItem();
                             if (heldItem == null || heldItem.getItem() == null) {
-                                break;
+                                continue;
                             }
                             Item heldItemType = heldItem.getItem();
                             String heldItemName = Item.itemRegistry.getNameForObject(heldItemType).toString();
@@ -83,4 +82,3 @@ public class AutoClickThred implements Runnable {
             }
         }
     }
-}

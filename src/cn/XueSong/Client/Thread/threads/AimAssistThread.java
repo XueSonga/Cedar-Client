@@ -65,7 +65,7 @@ public class AimAssistThread implements Runnable{
         mc.thePlayer.rotationYaw += yawDifference * aimSpeed;
         mc.thePlayer.rotationPitch += (targetPitch - mc.thePlayer.rotationPitch) * aimSpeed;
     }
-
+    TeamUtil teamUtil = new TeamUtil();
 
     private boolean isPlayerValid(EntityPlayer player) {
         // 检查玩家是否还活着，不是隐形的，并且在指定的距离内，且不在同一个队伍中
@@ -73,7 +73,7 @@ public class AimAssistThread implements Runnable{
                 && player.isEntityAlive()
                 && !player.isInvisible()
                 && mc.thePlayer.getDistanceSqToEntity(player) <= maxDistance * maxDistance
-                && !TeamUtil.isInSameTeam(player, mc.thePlayer);
+                && !TeamUtil.isSameTeam(mc.thePlayer, player);
     }
 
 }

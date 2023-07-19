@@ -1,6 +1,7 @@
 package net.minecraft.client;
 
 import cn.XueSong.Client.Client;
+import cn.XueSong.Client.font.CFontRenderer;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -15,6 +16,7 @@ import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -627,7 +629,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     private void createDisplay() throws LWJGLException
     {
         Display.setResizable(true);
-        Display.setTitle("XUEClient loading...");
+        Display.setTitle("CedarClient loading... By CedarToday XueSonga");
         try
         {
             Display.create((new PixelFormat()).withDepthBits(24));
@@ -896,6 +898,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     private void drawSplashScreen(TextureManager textureManagerInstance) throws LWJGLException
     {
         ScaledResolution scaledresolution = new ScaledResolution(this);
+        int width = scaledresolution.getScaledWidth();
+        int height = scaledresolution.getScaledHeight();
         int i = scaledresolution.getScaleFactor();
         Framebuffer framebuffer = new Framebuffer(scaledresolution.getScaledWidth() * i, scaledresolution.getScaledHeight() * i, true);
         framebuffer.bindFramebuffer(false);
@@ -929,15 +933,21 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-        worldrenderer.pos(0.0D, (double)this.displayHeight, 0.0D).tex(0.0D, 0.0D).color(255, 255, 255, 255).endVertex();
-        worldrenderer.pos((double)this.displayWidth, (double)this.displayHeight, 0.0D).tex(0.0D, 0.0D).color(255, 255, 255, 255).endVertex();
-        worldrenderer.pos((double)this.displayWidth, 0.0D, 0.0D).tex(0.0D, 0.0D).color(255, 255, 255, 255).endVertex();
-        worldrenderer.pos(0.0D, 0.0D, 0.0D).tex(0.0D, 0.0D).color(255, 255, 255, 255).endVertex();
+        worldrenderer.pos(0.0D, (double)this.displayHeight, 0.0D).tex(0.0D, 0.0D).color(0, 0, 0, 255).endVertex();
+        worldrenderer.pos((double)this.displayWidth, (double)this.displayHeight, 0.0D).tex(0.0D, 0.0D).color(0, 0, 0, 255).endVertex();
+        worldrenderer.pos((double)this.displayWidth, 0.0D, 0.0D).tex(0.0D, 0.0D).color(0, 0, 0, 0).endVertex();
+        worldrenderer.pos(0.0D, 0.0D, 0.0D).tex(0.0D, 0.0D).color(0, 0, 0, 255).endVertex();
         tessellator.draw();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 0.0F);
         int j = 256;
         int k = 256;
-        this.draw((scaledresolution.getScaledWidth() - j) / 2, (scaledresolution.getScaledHeight() - k) / 2, 0, 0, j, k, 255, 255, 255, 255);
+        CFontRenderer font_B = new CFontRenderer("tenacity-bold", 40.0F, Font.PLAIN, true, true);//标题
+        CFontRenderer font_A = new CFontRenderer("tenacity-bold", 20.0F, Font.PLAIN, true, true);//标题
+        String text1 = Client.NAEM+"Client Loading";
+        String text2 = "Client by CedarToday";
+        font_B.drawString(text1,width/2- (float) font_B.getStringWidth(text1) /2, (float) height /2- (float) font_B.getStringHeight(text1) /2 - (float) font_A.getStringHeight(text2) - 2,Color.WHITE.getRGB());
+        font_A.drawString(text2,width/2- (float) font_A.getStringWidth(text2) /2, (float) height /2- (float) font_A.getStringHeight(text2) /2 + 10,Color.WHITE.getRGB());
+        //this.draw((scaledresolution.getScaledWidth() - j) / 2, (scaledresolution.getScaledHeight() - k) / 2, 0, 0, j, k, 255, 255, 255, 255);
         GlStateManager.disableLighting();
         GlStateManager.disableFog();
         framebuffer.unbindFramebuffer();

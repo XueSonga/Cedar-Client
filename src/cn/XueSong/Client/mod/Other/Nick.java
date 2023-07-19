@@ -1,5 +1,6 @@
 package cn.XueSong.Client.mod.Other;
 
+import cn.XueSong.Client.mod.Category;
 import cn.XueSong.Client.mod.Mod;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
@@ -9,7 +10,7 @@ public class Nick extends Mod {
 
     public static Minecraft mc = Minecraft.getMinecraft();
     public Nick() {
-        super("Nick", "匿名模式[K]", isNick);
+        super("Nick", "匿名模式[K]", isNick, Category.Other);
         setKey(Keyboard.KEY_K);
     }
 

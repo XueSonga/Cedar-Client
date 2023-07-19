@@ -5,6 +5,7 @@ import cn.XueSong.Client.mod.Combo.AimAssist;
 import cn.XueSong.Client.mod.MoveMent.Sprint;
 import cn.XueSong.Client.mod.Other.Nick;
 import cn.XueSong.Client.mod.Other.Serverdetection;
+import cn.XueSong.Client.mod.Render.ClickGUI;
 import cn.XueSong.Client.mod.Render.Hud;
 import cn.XueSong.Client.mod.Render.NameTag;
 import cn.XueSong.Client.mod.Render.fullbright;
@@ -37,6 +38,28 @@ public class ModManager {
         }
     }
 
+    public Mod getByName(String name) {
+        for (Mod mod : mods) {
+            if (name.equalsIgnoreCase(mod.getName())) {
+                return mod;
+            }
+        }
+        return null;
+    }
+
+    public Mod getByClass(Class<? extends Mod> modClass) {
+        for (Mod mod : mods) {
+            if (mod.getClass() == modClass) {
+                return mod;
+            }
+        }
+        return null;
+    }
+
+    public List<Mod> getByCategory(Category category) {
+        return mods.stream().filter(m -> m.getCategory() == category).collect(Collectors.toList());
+    }
+
     public void load() {
         mods.add(new Sprint());
         mods.add(new Hud());
@@ -46,5 +69,6 @@ public class ModManager {
         mods.add(new Serverdetection());
         mods.add(new Nick());
         mods.add(new NameTag());
+        mods.add(new ClickGUI());
     }
 }

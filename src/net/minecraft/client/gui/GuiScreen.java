@@ -254,7 +254,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
             {
                 String s1 = (String)textLines.get(k1);
                 //this.fontRendererObj.drawStringWithShadow(s1, (float)l1, (float)i2, -1);
-                CFontRenderer.DisplayFontWithShadow(s1, (float)l1, (float)i2, -1);
+                CFontRenderer.DisplayFontNormal(s1, (float)l1, (float)i2, -1);
                 if (k1 == 0)
                 {
                     i2 += 2;

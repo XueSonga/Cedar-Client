@@ -195,7 +195,7 @@ public class Gui
     public void drawCenteredString(FontRenderer fontRendererIn, String text, int x, int y, int color)
     {
         //fontRendererIn.drawStringWithShadow(text, (float)(x - fontRendererIn.getStringWidth(text) / 2), (float)y, color);
-        CFontRenderer.DisplayFontWithShadow(text, (float)(x - font_A.getStringWidth(text) / 2), (float)y, color);
+        CFontRenderer.DisplayFontWithShadowNormal(text, (float)(x - font_A.getStringWidth(text) / 2), (float)y, color);
     }
 
     /**
@@ -204,7 +204,7 @@ public class Gui
     public void drawString(FontRenderer fontRendererIn, String text, int x, int y, int color)
     {
         //fontRendererIn.drawStringWithShadow(text, (float)x, (float)y, color);
-        CFontRenderer.DisplayFontWithShadow(text, (float)x, (float)y, color);
+        CFontRenderer.DisplayFontWithShadowNormal(text, (float)x, (float)y, color);
     }
 
     /**

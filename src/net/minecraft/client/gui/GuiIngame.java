@@ -275,7 +275,7 @@ public class GuiIngame extends Gui
                     l = MathHelper.hsvToRGB(f2 / 50.0F, 0.7F, 0.6F) & 16777215;
                 }
 
-                CFontRenderer.DisplayFontWithShadow(this.recordPlaying, (float) -font_A.getStringWidth(this.recordPlaying)/ 2, -4, l + (l1 << 24 & -16777216));
+                CFontRenderer.DisplayFontWithShadowNormal(this.recordPlaying, (float) -font_A.getStringWidth(this.recordPlaying)/ 2, -4, l + (l1 << 24 & -16777216));
                 GlStateManager.disableBlend();
                 GlStateManager.popMatrix();
             }
@@ -311,11 +311,11 @@ public class GuiIngame extends Gui
                 GlStateManager.pushMatrix();
                 GlStateManager.scale(4.0F, 4.0F, 4.0F);
                 int j2 = i2 << 24 & -16777216;
-                CFontRenderer.DisplayFontWithShadow(this.displayedTitle, (float)(-font_A.getStringWidth(this.displayedTitle) / 2), -10.0F, 16777215 | j2);
+                CFontRenderer.DisplayFontWithShadowNormal(this.displayedTitle, (float)(-font_A.getStringWidth(this.displayedTitle) / 2), -10.0F, 16777215 | j2);
                 GlStateManager.popMatrix();
                 GlStateManager.pushMatrix();
                 GlStateManager.scale(2.0F, 2.0F, 2.0F);
-                CFontRenderer.DisplayFontWithShadow(this.displayedSubTitle, (float)(-font_A.getStringWidth(this.displayedSubTitle) / 2), 5.0F, 16777215 | j2);
+                CFontRenderer.DisplayFontWithShadowNormal(this.displayedSubTitle, (float)(-font_A.getStringWidth(this.displayedSubTitle) / 2), 5.0F, 16777215 | j2);
                 GlStateManager.popMatrix();
                 GlStateManager.disableBlend();
                 GlStateManager.popMatrix();
@@ -503,11 +503,11 @@ public class GuiIngame extends Gui
             int l1 = (scaledRes.getScaledWidth() - font_A.getStringWidth(s)) / 2;
             int i1 = scaledRes.getScaledHeight() - 31 - 4;
             int j1 = 0;
-            CFontRenderer.DisplayFontWithShadow(s, l1 + 1, i1, 0);
-            CFontRenderer.DisplayFontWithShadow(s, l1 - 1, i1, 0);
-            CFontRenderer.DisplayFontWithShadow(s, l1, i1 + 1, 0);
-            CFontRenderer.DisplayFontWithShadow(s, l1, i1 - 1, 0);
-            CFontRenderer.DisplayFontWithShadow(s, l1, i1, k1);
+            CFontRenderer.DisplayFontNormal(s, l1 + 1, i1, 0);
+            CFontRenderer.DisplayFontNormal(s, l1 - 1, i1, 0);
+            CFontRenderer.DisplayFontNormal(s, l1, i1 + 1, 0);
+            CFontRenderer.DisplayFontNormal(s, l1, i1 - 1, 0);
+            CFontRenderer.DisplayFontNormal(s, l1, i1, k1);
             this.mc.mcProfiler.endSection();
         }
     }
@@ -545,7 +545,7 @@ public class GuiIngame extends Gui
                 GlStateManager.pushMatrix();
                 GlStateManager.enableBlend();
                 GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-                CFontRenderer.DisplayFontWithShadow(s, (float)i, (float)j, 16777215 + (k << 24));
+                CFontRenderer.DisplayFont(s, (float)i, (float)j, 16777215 + (k << 24));
                 GlStateManager.disableBlend();
                 GlStateManager.popMatrix();
             }
@@ -569,7 +569,7 @@ public class GuiIngame extends Gui
         }
 
         int i = font_A.getStringWidth(s);
-        CFontRenderer.DisplayFontWithShadow(s, (float)(scaledRes.getScaledWidth() - i - 10), 5.0F, 16777215);
+        CFontRenderer.DisplayFontNormal(s, (float)(scaledRes.getScaledWidth() - i - 10), 5.0F, 16777215);
         this.mc.mcProfiler.endSection();
     }
 
@@ -655,13 +655,13 @@ public class GuiIngame extends Gui
             String s2 = EnumChatFormatting.RED + "" + score1.getScorePoints();
             k = j1 + 40 - j * (font_A.getStringHeight("A")+3);
             l = scaledRes.getScaledWidth() - k1 + 2;
-            CFontRenderer.DisplayFontWithShadow(s1, l1, k, Color.WHITE.getRGB());
+            CFontRenderer.DisplayFontNormal(s1, l1, k, Color.WHITE.getRGB());
             //CFontRenderer.DisplayFontWithShadow(s2, l - font_A.getStringWidth(s2), k, 553648127);
             if (j == collection.size()) {
                 String s3 = objective.getDisplayName();
                 //drawRect(l1 - 2, k - font_A.getStringHeight("A") - 1, l, k - 1, 1610612736);
                 //drawRect(l1 - 2, k - 1, l, k, 1342177280);
-                CFontRenderer.DisplayFontWithShadow(s3, l1 + i / 2 - font_A.getStringWidth(s3) / 2, k - font_A.getStringHeight("A")-3, Color.WHITE.getRGB());
+                CFontRenderer.DisplayFontNormal(s3, l1 + i / 2 - font_A.getStringWidth(s3) / 2, k - font_A.getStringHeight("A")-3, Color.WHITE.getRGB());
             }
 
         }
@@ -980,7 +980,7 @@ public class GuiIngame extends Gui
             }
 
             String s = BossStatus.bossName;
-            CFontRenderer.DisplayFontWithShadow(s, (float)(i / 2 - font_A.getStringWidth(s) / 2), (float)(i1 - 10), 16777215);
+            CFontRenderer.DisplayFontWithShadowNormal(s, (float)(i / 2 - font_A.getStringWidth(s) / 2), (float)(i1 - 10), 16777215);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.mc.getTextureManager().bindTexture(icons);
         }

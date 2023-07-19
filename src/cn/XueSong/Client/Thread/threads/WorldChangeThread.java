@@ -18,6 +18,11 @@ public class WorldChangeThread implements Runnable {
     public void run() {
         while (true) {
             if (mc.theWorld != lastWorld) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 onWorldChange();
                 lastWorld = mc.theWorld;
             }

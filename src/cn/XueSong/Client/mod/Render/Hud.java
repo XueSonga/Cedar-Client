@@ -2,6 +2,7 @@ package cn.XueSong.Client.mod.Render;
 
 import cn.XueSong.Client.Client;
 import cn.XueSong.Client.font.CFontRenderer;
+import cn.XueSong.Client.mod.Category;
 import cn.XueSong.Client.mod.Mod;
 import cn.XueSong.Client.util.render.ColorUtil;
 import cn.XueSong.Client.util.render.RenderUtil;
@@ -21,14 +22,14 @@ public class Hud extends Mod {
     public static Boolean Modlist = true;
     public static Boolean ShowFps = true;
 
-    private static final CFontRenderer font_A = new CFontRenderer("Roboto-Medium", 18.0F, Font.PLAIN, true, true);//普通
-    private static final CFontRenderer font_B = new CFontRenderer("SFBOLD", 30.0F, Font.PLAIN, true, true);//标题
-    private static final CFontRenderer font_C = new CFontRenderer("SFBOLD", 17.0F, Font.PLAIN, true, true);//版本
+    private static final CFontRenderer font_A = new CFontRenderer("Nunito", 18.0F, Font.PLAIN, true, true);//普通
+    private static final CFontRenderer font_B = new CFontRenderer("tenacity-bold", 30.0F, Font.PLAIN, true, true);//标题
+    private static final CFontRenderer font_C = new CFontRenderer("tenacity-bold", 17.0F, Font.PLAIN, true, true);//版本
 
     public double round = 5;
 
     public Hud() {
-        super("HUD", "界面", true);
+        super("HUD", "界面", true, Category.Render);
     }
     @Override
     public void render(float partialTicks) {
@@ -47,8 +48,8 @@ public class Hud extends Mod {
         int y_logo = 6;
         int x_logo = 8;
         if (ClientLogo) {
-            font_C.drawStringWithShadow(Client.VERSION, width - font_C.getStringWidth(Client.VERSION) - x_logo, y_logo + font_B.getStringHeight(Client.NAEM) - font_C.getStringHeight(Client.VERSION) - 1, new Color(255, 197, 0, 255).getRGB());
-            font_B.drawStringWithShadow(Client.NAEM, width - font_B.getStringWidth(Client.NAEM) - font_C.getStringWidth(Client.VERSION) - x_logo - 1, y_logo, new Color(107, 228, 255, 255).getRGB());
+            font_C.drawString(Client.VERSION, width - font_C.getStringWidth(Client.VERSION) - x_logo, y_logo + font_B.getStringHeight(Client.NAEM) - font_C.getStringHeight(Client.VERSION) - 1, new Color(218, 218, 218, 255).getRGB());
+            font_B.drawString(Client.NAEM, width - font_B.getStringWidth(Client.NAEM) - font_C.getStringWidth(Client.VERSION) - x_logo - 1, y_logo, new Color(255, 255, 255, 255).getRGB());
         }
     }
 
@@ -79,11 +80,11 @@ public class Hud extends Mod {
                     ModList_x = width - font_A.getStringWidth(enableMod.getName()) - font_A.getStringWidth(Modtype) - x_modlist - 2;
                 }
 
-                Gui.drawRect((int) (ModList_x - 2), (int) (y_modlist + font_A.getStringHeight("A") + 3), (int) (width - x_modlist + 2), (int) (y_modlist - 1), new Color(112, 112, 112, 116).getRGB());
-                Gui.drawRect((int) (ModList_x + ModList_long + 5), (int) (y_modlist + font_A.getStringHeight("A") + 3), (int) (ModList_x + ModList_long + 4), (int) (y_modlist - 1), new Color(0, 255, 255, 255).getRGB());
-                CFontRenderer.DisplayFontWithShadow(enableMod.getName(), (float) ModList_x, (float) y_modlist, new Color(255, 255, 255, 255).getRGB());
+                Gui.drawRect((int) (ModList_x - 2), (int) (y_modlist + font_A.getStringHeight("A")+1    ), (int) (width - x_modlist + 2), (int) (y_modlist - 1), new Color(103, 103, 103, 116).getRGB());
+                Gui.drawRect((int) (ModList_x + ModList_long + 5), (int) (y_modlist + font_A.getStringHeight("A") + 1), (int) (ModList_x + ModList_long + 4), (int) (y_modlist - 1), new Color(255, 255, 255, 255).getRGB());
+                CFontRenderer.DisplayFont(enableMod.getName(), (float) ModList_x, (float) y_modlist+1, new Color(255, 255, 255, 255).getRGB());
                 if (!Objects.equals(enableMod.getType(), "") || !Objects.equals(enableMod.getType(), " ")){
-                    CFontRenderer.DisplayFontWithShadow(enableMod.getType(), (float) (width - font_A.getStringWidth(Modtype) - x_modlist), (float) y_modlist, new Color(0, 255, 178, 210).getRGB());
+                    CFontRenderer.DisplayFontWithShadow(enableMod.getType(), (float) (width - font_A.getStringWidth(Modtype) - x_modlist), (float) y_modlist, new Color(0, 255, 181, 210).getRGB());
                 }
                 y_modlist = y_modlist + 11;
             }
@@ -107,8 +108,8 @@ public class Hud extends Mod {
         if (ShowFps) {
             RenderUtil.dropShadow(10, x_showFps_backdrop, y_showFps_backdrop, width_showFps, height_shouwFps, 40, round + 5);
             CShaders.CQ_SHADER.draw(x_showFps_backdrop,y_showFps_backdrop, width_showFps, height_shouwFps, round, new Color(10, 10, 10, 170));
-            font_A.drawStringWithShadow(text, x_showFps, y_showFps, Color.WHITE.getRGB());
-            font_A.drawStringWithShadow(FPS, font_A.getStringWidth(text) + x_showFps, y_showFps, new Color(190, 190, 190).getRGB());
+            font_A.drawString(text, x_showFps, y_showFps, Color.WHITE.getRGB());
+            font_A.drawString(FPS, font_A.getStringWidth(text) + x_showFps, y_showFps, new Color(190, 190, 190).getRGB());
         }
     }
 
@@ -127,8 +128,8 @@ public class Hud extends Mod {
         if (ShowFps) {
             RenderUtil.dropShadow(10, x_NAME_backdrop, y_NAME_backdrop, width_showFps, height_shouwFps, 40, round + 5);
             CShaders.CQ_SHADER.draw(x_NAME_backdrop,y_NAME_backdrop, width_showFps, height_shouwFps, round, new Color(10, 10, 10, 170));
-            font_A.drawStringWithShadow(text, x_NAME, y_NAME, Color.WHITE.getRGB());
-            CFontRenderer.DisplayFontWithShadow(Name, (float) (font_A.getStringWidth(text) + x_NAME), (float) y_NAME-2, new Color(190, 190, 190).getRGB());
+            font_A.drawString(text, x_NAME, y_NAME, Color.WHITE.getRGB());
+            CFontRenderer.DisplayFont(Name, (float) (font_A.getStringWidth(text) + x_NAME), (float) y_NAME, new Color(190, 190, 190).getRGB());
         }
     }
 }

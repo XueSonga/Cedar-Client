@@ -1,14 +1,14 @@
 package cn.XueSong.Client.mod.Combo;
 
 import cn.XueSong.Client.Thread.threads.AimAssistThread;
+import cn.XueSong.Client.mod.Category;
 import cn.XueSong.Client.mod.Mod;
-import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 
 public class AimAssist extends Mod {
     // Constructor
     public AimAssist() {
-        super("AimAssist", "自动瞄准[F]", true);
+        super("AimAssist", "自动瞄准[F]", true, Category.Combo);
         AimAssistThread.setAimAssistEnabled(true);
         setKey(Keyboard.KEY_F);
     }

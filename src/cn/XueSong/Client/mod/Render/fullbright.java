@@ -1,8 +1,7 @@
 package cn.XueSong.Client.mod.Render;
 
-import cn.XueSong.Client.Client;
+import cn.XueSong.Client.mod.Category;
 import cn.XueSong.Client.mod.Mod;
-import cn.XueSong.Client.mod.ModManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -12,7 +11,7 @@ public class fullbright extends Mod {
     Boolean fullbrightBoolean = false;
 
     public fullbright() {
-        super("Fullbright", "视角高亮", true);
+        super("Fullbright", "视角高亮", true, Category.Render);
     }
 
     @Override

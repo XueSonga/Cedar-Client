@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
@@ -25,11 +26,11 @@ import static org.lwjgl.opengl.GL11.glBegin;
 
 public class RenderUtil {
     static Minecraft mc = Minecraft.getMinecraft();
-    private static final CFontRenderer font_A = new CFontRenderer("Roboto-Medium", 18.0F, Font.PLAIN, true, true);//ÆÕÍ¨
-    public static void renderLabel(Entity entityIn,String str,int maxDistance,float partialTicks){
+    private static final CFontRenderer font_A = new CFontRenderer("Nunito", 18.0F, Font.PLAIN, true, true);//ÆÕÍ¨
+    public static void renderLabel(EntityPlayer entityIn, String str, int maxDistance, float partialTicks){
 
         double x = (entityIn.lastTickPosX + (entityIn.posX - entityIn.lastTickPosX) * (double)partialTicks) -mc.getRenderManager().renderPosX;
-        double y = (entityIn.lastTickPosY + (entityIn.posY - entityIn.lastTickPosY) * (double)partialTicks) -mc.getRenderManager().renderPosY;
+        double y = (entityIn.lastTickPosY + (entityIn.posY - entityIn.lastTickPosY) * (double)partialTicks) -mc.getRenderManager().renderPosY+0.1;
         double z = (entityIn.lastTickPosZ + (entityIn.posZ - entityIn.lastTickPosZ) * (double)partialTicks) -mc.getRenderManager().renderPosZ;
 
         double d0 = entityIn.getDistanceSqToEntity(mc.thePlayer);
@@ -61,11 +62,29 @@ public class RenderUtil {
             int j = font_A.getStringWidth(str) / 2;
             GlStateManager.disableTexture2D();
             worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+            String HP = String.valueOf((int) entityIn.getHealth());
+            Color hpColor = new Color(0, 255, 3,255);
+            if (entityIn.getHealth()>=10){
+                hpColor=new Color(0, 255, 3,255);
+            }else if(entityIn.getHealth()<10&&entityIn.getHealth()>=4){
+                hpColor=new Color(255, 223, 0,255);
+            }else if(entityIn.getHealth()<4){
+                hpColor=new Color(255, 0, 0, 255);
+            }
+            float NameLong = font_A.getStringWidth(str);
+            float HPLong = font_A.getStringWidth(HP);
+            float StrLong = 0;
+            if (NameLong>=HPLong){
+                StrLong=NameLong;
+            }else{
+                StrLong=HPLong;
+            }
             //RenderUtil.dropShadow(10, (float) -font_A.getStringWidth(str) / 2 - 3, i - 3, font_A.getStringWidth(str)+6, font_A.getStringHeight("A") + 6, 40, 5);
-            CShaders.CQ_SHADER.draw((float) -font_A.getStringWidth(str) / 2 - 4,i - 3, font_A.getStringWidth(str)+6, font_A.getStringHeight("A") + 6, 3, new Color(10, 10, 10, 255));
+            CShaders.CQ_SHADER.draw((float) -StrLong / 2 - 4,i - 4, StrLong+6, font_A.getStringHeight("A")*2 + 6, 3, new Color(10, 10, 10, 255));
             tessellator.draw();
             GlStateManager.enableTexture2D();
-            CFontRenderer.DisplayFont(str, -font_A.getStringWidth(str) / 2, i, 553648127);
+            CFontRenderer.DisplayFont(str, -StrLong / 2, i, 553648127);
+            CFontRenderer.DisplayFont(HP, -StrLong / 2+NameLong/2-HPLong/2, i+font_A.getStringHeight("A")+2, hpColor.getRGB());
             GlStateManager.enableDepth();
             GlStateManager.depthMask(true);
             //CFontRenderer.DisplayFont(str, -font_A.getStringWidth(str) / 2, i, -1);
@@ -387,5 +406,9 @@ public class RenderUtil {
             RenderHelper.disableStandardItemLighting();
             GlStateManager.popMatrix();
         }
+    }
+
+    public static void drawRect(int x, int y, int width, int height, int color) {
+        Gui.drawRect(x, y, x + width, y + height, color);
     }
 }

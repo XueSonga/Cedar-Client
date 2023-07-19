@@ -6,6 +6,7 @@ import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
 import java.io.IOException;
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -90,12 +91,14 @@ import net.optifine.util.TextureUtils;
 import net.optifine.util.TimedEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GLContext;
+import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Project;
 
 public class EntityRenderer implements IResourceManagerReloadListener
@@ -264,6 +267,23 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
         this.theShaderGroup = null;
         this.shaderIndex = shaderCount;
+    }
+
+    public Vec3 project(double x, double y, double z) {
+        IntBuffer viewport = BufferUtils.createIntBuffer(16);
+        FloatBuffer modelview = BufferUtils.createFloatBuffer(16);
+        FloatBuffer projection = BufferUtils.createFloatBuffer(16);
+        FloatBuffer screenCoords = BufferUtils.createFloatBuffer(4);
+
+        GL11.glGetFloat(GL11.GL_MODELVIEW_MATRIX, modelview);
+        GL11.glGetFloat(GL11.GL_PROJECTION_MATRIX, projection);
+        GL11.glGetInteger(GL11.GL_VIEWPORT, viewport);
+
+        boolean result = GLU.gluProject((float) x, (float) y, (float) z, modelview, projection, viewport, screenCoords);
+        if (result) {
+            return new Vec3(screenCoords.get(0), screenCoords.get(1), screenCoords.get(2));
+        }
+        return null;
     }
 
     public void switchUseShader()
