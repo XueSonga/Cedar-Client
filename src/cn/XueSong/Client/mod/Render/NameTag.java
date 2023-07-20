@@ -9,10 +9,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import org.lwjgl.input.Keyboard;
 
+import java.awt.*;
+
 public class NameTag extends Mod {
     Minecraft mc = Minecraft.getMinecraft();
     public NameTag() {
-        super("NameTag", "名称标签", true, Category.Render);
+        super("NameTag", "名称标签", true, Category.Render,"显示玩家的Name在世界上,实现透视效果");
         this.setKey(Keyboard.KEY_V);
     }
     String name= "";
@@ -24,7 +26,7 @@ public class NameTag extends Mod {
                 EntityPlayer player = (EntityPlayer) entity;
                 if (!antiBotUtil.isPlayerBot(player, mc) && !player.equals(mc.thePlayer)) {
                     name = player.getDisplayName().getFormattedText();
-                    RenderUtil.renderLabel(player, name, 128, partialTicks);
+                    RenderUtil.renderLabelPlayer(player, name, 128, new Color(0,0,0,255),partialTicks);
                 }
             }
         }

@@ -8,7 +8,7 @@ import org.lwjgl.input.Keyboard;
 public class AimAssist extends Mod {
     // Constructor
     public AimAssist() {
-        super("AimAssist", "自动瞄准[F]", true, Category.Combo);
+        super("AimAssist", "自动瞄准[F]", true, Category.Combo, "瞄准辅助");
         AimAssistThread.setAimAssistEnabled(true);
         setKey(Keyboard.KEY_F);
     }

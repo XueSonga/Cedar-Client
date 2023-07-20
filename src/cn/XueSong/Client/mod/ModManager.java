@@ -2,13 +2,12 @@ package cn.XueSong.Client.mod;
 
 import cn.XueSong.Client.mod.Combo.AutoClick;
 import cn.XueSong.Client.mod.Combo.AimAssist;
+import cn.XueSong.Client.mod.MiniGames.AnimalSearcher;
 import cn.XueSong.Client.mod.MoveMent.Sprint;
+import cn.XueSong.Client.mod.Other.AntiBot;
 import cn.XueSong.Client.mod.Other.Nick;
 import cn.XueSong.Client.mod.Other.Serverdetection;
-import cn.XueSong.Client.mod.Render.ClickGUI;
-import cn.XueSong.Client.mod.Render.Hud;
-import cn.XueSong.Client.mod.Render.NameTag;
-import cn.XueSong.Client.mod.Render.fullbright;
+import cn.XueSong.Client.mod.Render.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,13 +61,17 @@ public class ModManager {
 
     public void load() {
         mods.add(new Sprint());
-        mods.add(new Hud());
+        mods.add(new ModList());
         mods.add(new AutoClick());
-        mods.add(new fullbright());
+        mods.add(new FullBright());
         mods.add(new AimAssist());
         mods.add(new Serverdetection());
         mods.add(new Nick());
         mods.add(new NameTag());
+        mods.add(new ShowFPS());
+        mods.add(new ShowName());
+        mods.add(new AntiBot());
+        mods.add(new AnimalSearcher());
         mods.add(new ClickGUI());
     }
 }

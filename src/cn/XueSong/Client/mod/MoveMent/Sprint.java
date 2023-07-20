@@ -11,8 +11,7 @@ import static cn.XueSong.Client.util.InstanceAccess.InstanceAccess.mc;
 public class Sprint extends Mod {
 
     public Sprint() {
-        super("Sprint", "自动疾跑[Z]", true, Category.Movement);
-        setKey(Keyboard.KEY_Z);
+        super("Sprint", "自动疾跑", true, Category.Movement, "自动疾跑");
     }
 
     @Override

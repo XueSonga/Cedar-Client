@@ -1,9 +1,6 @@
 package cn.XueSong.Client.Thread;
 
-import cn.XueSong.Client.Thread.threads.AimAssistThread;
-import cn.XueSong.Client.Thread.threads.AutoClickThred;
-import cn.XueSong.Client.Thread.threads.SubThread;
-import cn.XueSong.Client.Thread.threads.WorldChangeThread;
+import cn.XueSong.Client.Thread.threads.*;
 import net.minecraft.client.Minecraft;
 
 public class ThreadManager {

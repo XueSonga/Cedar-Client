@@ -5,10 +5,10 @@ import cn.XueSong.Client.mod.Mod;
 import cn.XueSong.Client.serverdetection.ServerDetection;
 
 public class Serverdetection extends Mod {
-    String SeverName = "æœªçŸ¥æœåŠ¡å™¨";
-    String SeverGame = "æœªçŸ¥æ¸¸æˆ";
+    String SeverName = "Î´Öª·şÎñÆ÷";
+    String SeverGame = "Î´ÖªÓÎÏ·";
     public Serverdetection() {
-        super("ServerDetection", "æœªçŸ¥æœåŠ¡å™¨", true, Category.Other);
+        super("ServerDetection", "Î´Öª·şÎñÆ÷", true, Category.Other, "ËùÔÚ·şÎñÆ÷ºÍÓÎÏ·¼ì²â Ä¿Ç°½öÖ§³ÖHypxiel");
     }
 
     @Override

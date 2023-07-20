@@ -1,0 +1,98 @@
+---- Minecraft Crash Report ----
+// Surprise! Haha. Well, this is awkward.
+
+Time: 23-7-20 下午6:08
+Description: Rendering screen
+
+java.lang.NullPointerException: Rendering screen
+	at cn.XueSong.Client.gui.clickgui.ModPanel.drawScreen(ModPanel.java:44)
+	at cn.XueSong.Client.gui.clickgui.CategoryPanel.drawScreen(CategoryPanel.java:68)
+	at cn.XueSong.Client.gui.clickgui.ClickGui.lambda$drawScreen$0(ClickGui.java:37)
+	at java.util.ArrayList.forEach(ArrayList.java:1259)
+	at cn.XueSong.Client.gui.clickgui.ClickGui.drawScreen(ClickGui.java:37)
+	at net.minecraft.client.renderer.EntityRenderer.updateCameraAndRender(EntityRenderer.java:1419)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1158)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:430)
+	at net.minecraft.client.main.Main.main(Main.java:113)
+	at Start.main(Start.java:11)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at cn.XueSong.Client.gui.clickgui.ModPanel.drawScreen(ModPanel.java:44)
+	at cn.XueSong.Client.gui.clickgui.CategoryPanel.drawScreen(CategoryPanel.java:68)
+	at cn.XueSong.Client.gui.clickgui.ClickGui.lambda$drawScreen$0(ClickGui.java:37)
+	at java.util.ArrayList.forEach(ArrayList.java:1259)
+	at cn.XueSong.Client.gui.clickgui.ClickGui.drawScreen(ClickGui.java:37)
+
+-- Screen RenderA details --
+Details:
+	Screen name: cn.XueSong.Client.gui.clickgui.ClickGui
+	Mouse location: Scaled: (74, 30). Absolute: (149, 419)
+	Screen size: Scaled: (427, 240). Absolute: (854, 480). Scale factor of 2
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 1 total; [EntityPlayerSP['LOsadnwj'/92, l='MpServer', x=-191.92, y=28.00, z=-2026.81]]
+	Chunk stats: MultiplayerChunkCache: 289, 289
+	Level seed: 0
+	Level generator: ID 01 - flat, ver 0. Features enabled: false
+	Level generator options: 
+	Level spawn location: -361.00,4.00,-677.00 - World: (-361,4,-677), Chunk: (at 7,0,11 in -23,-43; contains blocks -368,0,-688 to -353,255,-673), Region: (-1,-2; contains chunks -32,-64 to -1,-33, blocks -512,0,-1024 to -1,255,-513)
+	Level time: 660374 game time, 197780 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 73 total; [EntityItem['item.item.seeds'/128, l='MpServer', x=-245.47, y=5.00, z=-1981.34], EntityItem['item.item.seeds'/129, l='MpServer', x=-246.84, y=5.00, z=-1980.69], EntityItem['item.item.wheat'/130, l='MpServer', x=-245.81, y=5.00, z=-1980.69], EntityItem['item.item.seeds'/131, l='MpServer', x=-243.56, y=5.00, z=-1981.09], EntityItem['item.item.seeds'/132, l='MpServer', x=-241.75, y=5.00, z=-1980.22], EntityItem['item.item.seeds'/133, l='MpServer', x=-239.69, y=5.00, z=-1978.69], EntityItem['item.item.potato'/134, l='MpServer', x=-238.81, y=4.00, z=-1981.63], EntityItem['item.item.potato'/135, l='MpServer', x=-237.19, y=5.00, z=-1977.94], EntitySlime['史莱姆'/141, l='MpServer', x=-208.05, y=4.26, z=-2009.98], EntitySlime['史莱姆'/143, l='MpServer', x=-198.93, y=4.51, z=-2029.24], EntitySlime['史莱姆'/144, l='MpServer', x=-192.61, y=4.51, z=-2024.40], EntitySlime['史莱姆'/145, l='MpServer', x=-200.29, y=5.04, z=-2010.11], EntitySlime['史莱姆'/146, l='MpServer', x=-194.25, y=4.77, z=-2006.39], EntitySlime['史莱姆'/147, l='MpServer', x=-206.17, y=4.75, z=-2013.10], EntityXPOrb['经验球'/148, l='MpServer', x=-196.94, y=4.00, z=-1988.66], EntityXPOrb['经验球'/149, l='MpServer', x=-198.72, y=4.00, z=-1992.84], EntityXPOrb['经验球'/150, l='MpServer', x=-196.03, y=4.00, z=-1992.16], EntityXPOrb['经验球'/151, l='MpServer', x=-197.66, y=4.00, z=-1994.19], EntitySlime['史莱姆'/152, l='MpServer', x=-201.02, y=4.93, z=-1996.40], EntitySlime['史莱姆'/153, l='MpServer', x=-201.72, y=4.34, z=-1990.38], EntitySlime['史莱姆'/154, l='MpServer', x=-194.08, y=4.99, z=-1988.55], EntitySlime['史莱姆'/155, l='MpServer', x=-204.09, y=4.26, z=-1964.23], EntitySlime['史莱姆'/158, l='MpServer', x=-191.87, y=4.99, z=-1966.74], EntitySlime['史莱姆'/159, l='MpServer', x=-183.85, y=4.14, z=-1959.36], EntitySlime['史莱姆'/162, l='MpServer', x=-171.61, y=4.24, z=-2058.69], EntitySlime['史莱姆'/163, l='MpServer', x=-166.43, y=5.62, z=-2042.89], EntitySlime['史莱姆'/164, l='MpServer', x=-173.85, y=4.51, z=-1992.50], EntityItem['item.item.arrow'/165, l='MpServer', x=-163.19, y=4.00, z=-1976.78], EntitySlime['史莱姆'/168, l='MpServer', x=-152.30, y=4.34, z=-1983.11], EntitySlime['史莱姆'/169, l='MpServer', x=-132.59, y=5.02, z=-2042.15], EntitySlime['史莱姆'/170, l='MpServer', x=-135.99, y=4.34, z=-2033.20], EntitySlime['史莱姆'/172, l='MpServer', x=-118.94, y=4.00, z=-2038.97], EntitySlime['史莱姆'/173, l='MpServer', x=-120.47, y=4.62, z=-2017.57], EntityXPOrb['经验球'/179, l='MpServer', x=-111.00, y=4.00, z=-1962.81], EntityXPOrb['经验球'/180, l='MpServer', x=-111.16, y=4.00, z=-1962.06], EntityXPOrb['经验球'/181, l='MpServer', x=-108.44, y=4.00, z=-1964.47], EntityPlayerSP['LOsadnwj'/92, l='MpServer', x=-191.92, y=28.00, z=-2026.81], EntityVillager['村民'/81, l='MpServer', x=-251.84, y=4.00, z=-2012.56], EntityVillager['村民'/82, l='MpServer', x=-247.72, y=5.00, z=-2000.81], EntityVillager['村民'/83, l='MpServer', x=-235.59, y=4.00, z=-2014.75], EntityVillager['村民'/84, l='MpServer', x=-261.78, y=5.00, z=-2002.44], EntityVillager['村民'/85, l='MpServer', x=-258.47, y=6.50, z=-2002.13], EntityVillager['村民'/86, l='MpServer', x=-256.25, y=4.00, z=-2011.44], EntityVillager['村民'/87, l='MpServer', x=-256.81, y=4.00, z=-2003.53], EntityVillager['村民'/88, l='MpServer', x=-262.84, y=4.00, z=-1993.53], EntityVillager['村民'/89, l='MpServer', x=-259.72, y=4.00, z=-1998.31], EntityVillager['村民'/90, l='MpServer', x=-270.53, y=5.00, z=-2032.81], EntitySlime['史莱姆'/93, l='MpServer', x=-191.05, y=4.26, z=-2020.00], EntitySlime['史莱姆'/103, l='MpServer', x=-267.25, y=4.00, z=-2098.38], EntitySlime['史莱姆'/104, l='MpServer', x=-257.56, y=4.00, z=-2088.81], EntityVillager['村民'/105, l='MpServer', x=-256.91, y=5.00, z=-2022.50], EntityVillager['村民'/106, l='MpServer', x=-257.72, y=6.00, z=-2021.94], EntityVillager['村民'/107, l='MpServer', x=-262.81, y=4.00, z=-2018.78], EntityVillager['村民'/108, l='MpServer', x=-266.50, y=4.00, z=-2023.25], EntitySlime['史莱姆'/109, l='MpServer', x=-258.50, y=4.00, z=-1980.72], EntityVillager['村民'/110, l='MpServer', x=-266.63, y=4.00, z=-1979.72], EntitySlime['史莱姆'/111, l='MpServer', x=-261.66, y=4.00, z=-1975.56], EntitySlime['史莱姆'/112, l='MpServer', x=-253.28, y=4.00, z=-2084.09], EntityVillager['村民'/113, l='MpServer', x=-247.50, y=8.00, z=-2023.75], EntityVillager['村民'/114, l='MpServer', x=-243.25, y=4.00, z=-2024.53], EntityXPOrb['经验球'/115, l='MpServer', x=-243.94, y=4.00, z=-1996.06], EntityItem['item.item.wheat'/116, l='MpServer', x=-243.53, y=5.00, z=-1976.50], EntityItem['item.item.seeds'/117, l='MpServer', x=-242.59, y=5.00, z=-1978.03], EntityItem['item.item.wheat'/118, l='MpServer', x=-241.34, y=5.00, z=-1979.66], EntityItem['item.item.seeds'/119, l='MpServer', x=-241.09, y=5.00, z=-1979.31], EntityItem['item.item.seeds'/120, l='MpServer', x=-241.31, y=5.00, z=-1977.69], EntityItem['item.item.wheat'/121, l='MpServer', x=-240.31, y=5.00, z=-1979.06], EntityItem['item.item.seeds'/122, l='MpServer', x=-240.13, y=5.00, z=-1980.66], EntityItem['item.item.wheat'/123, l='MpServer', x=-241.34, y=5.00, z=-1980.59], EntityItem['item.item.seeds'/124, l='MpServer', x=-240.38, y=5.00, z=-1982.06], EntityItem['item.item.slimeball'/125, l='MpServer', x=-248.13, y=4.00, z=-1976.91], EntityXPOrb['经验球'/126, l='MpServer', x=-252.31, y=5.00, z=-1971.88], EntityItem['item.item.wheat'/127, l='MpServer', x=-247.50, y=5.00, z=-1981.19]]
+	Retry entities: 0 total; []
+	Server brand: vanilla
+	Server type: Integrated singleplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:403)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2785)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:451)
+	at net.minecraft.client.main.Main.main(Main.java:113)
+	at Start.main(Start.java:11)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.9
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 1.8.0_382, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Amazon.com Inc.
+	Memory: 298508032 bytes (284 MB) / 934281216 bytes (891 MB) up to 3763863552 bytes (3589 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	Launched Version: mcp
+	LWJGL: 2.9.4
+	OpenGL: NVIDIA GeForce GTX 1070/PCIe/SSE2 GL version 4.6.0 NVIDIA 545.37, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: Yes
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: !            §5§lZOVA MASHUP V4(1).zip
+	Current Language: 简体中文 (中国)
+	Profiler Position: N/A (disabled)
+	CPU: <unknown>
+	OptiFine Version: OptiFine_1.8.9_HD_U_M5
+	OptiFine Build: ~~NULL~~
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: 动态模糊光影.zip
+	OpenGlVersion: 4.6.0 NVIDIA 545.37
+	OpenGlRenderer: NVIDIA GeForce GTX 1070/PCIe/SSE2
+	OpenGlVendor: NVIDIA Corporation
+	CpuCount: 8

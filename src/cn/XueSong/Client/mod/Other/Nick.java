@@ -10,8 +10,7 @@ public class Nick extends Mod {
 
     public static Minecraft mc = Minecraft.getMinecraft();
     public Nick() {
-        super("Nick", "匿名模式[K]", isNick, Category.Other);
-        setKey(Keyboard.KEY_K);
+        super("Nick", "匿名模式", isNick, Category.Other, "隐藏自己的名称,在任何有你名字的地方,包括输入框");
     }
 
     public static String Nick(String str) {

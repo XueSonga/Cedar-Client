@@ -91,9 +91,13 @@ public class CategoryPanel{
         if (displayMod) {
             for (ModPanel it : modPanels) {
                 it.mouseClicked(mouseX, mouseY, mouseButton, x + it.x, y + it.y);  // 添加 x 和 y
+                if (it.isPress()) {
+                    break;  // 如果 ModPanel 被点击，就停止检查其他的 ModPanel
+                }
             }
         }
     }
+
 
     protected void mouseReleased(int mouseX, int mouseY, int mouseButton) {
         if (mouseButton==0){
@@ -109,4 +113,7 @@ public class CategoryPanel{
     }
 
 
+    public boolean isPress() {
+        return press;
+    }
 }

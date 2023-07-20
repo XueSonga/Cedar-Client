@@ -9,7 +9,7 @@ import org.lwjgl.opengl.GL11;
 public class Client {
 
     public static final String NAEM = "Cedar";
-    public static final String VERSION = "Dev 0.3";
+    public static final String VERSION = "Dev 0.31";
     public static ModManager modManager;
     public static ThreadManager threadManager = new ThreadManager();
     public static ClickGui clickGui;

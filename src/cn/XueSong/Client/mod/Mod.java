@@ -5,15 +5,17 @@ public abstract class Mod {
 
     private final Category category;
 
+    private String description;
     private String type;
     private boolean enabled;
     private int key;
 
-    public Mod(String name, String type, boolean enabled,Category category) {
+    public Mod(String name, String type, boolean enabled, Category category, String description) {
         this.name = name;
         this.category = category;
         this.type = type;
         this.enabled = enabled;
+        this.description = description;
     }
 
     public String getName() {
@@ -22,6 +24,10 @@ public abstract class Mod {
 
     public String getType() {
         return type;
+    }
+
+    public String getDescription(){
+        return description;
     }
 
     public boolean isEnabled() {

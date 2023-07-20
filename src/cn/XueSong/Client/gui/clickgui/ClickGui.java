@@ -40,10 +40,20 @@ public class ClickGui extends GuiScreen {
 
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-        categoryPanels.forEach(it->it.mouseClicked(mouseX,mouseY,mouseButton));
+        for (int i = categoryPanels.size() - 1; i >= 0; i--) {
+            CategoryPanel panel = categoryPanels.get(i);
+            panel.mouseClicked(mouseX, mouseY, mouseButton);
+            if (panel.isPress()) {
+                // 当面板被点击时，将其移动到列表的末尾
+                categoryPanels.remove(i);
+                categoryPanels.add(panel);
+                break; // 找到了被点击的面板，退出循环
+            }
+        }
         super.mouseClicked(mouseX, mouseY, mouseButton);
-
     }
+
+
 
     @Override
     protected void mouseReleased(int mouseX, int mouseY, int state) {

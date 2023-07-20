@@ -2,7 +2,6 @@ package cn.XueSong.Client.font;
 
 
 import cn.XueSong.Client.mod.Other.Nick;
-import cn.XueSong.Client.serverdetection.ServerDetection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -432,6 +431,8 @@ public class CFontRenderer extends CFont {
 
     private static final CFontRenderer font_A = new CFontRenderer("Nunito", 18.0F, Font.PLAIN, true, true);//GUI
     private static final CFontRenderer font_N = new CFontRenderer("Roboto-Medium", 18.0F, Font.PLAIN, true, true);//普通
+
+    private static final CFontRenderer font_15f = new CFontRenderer("Nunito", 10.0F, Font.PLAIN, false, false);//小字
     private static final CFontRenderer font_Title = new CFontRenderer("Nunito", 18.0F*4F, Font.PLAIN, true, true);//普通
     private static final CFontRenderer font_SubTitle = new CFontRenderer("Nunito", 18.0F*2F, Font.PLAIN, true, true);//普通
 

@@ -957,7 +957,7 @@ public class GuiIngame extends Gui
     }
 
     /**
-     * Renders dragon's (boss) health on the Hud
+     * Renders dragon's (boss) health on the ModList
      */
     private void renderBossHealth()
     {

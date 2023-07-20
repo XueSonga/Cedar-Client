@@ -4,23 +4,18 @@ import cn.XueSong.Client.Client;
 import cn.XueSong.Client.font.CFontRenderer;
 import cn.XueSong.Client.mod.Category;
 import cn.XueSong.Client.mod.Mod;
-import cn.XueSong.Client.util.render.ColorUtil;
-import cn.XueSong.Client.util.render.RenderUtil;
-import cn.XueSong.Client.util.shader.CShaders;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
 
 import java.awt.*;
 import java.util.List;
 import java.util.Objects;
 
-public class Hud extends Mod {
+public class ModList extends Mod {
 
     public static Boolean ClientLogo = true;
     public static Boolean Modlist = true;
-    public static Boolean ShowFps = true;
 
     private static final CFontRenderer font_A = new CFontRenderer("Nunito", 18.0F, Font.PLAIN, true, true);//普通
     private static final CFontRenderer font_B = new CFontRenderer("tenacity-bold", 30.0F, Font.PLAIN, true, true);//标题
@@ -28,17 +23,13 @@ public class Hud extends Mod {
 
     public double round = 5;
 
-    public Hud() {
-        super("HUD", "界面", true, Category.Render);
+    public ModList() {
+        super("ModList", "模组列表", true, Category.Render, "显示模组列表");
     }
     @Override
     public void render(float partialTicks) {
-        GlStateManager.pushMatrix();
         renderLogo();
         renderModList();
-        renderShowFps();
-        renderOwnName();
-        GlStateManager.popMatrix();
     }
     public void renderLogo() {
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
@@ -88,48 +79,6 @@ public class Hud extends Mod {
                 }
                 y_modlist = y_modlist + 11;
             }
-        }
-    }
-
-    public void renderShowFps() {
-        ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
-        int width = scaledResolution.getScaledWidth();
-        int height = scaledResolution.getScaledHeight();
-        String text = "FPS ";
-        String FPS = Integer.toString(Minecraft.getDebugFPS());
-        double y_showFps = 10;
-        double x_showFps = 10;
-        double y_showFps_backdrop = y_showFps - 5;
-        double x_showFps_backdrop = x_showFps - 5;
-        double width_showFps = font_A.getStringWidth(text + FPS) + 10;
-        double height_shouwFps = (double) font_A.getStringHeight("A") + 8;
-        final double progress_showfps = 1;
-        final Color bloomColor = ColorUtil.withAlpha(Color.BLACK, (int) (progress_showfps * 150));
-        if (ShowFps) {
-            RenderUtil.dropShadow(10, x_showFps_backdrop, y_showFps_backdrop, width_showFps, height_shouwFps, 40, round + 5);
-            CShaders.CQ_SHADER.draw(x_showFps_backdrop,y_showFps_backdrop, width_showFps, height_shouwFps, round, new Color(10, 10, 10, 170));
-            font_A.drawString(text, x_showFps, y_showFps, Color.WHITE.getRGB());
-            font_A.drawString(FPS, font_A.getStringWidth(text) + x_showFps, y_showFps, new Color(190, 190, 190).getRGB());
-        }
-    }
-
-    public void renderOwnName() {
-        ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
-        String text = "Name: ";
-        String Name = Minecraft.getMinecraft().thePlayer.getName();
-        double y_NAME = 30;
-        double x_NAME = 10;
-        double y_NAME_backdrop = y_NAME - 5;
-        double x_NAME_backdrop = x_NAME - 5;
-        double width_showFps = font_A.getStringWidth(text + Name) + 10;
-        double height_shouwFps = (double) font_A.getStringHeight("A") + 8;
-        final double progress_showfps = 1;
-        final Color bloomColor = ColorUtil.withAlpha(Color.BLACK, (int) (progress_showfps * 150));
-        if (ShowFps) {
-            RenderUtil.dropShadow(10, x_NAME_backdrop, y_NAME_backdrop, width_showFps, height_shouwFps, 40, round + 5);
-            CShaders.CQ_SHADER.draw(x_NAME_backdrop,y_NAME_backdrop, width_showFps, height_shouwFps, round, new Color(10, 10, 10, 170));
-            font_A.drawString(text, x_NAME, y_NAME, Color.WHITE.getRGB());
-            CFontRenderer.DisplayFont(Name, (float) (font_A.getStringWidth(text) + x_NAME), (float) y_NAME, new Color(190, 190, 190).getRGB());
         }
     }
 }

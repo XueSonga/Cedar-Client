@@ -6,12 +6,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
-public class fullbright extends Mod {
+public class FullBright extends Mod {
     private float originalGamma;
     Boolean fullbrightBoolean = false;
 
-    public fullbright() {
-        super("Fullbright", "视角高亮", true, Category.Render);
+    public FullBright() {
+        super("Fullbright", "视角高亮", true, Category.Render, "使世界亮度达到一个新的高度");
     }
 
     @Override

@@ -1,5 +1,5 @@
-#Thu Jul 20 02:33:06 CST 2023
-shaderPack=动态模糊光影.zip
+#Thu Jul 20 19:51:02 CST 2023
+shaderPack=OFF
 antialiasingLevel=0
 normalMapEnabled=true
 specularMapEnabled=true

@@ -3,15 +3,11 @@ package cn.XueSong.Client.util.render;
 import cn.XueSong.Client.font.CFontRenderer;
 import cn.XueSong.Client.util.shader.CShaders;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
@@ -26,8 +22,18 @@ import static org.lwjgl.opengl.GL11.glBegin;
 
 public class RenderUtil {
     static Minecraft mc = Minecraft.getMinecraft();
-    private static final CFontRenderer font_A = new CFontRenderer("Nunito", 18.0F, Font.PLAIN, true, true);//普通
-    public static void renderLabel(EntityPlayer entityIn, String str, int maxDistance, float partialTicks){
+    private static final CFontRenderer font_A = new CFontRenderer("Nunito", 18.0F, Font.PLAIN, false, false);//普通
+
+    protected RenderItem itemRender;
+
+    /** The width of the screen object. */
+    public int width;
+
+    /** The height of the screen object. */
+    public int height;
+    private float zLevel;
+
+    public static void renderLabelPlayer(EntityPlayer entityIn, String str, int maxDistance, Color backColor, float partialTicks){
 
         double x = (entityIn.lastTickPosX + (entityIn.posX - entityIn.lastTickPosX) * (double)partialTicks) -mc.getRenderManager().renderPosX;
         double y = (entityIn.lastTickPosY + (entityIn.posY - entityIn.lastTickPosY) * (double)partialTicks) -mc.getRenderManager().renderPosY+0.1;
@@ -37,7 +43,7 @@ public class RenderUtil {
 
         if (d0 <= (double)(maxDistance * maxDistance))
         {
-            float f = 1.6F;
+            float f = 1.8F;
             float f1 = 0.016666668F * f;
             GlStateManager.pushMatrix();
             GlStateManager.translate((float)x + 0.0F, (float)y + entityIn.height + 0.5F, (float)z);
@@ -80,11 +86,60 @@ public class RenderUtil {
                 StrLong=HPLong;
             }
             //RenderUtil.dropShadow(10, (float) -font_A.getStringWidth(str) / 2 - 3, i - 3, font_A.getStringWidth(str)+6, font_A.getStringHeight("A") + 6, 40, 5);
-            CShaders.CQ_SHADER.draw((float) -StrLong / 2 - 4,i - 4, StrLong+6, font_A.getStringHeight("A")*2 + 6, 3, new Color(10, 10, 10, 255));
+            CShaders.CQ_SHADER.draw((float) -StrLong / 2 - 4,i - 4, StrLong+7, font_A.getStringHeight("A")*2 + 6, 3, backColor);
             tessellator.draw();
             GlStateManager.enableTexture2D();
-            CFontRenderer.DisplayFont(str, -StrLong / 2, i, 553648127);
-            CFontRenderer.DisplayFont(HP, -StrLong / 2+NameLong/2-HPLong/2, i+font_A.getStringHeight("A")+2, hpColor.getRGB());
+            CFontRenderer.DisplayFontNormal(str, -StrLong / 2, i, new Color(255,255,255,255).getRGB());
+            CFontRenderer.DisplayFontNormal(HP, -StrLong / 2+NameLong/2-HPLong/2, i+font_A.getStringHeight("A")+2, hpColor.getRGB());
+            GlStateManager.enableDepth();
+            GlStateManager.depthMask(true);
+            //CFontRenderer.DisplayFont(str, -font_A.getStringWidth(str) / 2, i, -1);
+            GlStateManager.disableBlend();
+            GlStateManager.popMatrix();
+        }
+    }
+
+    public static void renderLabelEntity(Entity entityIn, String str, int maxDistance, Color backColor, float partialTicks){
+
+        double x = (entityIn.lastTickPosX + (entityIn.posX - entityIn.lastTickPosX) * (double)partialTicks) -mc.getRenderManager().renderPosX;
+        double y = (entityIn.lastTickPosY + (entityIn.posY - entityIn.lastTickPosY) * (double)partialTicks) -mc.getRenderManager().renderPosY+0.1;
+        double z = (entityIn.lastTickPosZ + (entityIn.posZ - entityIn.lastTickPosZ) * (double)partialTicks) -mc.getRenderManager().renderPosZ;
+
+        double d0 = entityIn.getDistanceSqToEntity(mc.thePlayer);
+
+        if (d0 <= (double)(maxDistance * maxDistance))
+        {
+            float f = 1.6F;
+            float f1 = 0.016666668F * f;
+            GlStateManager.pushMatrix();
+            GlStateManager.translate((float)x + 0.0F, (float)y + entityIn.height + 0.5F, (float)z);
+            GL11.glNormal3f(0.0F, 1.0F, 0.0F);
+            GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
+            GlStateManager.rotate(mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+            GlStateManager.scale(-f1, -f1, f1);
+            GlStateManager.disableLighting();
+            GlStateManager.depthMask(false);
+            GlStateManager.disableDepth();
+            GlStateManager.enableBlend();
+            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+            Tessellator tessellator = Tessellator.getInstance();
+            WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+            int i = 0;
+
+            if (str.equals("deadmau5"))
+            {
+                i = -10;
+            }
+
+            int j = font_A.getStringWidth(str) / 2;
+            GlStateManager.disableTexture2D();
+            worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+            float StrLong = font_A.getStringWidth(str);
+            //RenderUtil.dropShadow(10, (float) -font_A.getStringWidth(str) / 2 - 3, i - 3, font_A.getStringWidth(str)+6, font_A.getStringHeight("A") + 6, 40, 5);
+            CShaders.CQ_SHADER.draw((float) -StrLong / 2 - 4,i - 4, StrLong+7, font_A.getStringHeight("A") + 6, 3, backColor);
+            tessellator.draw();
+            GlStateManager.enableTexture2D();
+            CFontRenderer.DisplayFontNormal(str, -StrLong / 2, i, new Color(255,255,255,255).getRGB());
             GlStateManager.enableDepth();
             GlStateManager.depthMask(true);
             //CFontRenderer.DisplayFont(str, -font_A.getStringWidth(str) / 2, i, -1);
@@ -227,7 +282,7 @@ public class RenderUtil {
         polygon(x, y, sideLength, amountOfSides, true, null);
     }
 
-    public void color(final double red, final double green, final double blue, final double alpha) {
+    public static void color(final double red, final double green, final double blue, final double alpha) {
         GL11.glColor4d(red, green, blue, alpha);
     }
 
@@ -235,7 +290,7 @@ public class RenderUtil {
         color(red, green, blue, 1);
     }
 
-    public void color(Color color) {
+    public static void color(Color color) {
         if (color == null)
             color = Color.white;
         color(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
@@ -247,6 +302,25 @@ public class RenderUtil {
         color(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, 0.5);
     }
 
+    public static void rainbowRectangle(final double x, final double y, final double width, final double height) {
+        start();
+
+        GL11.glBegin(GL11.GL_QUADS);
+
+        for (double position = x; position <= x + width; position += 0.5) {
+            color(Color.getHSBColor((float) ((position - x) / width), 1, 1));
+
+            GL11.glVertex2d(position, y);
+            GL11.glVertex2d(position + 0.5f, y);
+            GL11.glVertex2d(position + 0.5f, y + height);
+            GL11.glVertex2d(position, y + height);
+        }
+
+        GL11.glEnd();
+
+        stop();
+    }
+
     public void begin(final int glMode) {
         GL11.glBegin(glMode);
     }
@@ -255,7 +329,7 @@ public class RenderUtil {
         GL11.glVertex2d(x, y);
     }
 
-    public void start() {
+    public static void start() {
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GlStateManager.disableTexture2D();
@@ -267,7 +341,7 @@ public class RenderUtil {
     /**
      * 最好使用gl状态管理器来避免bug!
      */
-    public void stop() {
+    public static void stop() {
         GlStateManager.enableDepth();
         GlStateManager.enableAlpha();
         GlStateManager.enableCull();
@@ -410,5 +484,11 @@ public class RenderUtil {
 
     public static void drawRect(int x, int y, int width, int height, int color) {
         Gui.drawRect(x, y, x + width, y + height, color);
+    }
+    public static void drawHoveringText(String text, double x, double y)
+    {
+            RenderUtil.dropShadow(20, x - 5, y - 6, font_A.getStringWidth(text) + 9, font_A.getStringHeight(text) + 12, 30, 5+5);
+            CShaders.CQ_SHADER.draw(x - 5, y - 6, font_A.getStringWidth(text) + 9, font_A.getStringHeight(text) + 12,5,new Color(0, 0, 0, 255));
+            CFontRenderer.DisplayFontNormal(text, (float) x, (float) y, Color.white.getRGB());
     }
 }
