@@ -22,7 +22,7 @@ public class AnimalSearcher extends Mod {
     public void renderWorld(float partialTicks) {
         for (Entity entity: Minecraft.getMinecraft().theWorld.loadedEntityList){
             if (!(entity instanceof EntityPig || entity instanceof EntityCow || entity instanceof EntityOcelot ||
-                    entity instanceof EntityChicken || entity instanceof EntityHorse || entity instanceof EntityWolf)) {
+                    entity instanceof EntityChicken || entity instanceof EntityHorse || entity instanceof EntityWolf || entity instanceof EntitySheep)) {
                 continue;
             }
 
@@ -31,7 +31,7 @@ public class AnimalSearcher extends Mod {
             }
 
             if (markedEntities.contains(entity)) {
-                RenderUtil.renderLabelEntity(entity, "找到动物! "+entity.getName(), 300, new Color(255, 0, 0,255),partialTicks);
+                RenderUtil.renderLabelEntity(entity, "找到动物! "+entity.getName(), 400, new Color(255, 0, 0,255),partialTicks);
             }
         }
     }
