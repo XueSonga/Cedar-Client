@@ -462,6 +462,18 @@ public class RenderUtil {
         }
     }
 
+    public static void dropglow(final int loops, final double x, final double y, final double width, final double height, final double opacity, final double edgeRadius) {
+        GlStateManager.alphaFunc(516, 0);
+        GlStateManager.enableBlend();
+        GlStateManager.enableAlpha();
+
+        for (float margin = 0; margin <= loops / 2f; margin += 0.5f) {
+            roundedRectangle(x - margin / 2f, y - margin / 2f,
+                    width + margin, height + margin, edgeRadius,
+                    new Color(0, 0, 0, (int) Math.max(0.5f, (opacity - margin * 1.2) / 5.5f)));
+        }
+    }
+
     /**
     绘制物品图标
      */

@@ -26,7 +26,7 @@ public class ShowName extends Mod {
     public void renderOwnName() {
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
         String text = "Name: ";
-        String Name = Minecraft.getMinecraft().thePlayer.getName();
+        String Name = Minecraft.getMinecraft().thePlayer.getDisplayName().getFormattedText();
         double y_NAME = 30;
         double x_NAME = 10;
         double y_NAME_backdrop = y_NAME - 5;
