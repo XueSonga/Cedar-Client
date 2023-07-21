@@ -2,6 +2,7 @@ package net.minecraft.client.entity;
 
 import cn.XueSong.Client.Client;
 import cn.XueSong.Client.mod.Mod;
+import cn.XueSong.Client.util.vector.Vector2f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MovingSoundMinecartRiding;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -909,4 +910,14 @@ public class EntityPlayerSP extends AbstractClientPlayer
             this.sendPlayerAbilities();
         }
     }
+
+    public Vector2f getPreviousRotation() {
+        return new Vector2f(lastReportedYaw, lastReportedPitch);
+    }
+
+    public void moveEntityNoEvent(double x, double y, double z) {
+        super.moveEntity(x, y, z);
+    }
+
+
 }

@@ -1,10 +1,12 @@
 package cn.XueSong.Client.Thread.threads;
 
 import cn.XueSong.Client.util.EntityFinder;
+import cn.XueSong.Client.util.rotation.RotationUtil;
 import cn.XueSong.Client.util.team.TeamUtil;
+import cn.XueSong.Client.util.vector.Vector2f;
+import cn.XueSong.Client.util.vector.Vector3d;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.MathHelper;
 
 public class AimAssistThread implements Runnable{
     private final Minecraft mc;
@@ -12,8 +14,8 @@ public class AimAssistThread implements Runnable{
     private static boolean isAimAssistEnabled = false;
 
     private double maxAimAngle = 180.0;
-    private double maxDistance = 4;
-    private double aimSpeed = 0.08;
+    private double maxDistance = 5;
+    private double aimSpeed = 0.8;
 
     public AimAssistThread(Minecraft mc) {
         this.mc = mc;
@@ -37,7 +39,7 @@ public class AimAssistThread implements Runnable{
                 targetPlayer = null;
             }
             try {
-                Thread.sleep(4); // 设置短时间休眠，避免CPU占用率过高
+                Thread.sleep(3); // 设置短时间休眠，避免CPU占用率过高
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -45,25 +47,11 @@ public class AimAssistThread implements Runnable{
     }
 
     private void adjustAimToTarget() {
-        double deltaX = targetPlayer.posX - mc.thePlayer.posX;
-        double deltaY = (targetPlayer.posY + targetPlayer.getEyeHeight()) - (mc.thePlayer.posY + mc.thePlayer.getEyeHeight());
-        double deltaZ = targetPlayer.posZ - mc.thePlayer.posZ;
-
-        double targetYaw = Math.atan2(deltaZ, deltaX) * 180.0D / Math.PI - 90.0D;
-        if (targetYaw < 0) {
-            targetYaw += 360.0;
-        }
-        double targetPitch = -Math.atan2(deltaY, Math.sqrt(deltaX * deltaX + deltaZ * deltaZ)) * 180.0D / Math.PI;
-
-        // Use interpolation to smooth the aiming
-        double yawDifference = targetYaw - mc.thePlayer.rotationYaw;
-        if (yawDifference > 180.0) {
-            yawDifference -= 360.0;
-        } else if (yawDifference < -180.0) {
-            yawDifference += 360.0;
-        }
-        mc.thePlayer.rotationYaw += yawDifference * aimSpeed;
-        mc.thePlayer.rotationPitch += (targetPitch - mc.thePlayer.rotationPitch) * aimSpeed;
+        Vector2f currentRotation = new Vector2f(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch);
+        Vector2f targetRotation = RotationUtil.calculate(mc.thePlayer.getCustomPositionVector().add(0, mc.thePlayer.getEyeHeight(), 0), new Vector3d(targetPlayer.posX, targetPlayer.posY + targetPlayer.getEyeHeight(), targetPlayer.posZ));
+        Vector2f smoothedRotation = RotationUtil.smooth(currentRotation, targetRotation, aimSpeed);
+        mc.thePlayer.rotationYaw = smoothedRotation.x;
+        mc.thePlayer.rotationPitch = smoothedRotation.y;
     }
     TeamUtil teamUtil = new TeamUtil();
 
@@ -75,5 +63,4 @@ public class AimAssistThread implements Runnable{
                 && mc.thePlayer.getDistanceSqToEntity(player) <= maxDistance * maxDistance
                 && !TeamUtil.isSameTeam(mc.thePlayer, player);
     }
-
 }

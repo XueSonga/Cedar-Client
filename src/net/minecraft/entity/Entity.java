@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.Callable;
+
+import cn.XueSong.Client.util.vector.Vector3d;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockFenceGate;
@@ -159,6 +161,12 @@ public abstract class Entity implements ICommandSender
      * The entity's Z coordinate at the previous tick, used to calculate position during rendering routines
      */
     public double lastTickPosZ;
+
+    /**
+     * How high this entity can step up when running into a block to try to get over it (currently make note the entity
+     * will always step up this amount and not just the amount needed)
+     */
+    public double threadDistance;
 
     /**
      * How high this entity can step up when running into a block to try to get over it (currently make note the entity
@@ -1470,10 +1478,14 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    public Vector3d getCustomPositionVector() {
+        return new Vector3d(posX, posY, posZ);
+    }
+
     /**
      * Creates a Vec3 using the pitch and yaw of the entities rotation.
      */
-    protected final Vec3 getVectorForRotation(float pitch, float yaw)
+    public final Vec3 getVectorForRotation(float pitch, float yaw)
     {
         float f = MathHelper.cos(-yaw * 0.017453292F - (float)Math.PI);
         float f1 = MathHelper.sin(-yaw * 0.017453292F - (float)Math.PI);
@@ -1504,6 +1516,14 @@ public abstract class Entity implements ICommandSender
         Vec3 vec32 = vec3.addVector(vec31.xCoord * blockReachDistance, vec31.yCoord * blockReachDistance, vec31.zCoord * blockReachDistance);
         return this.worldObj.rayTraceBlocks(vec3, vec32, false, false, true);
     }
+
+    public MovingObjectPosition rayTraceCustom(double blockReachDistance, float yaw, float pitch) {
+        final Vec3 vec3 = this.getPositionEyes(1.0F);
+        final Vec3 vec31 = this.getLookCustom(yaw, pitch);
+        final Vec3 vec32 = vec3.addVector(vec31.xCoord * blockReachDistance, vec31.yCoord * blockReachDistance, vec31.zCoord * blockReachDistance);
+        return this.worldObj.rayTraceBlocks(vec3, vec32, false, false, true);
+    }
+
 
     /**
      * Returns true if other Entities should be prevented from moving through this Entity.
@@ -2046,6 +2066,9 @@ public abstract class Entity implements ICommandSender
         return null;
     }
 
+    public Vec3 getLookCustom(float yaw, float pitch) {
+        return this.getVectorForRotation(pitch, yaw);
+    }
     /**
      * Marks the entity as being inside a portal, activating teleportation logic in onEntityUpdate() in the following
      * tick(s).
