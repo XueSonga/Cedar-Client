@@ -13,8 +13,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 
-// Ô´ÂëÀ´×Ô RiseClient
-
 @UtilityClass
 public class RotationUtil implements InstanceAccess {
     /*

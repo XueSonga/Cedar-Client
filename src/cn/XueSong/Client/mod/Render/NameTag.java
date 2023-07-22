@@ -10,6 +10,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class NameTag extends Mod {
     Minecraft mc = Minecraft.getMinecraft();
@@ -21,15 +23,28 @@ public class NameTag extends Mod {
     @Override
     public void renderWorld(float partialTicks) {
         AntiBotUtil antiBotUtil = new AntiBotUtil();
-        for (Entity entity: Minecraft.getMinecraft().theWorld.loadedEntityList){
-            if(entity instanceof EntityPlayer){
+
+        // 将实体列表转为 ArrayList，以便进行排序
+        ArrayList<Entity> entities = new ArrayList<>(Minecraft.getMinecraft().theWorld.loadedEntityList);
+
+        // 根据实体与玩家的距离进行排序，距离更远的实体会在前面
+        entities.sort(Comparator.comparingDouble(e -> -e.getDistanceToEntity(mc.thePlayer)));
+
+        for (Entity entity : entities) {
+            if(entity instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) entity;
                 if (!antiBotUtil.isPlayerBot(player, mc) && !player.equals(mc.thePlayer)) {
                     name = player.getDisplayName().getFormattedText();
-                    RenderUtil.renderLabelPlayer(player, name, 128, new Color(0,0,0,255),partialTicks);
+                    RenderUtil.renderLabelPlayer(player, name, 400, 0,0.1f,new Color(0,0,0,255),false,partialTicks);
                 }
             }
         }
     }
+
+
+
+
+
+
 
 }

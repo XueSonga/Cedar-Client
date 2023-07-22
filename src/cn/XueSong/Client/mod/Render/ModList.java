@@ -24,7 +24,7 @@ public class ModList extends Mod {
     public double round = 5;
 
     public ModList() {
-        super("ModList", "模组列表", true, Category.Render, "显示模组列表");
+        super("ModList", "模组列表", false, Category.Render, "显示模组列表");
     }
     @Override
     public void render(float partialTicks) {

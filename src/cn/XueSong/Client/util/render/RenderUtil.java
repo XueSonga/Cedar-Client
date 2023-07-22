@@ -1,6 +1,7 @@
 package cn.XueSong.Client.util.render;
 
 import cn.XueSong.Client.font.CFontRenderer;
+import cn.XueSong.Client.util.player.PlayerUtil;
 import cn.XueSong.Client.util.shader.CShaders;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -11,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import org.lwjgl.opengl.GL11;
@@ -26,30 +28,37 @@ public class RenderUtil {
 
     protected RenderItem itemRender;
 
-    /** The width of the screen object. */
+    /**
+     * The width of the screen object.
+     */
     public int width;
 
-    /** The height of the screen object. */
+    /**
+     * The height of the screen object.
+     */
     public int height;
     private float zLevel;
 
-    public static void renderLabelPlayer(EntityPlayer entityIn, String str, int maxDistance, Color backColor, float partialTicks){
+    public static void renderLabelPlayer(EntityPlayer entityIn, String str, int maxDistance, float Xoffset, float Yoffset, Color backdropColor, Boolean Shadow, float partialTicks) {
 
-        double x = (entityIn.lastTickPosX + (entityIn.posX - entityIn.lastTickPosX) * (double)partialTicks) -mc.getRenderManager().renderPosX;
-        double y = (entityIn.lastTickPosY + (entityIn.posY - entityIn.lastTickPosY) * (double)partialTicks) -mc.getRenderManager().renderPosY+0.1;
-        double z = (entityIn.lastTickPosZ + (entityIn.posZ - entityIn.lastTickPosZ) * (double)partialTicks) -mc.getRenderManager().renderPosZ;
+        double x = (entityIn.lastTickPosX + (entityIn.posX - entityIn.lastTickPosX) * (double) partialTicks) - mc.getRenderManager().renderPosX;
+        double y = (entityIn.lastTickPosY + (entityIn.posY - entityIn.lastTickPosY) * (double) partialTicks) - mc.getRenderManager().renderPosY + Yoffset;
+        double z = (entityIn.lastTickPosZ + (entityIn.posZ - entityIn.lastTickPosZ) * (double) partialTicks) - mc.getRenderManager().renderPosZ;
 
         double d0 = entityIn.getDistanceSqToEntity(mc.thePlayer);
 
-        if (d0 <= (double)(maxDistance * maxDistance))
-        {
+        if (d0 <= (double) (maxDistance * maxDistance)) {
             float f = 1.8F;
             float f1 = 0.016666668F * f;
             GlStateManager.pushMatrix();
-            GlStateManager.translate((float)x + 0.0F, (float)y + entityIn.height + 0.5F, (float)z);
+            GlStateManager.translate((float) x + 0.0F, (float) y + entityIn.height + 0.5F, (float) z);
             GL11.glNormal3f(0.0F, 1.0F, 0.0F);
             GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
-            GlStateManager.rotate(mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+            if(mc.gameSettings.showDebugInfo==2){
+                GlStateManager.rotate(-mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+            }else {
+                GlStateManager.rotate(mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+            }
             GlStateManager.scale(-f1, -f1, f1);
             GlStateManager.disableLighting();
             GlStateManager.depthMask(false);
@@ -60,8 +69,7 @@ public class RenderUtil {
             WorldRenderer worldrenderer = tessellator.getWorldRenderer();
             int i = 0;
 
-            if (str.equals("deadmau5"))
-            {
+            if (str.equals("deadmau5")) {
                 i = -10;
             }
 
@@ -69,28 +77,31 @@ public class RenderUtil {
             GlStateManager.disableTexture2D();
             worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
             String HP = String.valueOf((int) entityIn.getHealth());
-            Color hpColor = new Color(0, 255, 3,255);
-            if (entityIn.getHealth()>=10){
-                hpColor=new Color(0, 255, 3,255);
-            }else if(entityIn.getHealth()<10&&entityIn.getHealth()>=4){
-                hpColor=new Color(255, 223, 0,255);
-            }else if(entityIn.getHealth()<4){
-                hpColor=new Color(255, 0, 0, 255);
+            Color hpColor = new Color(0, 255, 3, 255);
+            if (entityIn.getHealth() >= 10) {
+                hpColor = new Color(0, 255, 3, 255);
+            } else if (entityIn.getHealth() < 10 && entityIn.getHealth() >= 4) {
+                hpColor = new Color(255, 223, 0, 255);
+            } else if (entityIn.getHealth() < 4) {
+                hpColor = new Color(255, 0, 0, 255);
             }
             float NameLong = font_A.getStringWidth(str);
             float HPLong = font_A.getStringWidth(HP);
             float StrLong = 0;
-            if (NameLong>=HPLong){
-                StrLong=NameLong;
-            }else{
-                StrLong=HPLong;
+            if (NameLong >= HPLong) {
+                StrLong = NameLong;
+            } else {
+                StrLong = HPLong;
+            }
+            if (Shadow) {
+                RenderUtil.dropShadowWithColor(50, (float) -StrLong / 2 - 4 + Xoffset, i - 4, StrLong + 7, font_A.getStringHeight("A") * 2 + 6, 22, 11, backdropColor);
             }
             //RenderUtil.dropShadow(10, (float) -font_A.getStringWidth(str) / 2 - 3, i - 3, font_A.getStringWidth(str)+6, font_A.getStringHeight("A") + 6, 40, 5);
-            CShaders.CQ_SHADER.draw((float) -StrLong / 2 - 4,i - 4, StrLong+7, font_A.getStringHeight("A")*2 + 6, 3, backColor);
+            CShaders.CQ_SHADER.draw((float) -StrLong / 2 - 4 + Xoffset, i - 4, StrLong + 7, font_A.getStringHeight("A") * 2 + 6, 3, backdropColor);
             tessellator.draw();
             GlStateManager.enableTexture2D();
-            CFontRenderer.DisplayFontNormal(str, -StrLong / 2, i, new Color(255,255,255,255).getRGB());
-            CFontRenderer.DisplayFontNormal(HP, -StrLong / 2+NameLong/2-HPLong/2, i+font_A.getStringHeight("A")+2, hpColor.getRGB());
+            CFontRenderer.DisplayFontNormal(str, -StrLong / 2 + Xoffset, i, new Color(255, 255, 255, 255).getRGB());
+            CFontRenderer.DisplayFontNormal(HP, -StrLong / 2 + NameLong / 2 - HPLong / 2 + Xoffset, i + font_A.getStringHeight("A") + 2, hpColor.getRGB());
             GlStateManager.enableDepth();
             GlStateManager.depthMask(true);
             //CFontRenderer.DisplayFont(str, -font_A.getStringWidth(str) / 2, i, -1);
@@ -99,23 +110,27 @@ public class RenderUtil {
         }
     }
 
-    public static void renderLabelEntity(Entity entityIn, String str, int maxDistance, Color backColor, float partialTicks){
+    public static void renderLabelEntity(Entity entityIn, String str, int maxDistance, float Xoffset, float Yoffset, Color backdropColor, Boolean Shadow, float partialTicks) {
 
-        double x = (entityIn.lastTickPosX + (entityIn.posX - entityIn.lastTickPosX) * (double)partialTicks) -mc.getRenderManager().renderPosX;
-        double y = (entityIn.lastTickPosY + (entityIn.posY - entityIn.lastTickPosY) * (double)partialTicks) -mc.getRenderManager().renderPosY+0.1;
-        double z = (entityIn.lastTickPosZ + (entityIn.posZ - entityIn.lastTickPosZ) * (double)partialTicks) -mc.getRenderManager().renderPosZ;
+        double x = (entityIn.lastTickPosX + (entityIn.posX - entityIn.lastTickPosX) * (double) partialTicks) - mc.getRenderManager().renderPosX;
+        double y = (entityIn.lastTickPosY + (entityIn.posY - entityIn.lastTickPosY) * (double) partialTicks) - mc.getRenderManager().renderPosY + Yoffset;
+        double z = (entityIn.lastTickPosZ + (entityIn.posZ - entityIn.lastTickPosZ) * (double) partialTicks) - mc.getRenderManager().renderPosZ;
 
         double d0 = entityIn.getDistanceSqToEntity(mc.thePlayer);
 
-        if (d0 <= (double)(maxDistance * maxDistance))
-        {
+        if (d0 <= (double) (maxDistance * maxDistance)) {
             float f = 1.6F;
             float f1 = 0.016666668F * f;
             GlStateManager.pushMatrix();
-            GlStateManager.translate((float)x + 0.0F, (float)y + entityIn.height + 0.5F, (float)z);
+            GlStateManager.translate((float) x + 0.0F, (float) y + entityIn.height + 0.5F, (float) z);
             GL11.glNormal3f(0.0F, 1.0F, 0.0F);
             GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
-            GlStateManager.rotate(mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+            if(mc.gameSettings.showDebugInfo==2){
+                GlStateManager.rotate(-mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+            }else {
+                GlStateManager.rotate(mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+            }
+
             GlStateManager.scale(-f1, -f1, f1);
             GlStateManager.disableLighting();
             GlStateManager.depthMask(false);
@@ -126,8 +141,7 @@ public class RenderUtil {
             WorldRenderer worldrenderer = tessellator.getWorldRenderer();
             int i = 0;
 
-            if (str.equals("deadmau5"))
-            {
+            if (str.equals("deadmau5")) {
                 i = -10;
             }
 
@@ -135,17 +149,68 @@ public class RenderUtil {
             GlStateManager.disableTexture2D();
             worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
             float StrLong = font_A.getStringWidth(str);
-            //RenderUtil.dropShadow(10, (float) -font_A.getStringWidth(str) / 2 - 3, i - 3, font_A.getStringWidth(str)+6, font_A.getStringHeight("A") + 6, 40, 5);
-            CShaders.CQ_SHADER.draw((float) -StrLong / 2 - 4,i - 4, StrLong+7, font_A.getStringHeight("A") + 6, 3, backColor);
+            if (Shadow) {
+                RenderUtil.dropShadowWithColor(50, (float) -StrLong / 2 - 4 + Xoffset, i - 4, StrLong + 7, font_A.getStringHeight("A") + 6, 22, 11, backdropColor);
+            }
+            CShaders.CQ_SHADER.draw((float) -StrLong / 2 - 4 + Xoffset, i - 4, StrLong + 7, font_A.getStringHeight("A") + 6, 3, backdropColor);
             tessellator.draw();
             GlStateManager.enableTexture2D();
-            CFontRenderer.DisplayFontNormal(str, -StrLong / 2, i, new Color(255,255,255,255).getRGB());
+            CFontRenderer.DisplayFontNormal(str, -StrLong / 2 + Xoffset, i, new Color(255, 255, 255, 255).getRGB());
             GlStateManager.enableDepth();
             GlStateManager.depthMask(true);
             //CFontRenderer.DisplayFont(str, -font_A.getStringWidth(str) / 2, i, -1);
             GlStateManager.disableBlend();
             GlStateManager.popMatrix();
         }
+    }
+
+    public static void renderLabelXYZ(double x, double y, double z, String str, float Xoffset, float Yoffset, Color backdropColor, Boolean Shadow) {
+
+        x=x - mc.getRenderManager().renderPosX;
+        y=y - mc.getRenderManager().renderPosY + Yoffset;
+        z=z - mc.getRenderManager().renderPosZ;
+        //float f = PlayerUtil.distanceXYZ(x,y,z,mc.getRenderManager().renderPosX,mc.getRenderManager().renderPosYmc.getRenderManager().renderPosY,mc.getRenderManager().renderPosZ,)
+        float f = 1.6F;
+        float f1 = 0.016666668F * f;
+        GlStateManager.pushMatrix();
+        GlStateManager.translate((float) x + 0.0F, (float) y + 0.5F, (float) z);
+        GL11.glNormal3f(0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
+        if(mc.gameSettings.showDebugInfo==2){
+            GlStateManager.rotate(-mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+        }else {
+            GlStateManager.rotate(mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+        }
+        GlStateManager.scale(-f1, -f1, f1);
+        GlStateManager.disableLighting();
+        GlStateManager.depthMask(false);
+        //GlStateManager.disableDepth();
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        int i = 0;
+
+        if (str.equals("deadmau5")) {
+            i = -10;
+        }
+
+        int j = font_A.getStringWidth(str) / 2;
+        GlStateManager.disableTexture2D();
+        worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+        float StrLong = font_A.getStringWidth(str);
+        if (Shadow) {
+            RenderUtil.dropShadowWithColor(50, (float) -StrLong / 2 - 4 + Xoffset, i - 4, StrLong + 7, font_A.getStringHeight("A") + 6, 22, 11, backdropColor);
+        }
+        CShaders.CQ_SHADER.draw((float) -StrLong / 2 - 4 + Xoffset, i - 4, StrLong + 7, font_A.getStringHeight("A") + 6, 3, backdropColor);
+        tessellator.draw();
+        GlStateManager.enableTexture2D();
+        CFontRenderer.DisplayFontNormal(str, -StrLong / 2 + Xoffset, i, new Color(255, 255, 255, 255).getRGB());
+        //GlStateManager.enableDepth();
+        GlStateManager.depthMask(true);
+        //CFontRenderer.DisplayFont(str, -font_A.getStringWidth(str) / 2, i, -1);
+        GlStateManager.disableBlend();
+        GlStateManager.popMatrix();
     }
 
     public void image(final ResourceLocation imageLocation, final float x, final float y, final float width, final float height, final Color color) {
@@ -173,6 +238,7 @@ public class RenderUtil {
     public void image(final ResourceLocation imageLocation, final double x, final double y, final double width, final double height) {
         image(imageLocation, (float) x, (float) y, (float) width, (float) height);
     }
+
     public static void drawRoundedGradientRect(double x, double y, double width, double height, double radius, Color firstColor, Color secondColor, boolean vertical) {
         CShaders.CGQ_SHADER.draw(x, y, width, height, radius, firstColor, secondColor, vertical);
     }
@@ -188,12 +254,14 @@ public class RenderUtil {
     public static void roundedOutlineGradientRectangle(double x, double y, double width, double height, double radius, double borderSize, Color color1, Color color2) {
         CShaders.COGQ_SHADER.draw(x, y, width, height, radius, borderSize, color1, color2);
     }
+
     public static void end() {
         GL11.glEnd();
     }
+
     /**
-        画圆形
-    */
+     * 画圆形
+     */
     public void circle(final double x, final double y, final float radius) {//画圈圈
         GL11.glEnable(GL11.GL_POINT_SMOOTH);
         GL11.glPointSize(radius * 4);
@@ -206,6 +274,7 @@ public class RenderUtil {
     public void circle(final double x, final double y, final double radius, final boolean filled, final Color color) {
         polygon(x, y, radius, 360, filled, color);
     }
+
     public void circle(final double x, final double y, final double radius, final double sides, final boolean filled, final Color color) {
         polygon(x, y, radius, sides, filled, color);
     }
@@ -217,8 +286,9 @@ public class RenderUtil {
     public void circle(final double x, final double y, final double radius, final Color color) {
         polygon(x, y, radius, 360, color);
     }
+
     /**
-    绘制线段
+     * 绘制线段
      */
     public void drawLine(double x, double y, double z, double x1, double y1, double z1, final Color color, final float width) {
         x = x - mc.getRenderManager().renderPosX;
@@ -248,8 +318,9 @@ public class RenderUtil {
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();
     }
+
     /**
-     多边形绘制
+     * 多边形绘制
      */
     public void polygon(final double x, final double y, double sideLength, final double amountOfSides, final boolean filled, final Color color) {
         sideLength /= 2;
@@ -349,8 +420,9 @@ public class RenderUtil {
         GlStateManager.disableBlend();
         GlStateManager.resetColor();
     }
+
     /**
-    gl顶点绘制
+     * gl顶点绘制
      */
     public static void glVertex3D(Vec3 vector3d) {
         GL11.glVertex3d(vector3d.xCoord, vector3d.yCoord, vector3d.zCoord);
@@ -364,8 +436,9 @@ public class RenderUtil {
 
         return new Vec3(x, y, z);
     }
+
     /**
-     绘制边界框
+     * 绘制边界框
      */
     public static void drawBoundingBox(final AxisAlignedBB aa) {//绘制边界框
 
@@ -437,18 +510,17 @@ public class RenderUtil {
     }
 
     /**
-    绘制阴影
-
-     dropShadow方法的每个参数的含义如下：
-
-     loops：循环次数，用于控制阴影的模糊效果。循环次数越大，阴影越模糊。
-     x：阴影的起始点横坐标。
-     y：阴影的起始点纵坐标。
-     width：阴影的宽度。
-     height：阴影的高度。
-     opacity：阴影的不透明度。取值范围为0到255
-     edgeRadius：圆角的半径。
-
+     * 绘制阴影
+     * <p>
+     * dropShadow方法的每个参数的含义如下：
+     * <p>
+     * loops：循环次数，用于控制阴影的模糊效果。循环次数越大，阴影越模糊。
+     * x：阴影的起始点横坐标。
+     * y：阴影的起始点纵坐标。
+     * width：阴影的宽度。
+     * height：阴影的高度。
+     * opacity：阴影的不透明度。取值范围为0到255
+     * edgeRadius：圆角的半径。
      */
     public static void dropShadow(final int loops, final double x, final double y, final double width, final double height, final double opacity, final double edgeRadius) {
         GlStateManager.alphaFunc(516, 0);
@@ -462,7 +534,7 @@ public class RenderUtil {
         }
     }
 
-    public static void dropglow(final int loops, final double x, final double y, final double width, final double height, final double opacity, final double edgeRadius) {
+    public static void dropShadowWithColor(final int loops, final double x, final double y, final double width, final double height, final double opacity, final double edgeRadius, Color color) {
         GlStateManager.alphaFunc(516, 0);
         GlStateManager.enableBlend();
         GlStateManager.enableAlpha();
@@ -470,12 +542,12 @@ public class RenderUtil {
         for (float margin = 0; margin <= loops / 2f; margin += 0.5f) {
             roundedRectangle(x - margin / 2f, y - margin / 2f,
                     width + margin, height + margin, edgeRadius,
-                    new Color(0, 0, 0, (int) Math.max(0.5f, (opacity - margin * 1.2) / 5.5f)));
+                    new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) Math.max(0.5f, (opacity - margin * 1.2) / 5.5f)));
         }
     }
 
     /**
-    绘制物品图标
+     * 绘制物品图标
      */
     public void renderItemIcon(final double x, final double y, final ItemStack itemStack) {
         if (itemStack != null) {
@@ -497,10 +569,10 @@ public class RenderUtil {
     public static void drawRect(int x, int y, int width, int height, int color) {
         Gui.drawRect(x, y, x + width, y + height, color);
     }
-    public static void drawHoveringText(String text, double x, double y)
-    {
-            RenderUtil.dropShadow(20, x - 5, y - 6, font_A.getStringWidth(text) + 9, font_A.getStringHeight(text) + 12, 30, 5+5);
-            CShaders.CQ_SHADER.draw(x - 5, y - 6, font_A.getStringWidth(text) + 9, font_A.getStringHeight(text) + 12,5,new Color(0, 0, 0, 255));
-            CFontRenderer.DisplayFontNormal(text, (float) x, (float) y, Color.white.getRGB());
+
+    public static void drawHoveringText(String text, double x, double y) {
+        RenderUtil.dropShadow(20, x - 5, y - 6, font_A.getStringWidth(text) + 9, font_A.getStringHeight(text) + 12, 30, 5 + 5);
+        CShaders.CQ_SHADER.draw(x - 5, y - 6, font_A.getStringWidth(text) + 9, font_A.getStringHeight(text) + 12, 5, new Color(0, 0, 0, 255));
+        CFontRenderer.DisplayFontNormal(text, (float) x, (float) y, Color.white.getRGB());
     }
 }
